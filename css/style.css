@@ -304,19 +304,20 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 80px;
+  height: 84px;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-decoration: none;
+  margin-right: 36px;
 }
 
 .logo-icon {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   background: var(--primary-orange);
   border-radius: var(--radius-sm);
   display: flex;
@@ -326,6 +327,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 800;
   font-size: 1.3rem;
+  flex-shrink: 0;
 }
 
 .logo-text {
@@ -335,11 +337,12 @@ h1, h2, h3, h4, h5, h6 {
 
 .logo-title {
   font-family: var(--font-heading);
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 800;
   letter-spacing: -0.01em;
   color: var(--text-white);
   line-height: 1.1;
+  white-space: nowrap;
 }
 
 .logo-title span {
@@ -352,12 +355,13 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 0.16em;
   color: var(--text-muted);
   font-weight: 600;
+  white-space: nowrap;
 }
 
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 32px;
 }
 
 .nav-link {
@@ -688,80 +692,64 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   HERO SECTION (RK Reno İlhamlı Mimari Düzen)
+   HERO SECTION (Lüks Mimari, Dengeli Tipografi & Geniş Boşluklar)
    ========================================================================== */
 .hero-section {
   position: relative;
-  padding: 80px 0 90px;
+  padding: 100px 0 90px;
   background-color: var(--bg-dark);
   overflow: hidden;
   border-bottom: 1px solid var(--border-subtle);
 }
 
-/* Hafif Nötr Izgara - Parlama Yok */
-.hero-bg-grid {
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 48px 48px;
-  pointer-events: none;
-  opacity: 0.7;
-}
-
-[data-theme="light"] .hero-bg-grid {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-}
-
 .hero-content-grid {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
-  gap: 50px;
+  gap: 64px;
   align-items: center;
   position: relative;
   z-index: 2;
 }
 
 .hero-badge-tag {
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 
 .hero-title {
-  font-size: clamp(2.4rem, 4.4vw, 3.8rem);
+  font-size: clamp(2.4rem, 4.2vw, 3.6rem);
   font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.03em;
+  line-height: 1.16;
+  letter-spacing: -0.025em;
   color: var(--text-white);
-  margin-bottom: 22px;
+  margin-bottom: 24px;
 }
 
 .hero-title span {
   color: var(--primary-orange);
-  display: block;
+  display: inline;
 }
 
 .hero-lead {
-  font-size: 1.12rem;
-  line-height: 1.65;
-  color: var(--text-light);
-  margin-bottom: 34px;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin-bottom: 40px;
   max-width: 580px;
 }
 
 .hero-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 42px;
+  margin-bottom: 48px;
 }
 
 .hero-stats {
   display: flex;
   align-items: center;
-  gap: 36px;
-  padding-top: 28px;
+  gap: 48px;
+  padding-top: 32px;
   border-top: 1px solid var(--border-subtle);
 }
 
@@ -772,11 +760,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-stat-number {
   font-family: var(--font-heading);
-  font-size: 2.1rem;
+  font-size: 2.2rem;
   font-weight: 800;
   color: var(--primary-orange);
   line-height: 1;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .hero-stat-label {
@@ -791,7 +779,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-image-card {
   position: relative;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   overflow: hidden;
   border: 1px solid var(--border-subtle);
   background: var(--bg-dark-surface);
@@ -808,81 +796,17 @@ h1, h2, h3, h4, h5, h6 {
   transform: scale(1.02);
 }
 
-.hero-floating-badge {
-  position: absolute;
-  bottom: 24px;
-  left: 24px;
-  background: var(--bg-dark-surface);
-  border: 1px solid var(--border-orange);
-  padding: 14px 18px;
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  box-shadow: none;
-}
-
-.hero-floating-badge .badge-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-sm);
-  background: var(--primary-orange);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #FFFFFF;
-}
-
-.badge-text-title {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--text-white);
-}
-
-.badge-text-sub {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-
 /* ==========================================================================
-   RK RENO SIGNATURE WATERMARK & MARQUEE
+   MARQUEE TICKER (Kusursuz Mimari Ayırıcı Bant)
    ========================================================================== */
-.bg-watermark {
-  position: absolute;
-  font-family: var(--font-heading);
-  font-weight: 900;
-  font-size: clamp(5.5rem, 14vw, 15rem);
-  color: rgba(255, 255, 255, 0.025);
-  letter-spacing: -0.04em;
-  line-height: 0.85;
-  user-select: none;
-  pointer-events: none;
-  z-index: 1;
-  text-transform: capitalize;
-}
-
-[data-theme="light"] .bg-watermark {
-  color: rgba(0, 0, 0, 0.035);
-}
-
-.hero-watermark {
-  bottom: 30px;
-  left: 20px;
-}
-
-.projects-watermark {
-  top: 30px;
-  right: 20px;
-}
-
 .marquee-strip {
   overflow: hidden;
   white-space: nowrap;
   background: var(--bg-black);
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 18px 0;
+  padding: 22px 0;
+  margin: 30px 0 70px;
   position: relative;
 }
 
