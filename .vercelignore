@@ -1,0 +1,5 @@
+resimler/
+videolar/
+.git/
+.playwright-mcp/
+*.log
