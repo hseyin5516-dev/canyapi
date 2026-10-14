@@ -1757,6 +1757,16 @@ textarea.form-control {
   .top-bar {
     display: none;
   }
+  .hero-section {
+    padding: 48px 0 36px;
+  }
+  .hero-content-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .hero-image-card img {
+    height: 320px;
+  }
   .discovery-box, .collage-grid, .featured-quote-box {
     grid-template-columns: 1fr;
     padding: 26px;
@@ -1771,15 +1781,81 @@ textarea.form-control {
 }
 
 @media (max-width: 640px) {
-  .projects-grid, .reviews-grid {
+  .hero-section {
+    padding: 30px 0 24px;
+  }
+  .hero-content-grid {
     grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .hero-badge-tag {
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    margin-bottom: 12px;
   }
   .hero-title {
-    font-size: 2.2rem;
+    font-size: clamp(1.75rem, 6.2vw, 2.15rem);
+    line-height: 1.22;
+    margin-bottom: 12px;
+  }
+  .hero-lead {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin-bottom: 20px;
+  }
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .hero-actions .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 0.92rem;
+  }
+  .hero-image-card img {
+    height: 230px;
   }
   .hero-stats {
-    flex-direction: column;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding-top: 16px;
+    text-align: center;
+    border-top: 1px solid var(--border-subtle);
+  }
+  .hero-stat-number {
+    font-size: 1.45rem;
+    margin-bottom: 2px;
+  }
+  .hero-stat-label {
+    font-size: 0.68rem;
+    line-height: 1.2;
+  }
+  .theme-toggle-btn {
+    padding: 6px 9px;
+    font-size: 0.85rem;
+  }
+  .theme-toggle-btn span {
+    display: none;
+  }
+  .header-actions {
+    gap: 8px;
+  }
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .service-card {
+    border-radius: 12px;
+  }
+  .service-thumb {
+    height: 200px;
+  }
+  .projects-grid, .reviews-grid {
+    grid-template-columns: 1fr;
   }
   .footer-grid {
     grid-template-columns: 1fr;
