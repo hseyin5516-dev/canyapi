@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initQuoteModal();
   initForms();
   initCounters();
+  initGalleryLightbox();
 });
 
 /* ==========================================================================
@@ -403,4 +404,61 @@ function initCounters() {
   }, { threshold: 0.5 });
 
   counters.forEach(c => observer.observe(c));
+}
+
+/* ==========================================================================
+   IMAGE GALLERY LIGHTBOX (Modal Zoom)
+   ========================================================================== */
+function initGalleryLightbox() {
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  if (!galleryItems.length) return;
+
+  let lightbox = document.querySelector('.image-lightbox');
+  if (!lightbox) {
+    lightbox = document.createElement('div');
+    lightbox.className = 'image-lightbox';
+    lightbox.innerHTML = `
+      <div class="lightbox-content">
+        <button class="lightbox-close" aria-label="Kapat">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+        <img class="lightbox-img" src="" alt="Büyük Görsel">
+        <div class="lightbox-caption"></div>
+      </div>
+    `;
+    document.body.appendChild(lightbox);
+
+    const closeBtn = lightbox.querySelector('.lightbox-close');
+    const closeLightbox = () => {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
+  }
+
+  const lightboxImg = lightbox.querySelector('.lightbox-img');
+  const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+
+  galleryItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const img = item.querySelector('img');
+      const caption = item.querySelector('.gallery-caption');
+      if (img) {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt || 'Can Yapı Uygulama';
+        lightboxCaption.textContent = caption ? caption.textContent : 'Can Yapı Antalya';
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    });
+  });
 }
