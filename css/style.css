@@ -1,33 +1,33 @@
 /* ==========================================================================
-   CAN YAPI ANTALYA - MAT & AÇIK DARK MOD MİMARİ TEMASI
-   Renk Şeması: Can Yapı Mat Turuncu (#FF5500), Mat Siyah (#14161B), Saf Beyaz (#FFFFFF)
-   Tasarım Prensibi: Sıfır parlama (No Glow), Yumuşak Açık Dark Mod, Mat Yüzeyler
+   CAN YAPI ANTALYA - MAT MİMARİ TASARIM SİSTEMİ
+   Renk Şeması: Can Yapı Mat Turuncu (#FF5500), Nötr Siyah (#0A0A0B), Saf Beyaz (#FFFFFF)
+   Prensip: Sıfır Parlama (No Glow), Lacivert ve Mor Yok, Nötr Koyu & Açık Tema
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Mat Renkler - Parlama ve Neon Yok */
+  /* Marka Renkleri - Kesinlikle Mat (Parlama Yok) */
   --primary-orange: #FF5500;
   --primary-orange-hover: #E04800;
   --primary-orange-light: rgba(255, 85, 0, 0.08);
 
-  /* Açık Dark Mod (Soft Slate Dark Mode) */
-  --bg-dark: #181B22;          /* Açık Dark Ana Zemin */
-  --bg-dark-surface: #20242D;  /* Yüzey / Başlık Zemini */
-  --bg-dark-card: #262B36;     /* Mat Kart Zemini */
-  --bg-dark-hover: #2E3441;    /* Hover / Odak Zemini */
-  --bg-black: #121419;         /* Mat Koyu Bölümler (Top Bar & Footer) */
+  /* Koyu Tema (Varsayılan - Tamamen Nötr Karbon Siyahı - Lacivert ve Mor Kesinlikle Yok) */
+  --bg-dark: #0A0A0B;          /* Ana Zemin (Nötr Simsiyah) */
+  --bg-dark-surface: #121214;  /* Yüzey / Başlık Zemini (Nötr Füme Siyah) */
+  --bg-dark-card: #18181B;     /* Mat Kart Zemini */
+  --bg-dark-hover: #222226;    /* Hover / Odak Zemini */
+  --bg-black: #060607;         /* En Koyu Bölümler (Top Bar & Footer) */
 
-  /* Mat Sınırlar */
-  --border-subtle: #323846;
+  /* Mat Nötr Sınırlar */
+  --border-subtle: #242428;
   --border-orange: #FF5500;
 
   /* Tipografi */
   --text-white: #FFFFFF;
-  --text-light: #E1E6EB;
-  --text-muted: #959EAE;
-  --text-dark: #14161B;
+  --text-light: #E0E0E0;
+  --text-muted: #8E8E93;
+  --text-dark: #0A0A0B;
 
   --font-heading: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -38,10 +38,27 @@
   --radius-full: 9999px;
 
   /* Mat Gölgeler - Parlamasız, Hafif ve Net */
-  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.25);
+  --shadow-card: none;
   --shadow-orange: none;
   --transition: all 0.22s ease;
   --mobile-bar-height: 64px;
+}
+
+/* Açık Tema (Saf Beyaz, Nötr Açık Yüzeyler, Mat Turuncu & Siyah Tipografi) */
+[data-theme="light"] {
+  --bg-dark: #FFFFFF;          /* Ana Zemin Saf Beyaz */
+  --bg-dark-surface: #F8F9FA;  /* Kart ve Yüzeyler Temiz Açık Gri */
+  --bg-dark-card: #FFFFFF;     /* Kartlar Saf Beyaz */
+  --bg-dark-hover: #F1F3F5;    /* Hover Zemini */
+  --bg-black: #0F0F10;         /* Koyu Kontrast Bölümler */
+
+  --border-subtle: #E5E7EB;    /* Nötr Açık Kenarlık */
+  --border-orange: #FF5500;
+
+  --text-white: #0F0F10;       /* Açık Temada Başlıklar ve Beyaz Metinler Siyah Olur */
+  --text-light: #2D3748;       /* Gövde Metni */
+  --text-muted: #6B7280;       /* Yardımcı Metin */
+  --text-dark: #FFFFFF;
 }
 
 /* Reset & Global */
@@ -63,6 +80,7 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   padding-bottom: 0;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 @media (max-width: 991px) {
@@ -104,7 +122,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Typography Helpers */
 .text-orange { color: var(--primary-orange) !important; }
-.text-white { color: #FFFFFF !important; }
+.text-white { color: var(--text-white) !important; }
 .text-muted { color: var(--text-muted) !important; }
 .text-center { text-align: center; }
 
@@ -137,7 +155,7 @@ h1, h2, h3, h4, h5, h6 {
 .section-title {
   font-size: clamp(2rem, 3.5vw, 2.9rem);
   margin-bottom: 16px;
-  color: #FFFFFF;
+  color: var(--text-white);
 }
 
 .section-desc {
@@ -180,27 +198,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-secondary {
-  background-color: #FFFFFF;
-  color: var(--bg-black);
-  border-color: #FFFFFF;
+  background-color: var(--text-white);
+  color: var(--bg-dark);
+  border-color: var(--text-white);
 }
 
 .btn-secondary:hover {
-  background-color: #E2E6EC;
-  color: var(--bg-black);
+  background-color: var(--text-light);
+  color: var(--bg-dark);
   transform: translateY(-2px);
 }
 
 .btn-outline {
   background-color: transparent;
-  color: #FFFFFF;
+  color: var(--text-white);
   border: 1px solid var(--border-subtle);
 }
 
 .btn-outline:hover {
   background-color: var(--bg-dark-hover);
-  border-color: #FFFFFF;
-  color: #FFFFFF;
+  border-color: var(--text-white);
+  color: var(--text-white);
   transform: translateY(-2px);
 }
 
@@ -227,7 +245,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   TOP BAR & HEADER (Mat Açık Dark)
+   TOP BAR & HEADER (Mat Nötr Siyah)
    ========================================================================== */
 .top-bar {
   background: var(--bg-black);
@@ -278,7 +296,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .header.scrolled {
-  background: #1C2028;
+  background: var(--bg-dark-surface);
   border-bottom-color: var(--border-subtle);
 }
 
@@ -320,7 +338,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1.3rem;
   font-weight: 800;
   letter-spacing: -0.01em;
-  color: #FFFFFF;
+  color: var(--text-white);
   line-height: 1.1;
 }
 
@@ -339,7 +357,7 @@ h1, h2, h3, h4, h5, h6 {
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 24px;
 }
 
 .nav-link {
@@ -419,7 +437,35 @@ h1, h2, h3, h4, h5, h6 {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+}
+
+/* Tema Değiştirici Buton (Açık Beyaz / Koyu Siyah) */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-dark-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-white);
+  padding: 7px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--primary-orange);
+  color: var(--primary-orange);
+}
+
+.theme-toggle-btn svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
 }
 
 .phone-badge {
@@ -464,14 +510,14 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 0.92rem;
-  color: #FFFFFF;
+  color: var(--text-white);
 }
 
 .hamburger-btn {
   display: none;
   background: transparent;
   border: none;
-  color: #FFFFFF;
+  color: var(--text-white);
   cursor: pointer;
   padding: 6px;
 }
@@ -499,14 +545,15 @@ h1, h2, h3, h4, h5, h6 {
   top: 0;
   right: -320px;
   width: 320px;
-  height: 100vh;
+  max-width: 85vw;
+  height: 100%;
   background: var(--bg-dark-surface);
   border-left: 1px solid var(--border-subtle);
   z-index: 1999;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  transition: right 0.3s ease;
+  transition: right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   overflow-y: auto;
 }
 
@@ -514,41 +561,48 @@ h1, h2, h3, h4, h5, h6 {
   right: 0;
 }
 
-.mobile-nav-header {
+.mobile-drawer-header, .mobile-nav-header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 24px;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--border-subtle);
 }
 
 .mobile-close-btn {
-  background: transparent;
-  border: none;
-  color: #FFFFFF;
+  background: var(--bg-dark-card);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-white);
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  padding: 6px;
 }
 
-.mobile-nav-list {
+.mobile-menu-links, .mobile-nav-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
   margin-bottom: 24px;
 }
 
-.mobile-nav-link {
+.mobile-menu-link, .mobile-nav-link {
   font-family: var(--font-heading);
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: var(--text-light);
+  color: var(--text-white);
+  padding: 10px 0;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 8px 0;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
+.mobile-menu-link:hover, .mobile-menu-link.active,
 .mobile-nav-link:hover, .mobile-nav-link.active {
   color: var(--primary-orange);
 }
@@ -556,108 +610,159 @@ h1, h2, h3, h4, h5, h6 {
 .mobile-submenu {
   display: none;
   flex-direction: column;
-  gap: 10px;
-  padding-left: 16px;
-  margin-top: 6px;
-  border-left: 2px solid var(--border-orange);
+  gap: 8px;
+  padding-left: 14px;
+  margin-top: 8px;
+  border-left: 2px solid var(--primary-orange);
 }
 
 .mobile-submenu.open {
   display: flex;
 }
 
-.mobile-sub-link {
+.mobile-submenu a {
   font-size: 0.9rem;
   color: var(--text-muted);
+  padding: 5px 0;
 }
 
-.mobile-sub-link:hover {
+.mobile-submenu a:hover {
   color: var(--primary-orange);
 }
 
-.mobile-nav-actions {
+.mobile-drawer-footer {
   margin-top: auto;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding-top: 18px;
-  border-top: 1px solid var(--border-subtle);
+  gap: 12px;
 }
 
 /* ==========================================================================
-   HERO SECTION (Mat Açık Dark Zemin - Sıfır Parlama)
+   BREADCRUMB & INNER HERO
    ========================================================================== */
-.hero {
-  position: relative;
-  min-height: 82vh;
+.breadcrumb-wrap {
+  padding: 16px 0;
+  background: var(--bg-black);
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.85rem;
+}
+
+.breadcrumb-list {
   display: flex;
   align-items: center;
-  padding: 70px 0;
+  gap: 8px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+}
+
+.breadcrumb-list a:hover {
+  color: var(--primary-orange);
+}
+
+.breadcrumb-separator {
+  color: var(--border-subtle);
+}
+
+.breadcrumb-current {
+  color: var(--primary-orange);
+  font-weight: 600;
+}
+
+.page-hero {
+  padding: 60px 0 50px;
+  background: var(--bg-dark-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  position: relative;
+}
+
+.page-hero-title {
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  margin-bottom: 14px;
+  color: var(--text-white);
+}
+
+.page-hero-desc {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  max-width: 720px;
+}
+
+/* ==========================================================================
+   HERO SECTION (RK Reno İlhamlı Mimari Düzen)
+   ========================================================================== */
+.hero-section {
+  position: relative;
+  padding: 80px 0 90px;
   background-color: var(--bg-dark);
   overflow: hidden;
   border-bottom: 1px solid var(--border-subtle);
 }
 
-.hero::after {
-  content: '';
+/* Hafif Nötr Izgara - Parlama Yok */
+.hero-bg-grid {
   position: absolute;
   inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 48px 48px;
   pointer-events: none;
-  z-index: 1;
+  opacity: 0.7;
+}
+
+[data-theme="light"] .hero-bg-grid {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
 }
 
 .hero-content-grid {
-  position: relative;
-  z-index: 2;
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
   gap: 50px;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
-.hero-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.hero-badge-tag {
+  margin-bottom: 18px;
 }
 
 .hero-title {
-  font-size: clamp(2.3rem, 4.5vw, 3.8rem);
+  font-size: clamp(2.4rem, 4.4vw, 3.8rem);
   font-weight: 800;
   line-height: 1.12;
-  margin-bottom: 20px;
   letter-spacing: -0.03em;
-  color: #FFFFFF;
+  color: var(--text-white);
+  margin-bottom: 22px;
 }
 
-.hero-title .highlight {
+.hero-title span {
   color: var(--primary-orange);
+  display: block;
 }
 
-.hero-description {
-  font-size: 1.1rem;
+.hero-lead {
+  font-size: 1.12rem;
+  line-height: 1.65;
   color: var(--text-light);
-  line-height: 1.7;
-  margin-bottom: 30px;
+  margin-bottom: 34px;
   max-width: 580px;
 }
 
 .hero-actions {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 14px;
-  margin-bottom: 36px;
+  flex-wrap: wrap;
+  margin-bottom: 42px;
 }
 
 .hero-stats {
   display: flex;
+  align-items: center;
   gap: 36px;
-  padding-top: 26px;
+  padding-top: 28px;
   border-top: 1px solid var(--border-subtle);
-  width: 100%;
 }
 
 .hero-stat-item {
@@ -669,18 +774,14 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-size: 2.1rem;
   font-weight: 800;
-  color: #FFFFFF;
-  line-height: 1;
-}
-
-.hero-stat-number span {
   color: var(--primary-orange);
+  line-height: 1;
+  margin-bottom: 4px;
 }
 
 .hero-stat-label {
   font-size: 0.82rem;
   color: var(--text-muted);
-  margin-top: 6px;
   font-weight: 500;
 }
 
@@ -693,11 +794,12 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--border-subtle);
+  background: var(--bg-dark-surface);
 }
 
 .hero-image-card img {
   width: 100%;
-  height: 500px;
+  height: 480px;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
@@ -708,62 +810,64 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-floating-badge {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background: var(--bg-dark-card);
+  bottom: 24px;
+  left: 24px;
+  background: var(--bg-dark-surface);
   border: 1px solid var(--border-orange);
   padding: 14px 18px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
-  gap: 12px;
-  max-width: 280px;
+  gap: 14px;
+  box-shadow: none;
 }
 
-.badge-icon {
+.hero-floating-badge .badge-icon {
   width: 40px;
   height: 40px;
   border-radius: var(--radius-sm);
   background: var(--primary-orange);
-  color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  color: #FFFFFF;
 }
 
 .badge-text-title {
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 0.92rem;
-  color: #FFFFFF;
-  line-height: 1.2;
+  font-size: 0.95rem;
+  color: var(--text-white);
 }
 
 .badge-text-sub {
   font-size: 0.78rem;
   color: var(--text-muted);
-  margin-top: 2px;
 }
 
 /* ==========================================================================
-   RK RENO İMZALARI: WATERMARKS & MAT MARQUEE
+   RK RENO SIGNATURE WATERMARK & MARQUEE
    ========================================================================== */
 .bg-watermark {
   position: absolute;
   font-family: var(--font-heading);
   font-weight: 900;
-  font-size: clamp(5rem, 13vw, 13rem);
-  color: rgba(255, 255, 255, 0.03);
+  font-size: clamp(5.5rem, 14vw, 15rem);
+  color: rgba(255, 255, 255, 0.025);
   letter-spacing: -0.04em;
   line-height: 0.85;
   user-select: none;
   pointer-events: none;
   z-index: 1;
+  text-transform: capitalize;
+}
+
+[data-theme="light"] .bg-watermark {
+  color: rgba(0, 0, 0, 0.035);
 }
 
 .hero-watermark {
-  bottom: 20px;
+  bottom: 30px;
   left: 20px;
 }
 
@@ -778,24 +882,33 @@ h1, h2, h3, h4, h5, h6 {
   background: var(--bg-black);
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 16px 0;
+  padding: 18px 0;
+  position: relative;
 }
 
 .marquee-track {
   display: inline-flex;
   align-items: center;
-  gap: 40px;
+  gap: 50px;
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 0.82rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-muted);
   animation: marqueeScroll 35s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track span {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .marquee-track .bullet {
   color: var(--primary-orange);
+  font-size: 1.2rem;
 }
 
 @keyframes marqueeScroll {
@@ -804,22 +917,30 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
-   SERVICES GRID & MATTE CARDS
+   SERVICES SECTION (8 Hizmet Kartı)
    ========================================================================== */
 .services-section {
   padding: 90px 0;
-  background: var(--bg-dark-surface);
-  position: relative;
-}
-
-.section-header {
-  margin-bottom: 50px;
+  background-color: var(--bg-dark);
 }
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-top: 48px;
+}
+
+@media (max-width: 1200px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .service-card {
@@ -827,87 +948,144 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
   overflow: hidden;
-  transition: var(--transition);
   display: flex;
   flex-direction: column;
+  transition: var(--transition);
 }
 
 .service-card:hover {
-  border-color: var(--border-orange);
+  border-color: var(--primary-orange);
   transform: translateY(-4px);
 }
 
 .service-thumb {
   position: relative;
-  height: 220px;
+  height: 200px;
   overflow: hidden;
+  background: var(--bg-dark-surface);
 }
 
 .service-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s ease;
 }
 
 .service-card:hover .service-thumb img {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
 .service-badge {
   position: absolute;
   top: 12px;
   right: 12px;
-  background: var(--bg-black);
+  background: var(--bg-dark-surface);
+  border: 1px solid var(--border-orange);
   color: var(--primary-orange);
+  font-family: var(--font-heading);
   font-size: 0.72rem;
   font-weight: 700;
-  padding: 4px 9px;
+  padding: 4px 10px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--border-orange);
 }
 
 .service-content {
-  padding: 22px;
+  padding: 22px 20px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
 }
 
 .service-title {
-  font-size: 1.2rem;
-  margin-bottom: 8px;
-  color: #FFFFFF;
-}
-
-.service-card:hover .service-title {
-  color: var(--primary-orange);
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+  color: var(--text-white);
 }
 
 .service-desc {
   font-size: 0.88rem;
   color: var(--text-muted);
-  line-height: 1.6;
+  line-height: 1.55;
   margin-bottom: 20px;
   flex-grow: 1;
 }
 
 .service-actions {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border-subtle);
+  gap: 10px;
+  margin-top: auto;
 }
 
 .service-actions .btn {
   flex: 1;
-  font-size: 0.82rem;
   padding: 9px 12px;
+  font-size: 0.85rem;
 }
 
 /* ==========================================================================
-   PROJECTS SECTION & SPEC TABLES (Mat Tasarım)
+   DISCOVERY BANNER (Ücretsiz Keşif)
+   ========================================================================== */
+.discovery-banner {
+  padding: 60px 0;
+  background: var(--bg-dark-surface);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.discovery-box {
+  background: var(--bg-dark-card);
+  border: 1px solid var(--border-orange);
+  border-radius: var(--radius-sm);
+  padding: 44px;
+  display: grid;
+  grid-template-columns: 1.4fr 0.6fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.discovery-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 26px;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.step-number {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  background: var(--primary-orange);
+  color: #FFFFFF;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+}
+
+.step-title {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-white);
+  margin-bottom: 4px;
+}
+
+.step-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   PROJECTS SECTION & RK RENO SPEC ROWS
    ========================================================================== */
 .projects-section {
   padding: 90px 0;
@@ -918,41 +1096,41 @@ h1, h2, h3, h4, h5, h6 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  margin-top: 40px;
 }
 
 .project-card {
-  position: relative;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
   background: var(--bg-dark-card);
   border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
   transition: var(--transition);
 }
 
 .project-card:hover {
-  border-color: var(--border-orange);
-  transform: translateY(-3px);
+  border-color: var(--primary-orange);
+  transform: translateY(-4px);
 }
 
 .project-thumb {
-  height: 250px;
-  position: relative;
+  height: 240px;
   overflow: hidden;
+  background: var(--bg-dark-surface);
 }
 
 .project-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s ease;
 }
 
 .project-card:hover .project-thumb img {
-  transform: scale(1.03);
+  transform: scale(1.05);
 }
 
 .project-spec-table {
-  padding: 18px 20px 20px;
+  padding: 18px 20px 22px;
   background: var(--bg-dark-card);
   display: flex;
   flex-direction: column;
@@ -960,16 +1138,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .spec-header {
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .spec-header h4 {
-  font-size: 1.1rem;
-  color: #FFFFFF;
+  font-size: 1.15rem;
+  color: var(--text-white);
 }
 
 .spec-header .spec-location {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--primary-orange);
   font-weight: 600;
 }
@@ -988,21 +1166,23 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .spec-val {
-  color: #FFFFFF;
+  color: var(--text-white);
   font-weight: 600;
 }
 
 .spec-val.badge-passed {
-  color: #00E676;
+  color: var(--primary-orange);
 }
 
 /* ==========================================================================
-   COLLAGE SECTION (Mat Asimetrik Galeri)
+   RK RENO ASYMMETRIC COLLAGE
    ========================================================================== */
 .collage-section {
   padding: 90px 0;
   background: var(--bg-dark-surface);
   position: relative;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .collage-grid {
@@ -1023,242 +1203,29 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--radius-sm);
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  height: 460px;
+  height: 480px;
 }
 
 .collage-img-tall img, .collage-img-box img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.collage-img-tall:hover img, .collage-img-box:hover img {
+  transform: scale(1.04);
 }
 
 .collage-img-box {
   border-radius: var(--radius-sm);
   overflow: hidden;
   border: 1px solid var(--border-subtle);
-  height: 222px;
+  height: 232px;
 }
 
 /* ==========================================================================
-   DISCOVERY BANNER
-   ========================================================================== */
-.discovery-banner {
-  padding: 70px 0;
-  background: var(--bg-dark);
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.discovery-box {
-  background: var(--bg-dark-card);
-  border: 1px solid var(--border-orange);
-  border-radius: var(--radius-sm);
-  padding: 44px;
-  display: grid;
-  grid-template-columns: 1.3fr 0.7fr;
-  align-items: center;
-  gap: 36px;
-}
-
-.discovery-steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 26px;
-}
-
-.step-item {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.step-number {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
-  background: var(--primary-orange);
-  color: #FFFFFF;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.9rem;
-}
-
-.step-title {
-  font-size: 0.92rem;
-  font-weight: 700;
-  color: #FFFFFF;
-}
-
-.step-desc {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
-
-/* ==========================================================================
-   QUOTE & INQUIRY FORM SECTION
-   ========================================================================== */
-.quote-section {
-  padding: 90px 0;
-  background: var(--bg-dark-surface);
-}
-
-.quote-card {
-  background: var(--bg-dark-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 38px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.form-group.full-width {
-  grid-column: span 2;
-}
-
-.form-label {
-  font-family: var(--font-heading);
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text-light);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.form-label .required {
-  color: var(--primary-orange);
-}
-
-.form-control {
-  background: var(--bg-dark);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  color: #FFFFFF;
-  padding: 12px 16px;
-  font-family: var(--font-body);
-  font-size: 0.92rem;
-  transition: var(--transition);
-  outline: none;
-}
-
-.form-control:focus {
-  border-color: var(--primary-orange);
-}
-
-textarea.form-control {
-  min-height: 100px;
-  resize: vertical;
-}
-
-select.form-control {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23959EAE' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 16px center;
-  cursor: pointer;
-}
-
-.file-upload-box {
-  border: 2px dashed var(--border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 22px;
-  text-align: center;
-  background: var(--bg-dark);
-  cursor: pointer;
-  transition: var(--transition);
-  position: relative;
-}
-
-.file-upload-box:hover, .file-upload-box.dragover {
-  border-color: var(--primary-orange);
-  background: var(--primary-orange-light);
-}
-
-.file-upload-box input[type="file"] {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-  width: 100%;
-  height: 100%;
-}
-
-.upload-icon {
-  width: 32px;
-  height: 32px;
-  color: var(--primary-orange);
-  margin: 0 auto 8px;
-}
-
-.upload-text {
-  font-size: 0.88rem;
-  color: var(--text-light);
-  font-weight: 500;
-}
-
-.upload-sub {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  margin-top: 4px;
-}
-
-.file-preview-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.preview-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--bg-dark-hover);
-  border: 1px solid var(--border-subtle);
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  font-size: 0.8rem;
-  color: var(--text-light);
-}
-
-.preview-chip .remove-file {
-  color: #FF5555;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-.checkbox-wrap {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  cursor: pointer;
-}
-
-.checkbox-wrap input[type="checkbox"] {
-  accent-color: var(--primary-orange);
-  width: 16px;
-  height: 16px;
-  margin-top: 3px;
-}
-
-/* ==========================================================================
-   TESTIMONIALS & FEATURED QUOTE
+   TESTIMONIALS & FEATURED TESTIMONIAL BOX
    ========================================================================== */
 .testimonials-section {
   padding: 90px 0;
@@ -1269,6 +1236,7 @@ select.form-control {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
+  margin-top: 40px;
 }
 
 .review-card {
@@ -1278,26 +1246,20 @@ select.form-control {
   padding: 26px;
   display: flex;
   flex-direction: column;
-  transition: var(--transition);
-}
-
-.review-card:hover {
-  border-color: var(--border-orange);
 }
 
 .review-stars {
-  display: flex;
-  gap: 4px;
-  color: #FFA500;
+  color: var(--primary-orange);
+  font-size: 1rem;
+  letter-spacing: 2px;
   margin-bottom: 14px;
 }
 
 .review-text {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   color: var(--text-light);
-  line-height: 1.65;
-  font-style: italic;
-  margin-bottom: 18px;
+  line-height: 1.6;
+  margin-bottom: 22px;
   flex-grow: 1;
 }
 
@@ -1305,44 +1267,46 @@ select.form-control {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding-top: 14px;
   border-top: 1px solid var(--border-subtle);
+  padding-top: 14px;
 }
 
 .reviewer-avatar {
   width: 38px;
   height: 38px;
   border-radius: var(--radius-sm);
-  background: var(--primary-orange-light);
+  background: var(--bg-dark-hover);
   border: 1px solid var(--border-orange);
   color: var(--primary-orange);
+  font-family: var(--font-heading);
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-family: var(--font-heading);
+  font-size: 0.85rem;
 }
 
 .reviewer-name {
-  font-weight: 700;
-  color: #FFFFFF;
+  font-family: var(--font-heading);
   font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-white);
 }
 
 .reviewer-loc {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   color: var(--text-muted);
 }
 
 .featured-quote-box {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
-  gap: 36px;
+  gap: 40px;
   background: var(--bg-dark-card);
   border: 1px solid var(--border-orange);
   border-radius: var(--radius-sm);
   overflow: hidden;
-  margin-top: 36px;
+  margin-top: 40px;
 }
 
 .featured-quote-content {
@@ -1361,21 +1325,21 @@ select.form-control {
 
 .featured-quote-text {
   font-family: var(--font-heading);
-  font-size: clamp(1.15rem, 2vw, 1.45rem);
-  color: #FFFFFF;
+  font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+  color: var(--text-white);
   line-height: 1.45;
-  margin-bottom: 22px;
+  margin-bottom: 24px;
   font-weight: 600;
 }
 
 .featured-quote-author {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: #FFFFFF;
+  color: var(--text-white);
 }
 
 .featured-quote-sub {
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   color: var(--primary-orange);
 }
 
@@ -1391,31 +1355,170 @@ select.form-control {
 }
 
 /* ==========================================================================
-   FOOTER (Mat Siyah)
+   QUOTE SECTION (Teklif Formu)
+   ========================================================================== */
+.quote-section {
+  padding: 90px 0;
+  background: var(--bg-dark-surface);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.quote-card {
+  background: var(--bg-dark-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 48px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 680px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-label {
+  font-family: var(--font-heading);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--text-white);
+}
+
+.form-label .required {
+  color: var(--primary-orange);
+}
+
+.form-control {
+  background: var(--bg-dark);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  color: var(--text-white);
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  border-color: var(--primary-orange);
+}
+
+.form-control::placeholder {
+  color: var(--text-muted);
+}
+
+textarea.form-control {
+  min-height: 110px;
+  resize: vertical;
+}
+
+/* File Upload Area */
+.file-upload-box {
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  text-align: center;
+  background: var(--bg-dark);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.file-upload-box:hover {
+  border-color: var(--primary-orange);
+}
+
+.file-upload-box svg {
+  color: var(--primary-orange);
+  width: 32px;
+  height: 32px;
+  margin-bottom: 8px;
+}
+
+.file-upload-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-white);
+}
+
+.file-upload-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.file-preview-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.file-chip {
+  background: var(--bg-dark-hover);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  color: var(--text-white);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ==========================================================================
+   FOOTER (Mat Nötr Siyah)
    ========================================================================== */
 .footer {
   background: var(--bg-black);
   border-top: 1px solid var(--border-subtle);
-  padding: 70px 0 28px;
-  color: var(--text-muted);
+  padding: 70px 0 30px;
 }
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
-  gap: 36px;
+  grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+  gap: 40px;
   margin-bottom: 50px;
 }
 
-.footer-col h5 {
-  color: #FFFFFF;
-  font-size: 1rem;
+@media (max-width: 991px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.footer-col h4 {
+  font-size: 1.05rem;
+  color: var(--text-white);
   margin-bottom: 20px;
   position: relative;
   padding-bottom: 8px;
 }
 
-.footer-col h5::after {
+.footer-col h4::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -1425,55 +1528,58 @@ select.form-control {
   background: var(--primary-orange);
 }
 
-.footer-about p {
-  font-size: 0.88rem;
-  line-height: 1.7;
-  margin-bottom: 18px;
-}
-
-.footer-links li {
-  margin-bottom: 9px;
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .footer-links a {
   font-size: 0.88rem;
   color: var(--text-muted);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
 }
 
 .footer-links a:hover {
   color: var(--primary-orange);
+  padding-left: 4px;
 }
 
 .footer-contact-item {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 14px;
   font-size: 0.88rem;
+  color: var(--text-muted);
 }
 
 .footer-contact-item svg {
   color: var(--primary-orange);
-  width: 16px;
-  height: 16px;
   flex-shrink: 0;
   margin-top: 3px;
+  width: 16px;
+  height: 16px;
+}
+
+.footer-contact-item a:hover {
+  color: var(--primary-orange);
 }
 
 .footer-bottom {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 26px;
-  border-top: 1px solid var(--border-subtle);
   font-size: 0.82rem;
+  color: var(--text-muted);
 }
 
 /* ==========================================================================
-   FIXED WHATSAPP BUTTON (Mat & Parlamasız)
+   FIXED WHATSAPP BUTTON (Turuncu, Siyah, Beyaz - Sıfır Parlama)
    ========================================================================== */
 .floating-whatsapp {
   position: fixed;
@@ -1483,29 +1589,29 @@ select.form-control {
   display: flex;
   align-items: center;
   gap: 9px;
-  background: #25D366;
+  background: var(--primary-orange);
   color: #FFFFFF;
   padding: 11px 18px;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid var(--border-orange);
   font-family: var(--font-heading);
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
   transition: var(--transition);
   box-shadow: none !important;
-  animation: none !important; /* Sıfır parlama / titreşim */
+  animation: none !important;
 }
 
 .floating-whatsapp:hover {
-  background: #20BA5A;
+  background: var(--primary-orange-hover);
   color: #FFFFFF;
   transform: translateY(-2px);
 }
 
 .floating-whatsapp svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   fill: currentColor;
   flex-shrink: 0;
 }
@@ -1514,8 +1620,8 @@ select.form-control {
   .floating-whatsapp {
     bottom: calc(var(--mobile-bar-height) + 12px);
     right: 14px;
-    width: 46px;
-    height: 46px;
+    width: 44px;
+    height: 44px;
     padding: 0;
     justify-content: center;
   }
@@ -1525,7 +1631,7 @@ select.form-control {
 }
 
 /* ==========================================================================
-   MOBILE STICKY CONTACT ACTION BAR (Mat)
+   MOBILE STICKY ACTION BAR (Siyah, Turuncu, Beyaz - Sıfır Parlama)
    ========================================================================== */
 .mobile-action-bar {
   display: none;
@@ -1556,14 +1662,13 @@ select.form-control {
   align-items: center;
   justify-content: center;
   gap: 3px;
-  color: var(--text-light);
   font-size: 0.72rem;
   font-weight: 600;
   text-align: center;
   padding: 6px 4px;
   border-radius: var(--radius-sm);
   transition: var(--transition);
-  border: none;
+  border: 1px solid transparent;
   box-shadow: none !important;
 }
 
@@ -1573,9 +1678,9 @@ select.form-control {
 }
 
 .mobile-action-item.btn-call {
-  background: var(--bg-dark-hover);
-  color: #FFFFFF;
-  border: 1px solid var(--border-subtle);
+  background: var(--bg-dark-surface);
+  color: var(--text-white);
+  border-color: var(--border-subtle);
   margin-right: 6px;
 }
 
@@ -1584,18 +1689,24 @@ select.form-control {
 }
 
 .mobile-action-item.btn-whatsapp-mobile {
-  background: #25D366;
+  background: var(--primary-orange);
   color: #FFFFFF;
+  border-color: var(--primary-orange);
   margin-right: 6px;
 }
 
 .mobile-action-item.btn-quote-mobile {
-  background: var(--primary-orange);
-  color: #FFFFFF;
+  background: var(--bg-dark-card);
+  color: var(--text-white);
+  border-color: var(--border-subtle);
+}
+
+.mobile-action-item.btn-quote-mobile svg {
+  color: var(--primary-orange);
 }
 
 /* ==========================================================================
-   MODAL (Mat Açık Dark)
+   MODAL (Mat Nötr Siyah)
    ========================================================================== */
 .modal-overlay {
   position: fixed;
@@ -1640,7 +1751,7 @@ select.form-control {
   right: 18px;
   background: var(--bg-dark-card);
   border: 1px solid var(--border-subtle);
-  color: #FFFFFF;
+  color: var(--text-white);
   width: 32px;
   height: 32px;
   border-radius: var(--radius-sm);
@@ -1652,11 +1763,11 @@ select.form-control {
 }
 
 .modal-close-btn:hover {
-  background: var(--primary-orange);
+  color: var(--primary-orange);
   border-color: var(--primary-orange);
 }
 
-/* Toast (Mat) */
+/* Toast */
 .toast-container {
   position: fixed;
   top: 20px;
@@ -1670,7 +1781,7 @@ select.form-control {
 .toast {
   background: var(--bg-dark-surface);
   border: 1px solid var(--border-orange);
-  color: #FFFFFF;
+  color: var(--text-white);
   padding: 12px 18px;
   border-radius: var(--radius-sm);
   display: flex;
@@ -1681,7 +1792,7 @@ select.form-control {
 }
 
 /* ==========================================================================
-   RESPONSIVE QUERIES
+   RESPONSIVE DESIGN BREAKPOINTS
    ========================================================================== */
 @media (max-width: 1100px) {
   .hero-content-grid {
@@ -1694,17 +1805,30 @@ select.form-control {
   .projects-grid, .reviews-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .footer-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 991px) {
-  .nav-menu, .header-actions .btn, .phone-badge {
+  .nav-menu, .header-actions .phone-badge, .header-actions .btn {
     display: none;
   }
+  .floating-whatsapp {
+    display: none !important; /* Mobilde alt sabit eylem çubuğu olduğundan butonların üst üste binmesini önler */
+  }
   .hamburger-btn {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-dark-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    width: 38px;
+    height: 38px;
+  }
+  .nav-container {
+    height: 66px;
+  }
+  .logo-title {
+    font-size: 1.1rem;
   }
   .top-bar {
     display: none;
@@ -1715,18 +1839,19 @@ select.form-control {
   }
   .discovery-steps {
     grid-template-columns: 1fr;
+    gap: 14px;
   }
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  .form-group.full-width {
-    grid-column: span 1;
+  .quote-card {
+    padding: 28px 20px;
   }
 }
 
 @media (max-width: 640px) {
   .projects-grid, .reviews-grid {
     grid-template-columns: 1fr;
+  }
+  .hero-title {
+    font-size: 2.2rem;
   }
   .hero-stats {
     flex-direction: column;

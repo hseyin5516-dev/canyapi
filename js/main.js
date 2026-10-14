@@ -14,12 +14,46 @@ const CAN_YAPI_CONFIG = {
 };
 
 document.addEventListener('DOMContentLoaded', function() {
+  initTheme();
   initHeader();
   initMobileNav();
   initQuoteModal();
   initForms();
   initCounters();
 });
+
+/* ==========================================================================
+   THEME SWITCHER (Koyu Siyah / Açık Beyaz)
+   ========================================================================== */
+function initTheme() {
+  const savedTheme = localStorage.getItem('canyapi_theme') || 'dark';
+  applyTheme(savedTheme);
+
+  document.querySelectorAll('.js-theme-toggle').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+      applyTheme(newTheme);
+      localStorage.setItem('canyapi_theme', newTheme);
+    });
+  });
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  const toggleBtns = document.querySelectorAll('.js-theme-toggle');
+  toggleBtns.forEach(btn => {
+    if (theme === 'light') {
+      btn.innerHTML = '🌙 <span>Koyu</span>';
+      btn.setAttribute('title', 'Koyu Temaya Geç');
+    } else {
+      btn.innerHTML = '☀️ <span>Açık</span>';
+      btn.setAttribute('title', 'Açık Temaya Geç');
+    }
+  });
+}
+
 
 /* ==========================================================================
    HEADER SCROLL & MOBIL MENU
