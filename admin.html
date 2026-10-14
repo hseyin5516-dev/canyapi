@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Can Yapı Antalya - Talep & Ölçümleme Yönetim Paneli</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FF5500'/><text x='50%' y='68%' font-size='60' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>CY</text></svg>">
+  <style>
+    .admin-header {
+      background: #060709;
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 16px 0;
+    }
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin: 30px 0;
+    }
+    .metric-card {
+      background: var(--bg-dark-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+    .metric-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary-orange);
+    }
+    .metric-value {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      font-family: var(--font-heading);
+      margin: 8px 0 4px;
+    }
+    .metric-title {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      background: var(--bg-dark-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-top: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    th {
+      background: var(--bg-dark-surface);
+      color: var(--text-muted);
+      font-weight: 600;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-subtle);
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+    td {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text-light);
+    }
+    tr:hover td {
+      background: var(--bg-dark-hover);
+    }
+    .badge-service {
+      background: var(--primary-orange-light);
+      color: var(--primary-orange);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.78rem;
+      border: 1px solid var(--border-orange);
+      white-space: nowrap;
+    }
+    @media (max-width: 991px) {
+      .metric-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body style="padding-bottom: 40px;">
+
+  <!-- Admin Header -->
+  <header class="admin-header">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+      <div class="logo">
+        <div class="logo-icon" style="width:36px; height:36px; font-size:1.1rem;">CY</div>
+        <div class="logo-text">
+          <span class="logo-title" style="font-size:1.15rem;">CAN YAPI <span>ANTALYA</span></span>
+          <span class="logo-sub">Yönetim & Ölçümleme Paneli</span>
+        </div>
+      </div>
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <a href="index.html" class="btn btn-sm btn-outline">← Siteyi Görüntüle</a>
+        <button id="exportCsvBtn" class="btn btn-sm btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span>Excel / CSV İndir</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="margin-top: 30px;">
+    <!-- Üst Başlık & Açıklama -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
+      <div>
+        <div class="section-tag">Canlı Ölçümleme & CRM</div>
+        <h1 style="font-size: 2rem;">Gelen Teklifler ve Müşteri Etkileşimleri</h1>
+        <p class="text-muted">Web sitenizden gelen WhatsApp tıklamaları, telefon aramaları, keşif ve teklif formları bu panelde anlık kaydedilir.</p>
+      </div>
+      <div>
+        <button onclick="createSampleLead()" class="btn btn-sm btn-outline-orange">+ Örnek Talep Ekle (Test)</button>
+        <button id="resetMetricsBtn" class="btn btn-sm btn-outline" style="color: #FF5555; border-color: rgba(255,85,85,0.3);">Sayaçları Sıfırla</button>
+      </div>
+    </div>
+
+    <!-- Metrik Kartları (WhatsApp Tıklamaları, Telefon Aramaları, Form Gönderimleri, Keşif Talepleri) -->
+    <div class="metric-grid">
+      <div class="metric-card" style="border-left-color: #25D366;">
+        <span class="metric-title">WhatsApp Tıklamaları</span>
+        <div class="metric-value text-white" id="metricWhatsapp">0</div>
+        <span style="font-size: 0.78rem; color: #25D366;">Tüm butonlar ve sabit WhatsApp</span>
+      </div>
+
+      <div class="metric-card" style="border-left-color: #FF5500;">
+        <span class="metric-title">Telefon Aramaları (Bizi Arayın)</span>
+        <div class="metric-value text-white" id="metricPhone">0</div>
+        <span style="font-size: 0.78rem; color: var(--primary-orange);">Mobil ve masaüstü aramaları</span>
+      </div>
+
+      <div class="metric-card" style="border-left-color: #00B0FF;">
+        <span class="metric-title">Teklif Formu Gönderimleri</span>
+        <div class="metric-value text-white" id="metricForms">0</div>
+        <span style="font-size: 0.78rem; color: #00B0FF;">Mutfak, banyo, komple tadilat vb.</span>
+      </div>
+
+      <div class="metric-card" style="border-left-color: #00E676;">
+        <span class="metric-title">Ücretsiz Keşif Talepleri</span>
+        <div class="metric-value text-white" id="metricDiscovery">0</div>
+        <span style="font-size: 0.78rem; color: #00E676;">Yerinde inceleme isteyen müşteriler</span>
+      </div>
+    </div>
+
+    <!-- Gelen Talepler Tablosu -->
+    <div style="margin-top: 40px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 style="font-size: 1.3rem;">Gelen Teklif & Keşif Talepleri</h3>
+        <span class="text-muted" style="font-size: 0.85rem;">Veriler güvenli yerel depolama ve Google dataLayer ile takip edilir.</span>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Talep ID</th>
+              <th>Tarih</th>
+              <th>Müşteri & Telefon</th>
+              <th>Hizmet Türü</th>
+              <th>Konum</th>
+              <th>Keşif</th>
+              <th>Durum</th>
+              <th>İşlemler</th>
+            </tr>
+          </thead>
+          <tbody id="leadsTableBody">
+            <!-- JavaScript ile doldurulur -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Olay Geçmişi (Event Log) -->
+    <div style="margin-top: 50px;">
+      <h3 style="font-size: 1.15rem; margin-bottom: 12px;">Son Ziyaretçi Etkileşim Geçmişi (Google Analytics & dataLayer Log)</h3>
+      <div class="table-responsive" style="max-height: 250px;">
+        <table>
+          <thead>
+            <tr>
+              <th>Olay Adı</th>
+              <th>Detaylar</th>
+              <th>Zaman Damgası</th>
+            </tr>
+          </thead>
+          <tbody id="historyList">
+            <!-- JS doldurur -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/analytics.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/admin.js"></script>
+  <script>
+    function createSampleLead() {
+      const sample = {
+        id: 'CY-' + Math.floor(100000 + Math.random() * 900000),
+        name: 'Deniz Ersoy',
+        phone: '0533 123 45 67',
+        service: 'Komple Ev Tadilatı',
+        location: 'Konyaaltı / Antalya',
+        notes: '130 m2 3+1 dairenin mutfak, banyo ve parkeleri sıfırdan yenilenecek. Yerinde keşif rica ediyoruz.',
+        isDiscovery: true,
+        files: [{ name: 'daire-plan.pdf', size: '1.4 MB' }],
+        date: new Date().toLocaleString('tr-TR'),
+        status: 'Yeni'
+      };
+
+      const leads = JSON.parse(localStorage.getItem('canyapi_leads') || '[]');
+      leads.unshift(sample);
+      localStorage.setItem('canyapi_leads', JSON.stringify(leads));
+
+      // Sayaç artır
+      if (window.CanYapiAnalytics) {
+        window.CanYapiAnalytics.track('quote_form_submit', { service: 'Komple Ev Tadilatı', isDiscovery: true });
+      }
+
+      location.reload();
+    }
+  </script>
+</body>
+</html>
