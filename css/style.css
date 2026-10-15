@@ -694,106 +694,365 @@ h1, h2, h3, h4, h5, h6 {
 /* ==========================================================================
    HERO SECTION (Lüks Mimari, Dengeli Tipografi & Geniş Boşluklar)
    ========================================================================== */
-.hero-section {
+/* ==========================================================================
+   YENİ HERO BANNER MİMARİSİ (Lüks Arka Plan, Kodla İkonlar & Vitrin Şeridi)
+   ========================================================================== */
+.hero-banner-section {
   position: relative;
-  padding: 100px 0 90px;
   background-color: var(--bg-dark);
+  color: var(--text-white);
   overflow: hidden;
   border-bottom: 1px solid var(--border-subtle);
+  padding: 0;
 }
 
-.hero-content-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 64px;
-  align-items: center;
+/* Arka Plan Görseli ve Zarif Karartma Gradyanı */
+.hero-banner-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-banner-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  display: block;
+}
+
+/* Soldaki metinlerin cam gibi okunması ve sağdaki usta eli / panoramik salonun net parlaması için asimetrik gradyan */
+.hero-banner-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(10, 10, 11, 0.96) 0%,
+    rgba(10, 10, 11, 0.90) 36%,
+    rgba(10, 10, 11, 0.65) 60%,
+    rgba(10, 10, 11, 0.20) 100%
+  );
+}
+
+body.light-theme .hero-banner-overlay {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.96) 0%,
+    rgba(255, 255, 255, 0.90) 40%,
+    rgba(255, 255, 255, 0.65) 65%,
+    rgba(255, 255, 255, 0.25) 100%
+  );
+}
+
+.hero-banner-container {
   position: relative;
   z-index: 2;
+  padding-top: 70px;
+  padding-bottom: 30px;
 }
 
-.hero-badge-tag {
-  margin-bottom: 22px;
+/* Sol Başlık & İçerik */
+.hero-banner-content {
+  max-width: 660px;
 }
 
-.hero-title {
-  font-size: clamp(2.4rem, 4.2vw, 3.6rem);
+.hero-pre-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 85, 0, 0.12);
+  border: 1px solid rgba(255, 85, 0, 0.35);
+  color: var(--primary-orange);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  backdrop-filter: blur(8px);
+}
+
+.hero-banner-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.3rem, 4.2vw, 3.7rem);
   font-weight: 800;
-  line-height: 1.16;
+  line-height: 1.14;
   letter-spacing: -0.025em;
   color: var(--text-white);
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
-.hero-title span {
+.text-orange-glow {
   color: var(--primary-orange);
-  display: inline;
+  text-shadow: 0 0 24px rgba(255, 85, 0, 0.35);
+  display: inline-block;
 }
 
-.hero-lead {
-  font-size: 1.1rem;
-  line-height: 1.7;
-  color: var(--text-muted);
-  margin-bottom: 40px;
+.hero-banner-desc {
+  font-size: 1.08rem;
+  line-height: 1.65;
+  color: var(--text-light);
+  margin-bottom: 24px;
   max-width: 580px;
 }
 
-.hero-actions {
+/* Güven / Sabit Fiyat Kutusu */
+.hero-trust-box {
   display: flex;
   align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  margin-bottom: 48px;
+  gap: 14px;
+  background: rgba(22, 22, 26, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 18px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 28px;
+  max-width: 540px;
+  backdrop-filter: blur(12px);
 }
 
-.hero-stats {
+body.light-theme .hero-trust-box {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.trust-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 85, 0, 0.15);
+  color: var(--primary-orange);
   display: flex;
   align-items: center;
-  gap: 48px;
-  padding-top: 32px;
-  border-top: 1px solid var(--border-subtle);
+  justify-content: center;
+  flex-shrink: 0;
 }
 
-.hero-stat-item {
+.trust-text {
   display: flex;
   flex-direction: column;
 }
 
-.hero-stat-number {
-  font-family: var(--font-heading);
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: var(--primary-orange);
-  line-height: 1;
-  margin-bottom: 6px;
+.trust-text strong {
+  font-size: 0.92rem;
+  color: var(--text-white);
+  font-weight: 700;
 }
 
-.hero-stat-label {
-  font-size: 0.82rem;
+.trust-text span {
+  font-size: 0.8rem;
   color: var(--text-muted);
-  font-weight: 500;
 }
 
-.hero-media {
-  position: relative;
+/* Buton Grubu */
+.hero-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 44px;
 }
 
-.hero-image-card {
-  position: relative;
+.btn-whatsapp-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #25D366;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 14px 22px;
   border-radius: var(--radius-sm);
+  text-decoration: none;
+  transition: all 0.25s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.btn-whatsapp-hero:hover {
+  background: #20BA59;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+  color: #fff;
+}
+
+.btn-outline-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(18, 18, 20, 0.6);
+  color: var(--text-white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 14px 22px;
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+}
+
+body.light-theme .btn-outline-hero {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: var(--text-black);
+}
+
+.btn-outline-hero:hover {
+  border-color: var(--primary-orange);
+  color: var(--primary-orange);
+  transform: translateY(-2px);
+}
+
+/* 2. Dairesel Hizmet İkon Şeridi */
+.hero-services-nav {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 22px 24px;
+  background: rgba(18, 18, 22, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+body.light-theme .hero-services-nav {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+.hero-service-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  flex: 1;
+  min-width: 82px;
+  transition: transform 0.25s ease;
+}
+
+.hero-service-item:hover {
+  transform: translateY(-4px);
+}
+
+.service-icon-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 85, 0, 0.18) 0%, rgba(18, 18, 22, 0.9) 80%);
+  border: 1.5px solid rgba(255, 85, 0, 0.45);
+  color: var(--primary-orange);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.light-theme .service-icon-circle {
+  background: radial-gradient(circle, rgba(255, 85, 0, 0.12) 0%, rgba(245, 245, 247, 0.95) 80%);
+  border-color: rgba(255, 85, 0, 0.5);
+  box-shadow: 0 4px 12px rgba(255, 85, 0, 0.1);
+}
+
+.hero-service-item:hover .service-icon-circle {
+  border-color: var(--primary-orange);
+  background: var(--primary-orange);
+  color: #fff;
+  box-shadow: 0 0 20px rgba(255, 85, 0, 0.55);
+  transform: scale(1.08);
+}
+
+.service-icon-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-white);
+  line-height: 1.25;
+  transition: color 0.2s ease;
+}
+
+.hero-service-item:hover .service-icon-label {
+  color: var(--primary-orange);
+}
+
+/* 3. Alttaki Küçük Vitrin Fotoğraf Şeridi */
+.hero-bottom-showcase {
+  margin-top: 26px;
+  background: var(--bg-black);
+  border-top: 1px solid var(--border-subtle);
+  position: relative;
+  z-index: 2;
+}
+
+.showcase-strip-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2px;
+  background: var(--border-subtle);
+}
+
+.showcase-strip-item {
+  position: relative;
+  height: 140px;
   overflow: hidden;
-  border: 1px solid var(--border-subtle);
-  background: var(--bg-dark-surface);
+  display: block;
+  text-decoration: none;
+  background: #000;
 }
 
-.hero-image-card img {
+.showcase-strip-item img {
   width: 100%;
-  height: 480px;
+  height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, filter 0.5s ease;
+  filter: brightness(0.85);
 }
 
-.hero-image-card:hover img {
-  transform: scale(1.02);
+.showcase-strip-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(10, 10, 11, 0.95) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px 12px;
+  transition: background 0.3s ease;
+}
+
+.showcase-strip-name {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.showcase-strip-sub {
+  font-size: 0.70rem;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 2px;
+}
+
+.showcase-strip-item:hover img {
+  transform: scale(1.08);
+  filter: brightness(1);
+}
+
+.showcase-strip-item:hover .showcase-strip-name {
+  color: var(--primary-orange);
 }
 
 /* ==========================================================================
@@ -1757,15 +2016,9 @@ textarea.form-control {
   .top-bar {
     display: none;
   }
-  .hero-section {
-    padding: 48px 0 36px;
-  }
-  .hero-content-grid {
-    grid-template-columns: 1fr;
-    gap: 36px;
-  }
-  .hero-image-card img {
-    height: 320px;
+  .hero-banner-container {
+    padding-top: 44px;
+    padding-bottom: 24px;
   }
   .discovery-box, .collage-grid, .featured-quote-box {
     grid-template-columns: 1fr;
@@ -1781,50 +2034,49 @@ textarea.form-control {
 }
 
 @media (max-width: 640px) {
-  .hero-section {
-    padding: 30px 0 24px;
+  .hero-banner-container {
+    padding-top: 32px;
+    padding-bottom: 18px;
   }
-  .hero-content-grid {
-    grid-template-columns: 1fr;
-    gap: 22px;
-  }
-  .hero-badge-tag {
+  .hero-pre-badge {
     font-size: 0.72rem;
-    padding: 3px 10px;
-    margin-bottom: 12px;
+    padding: 4px 10px;
+    margin-bottom: 14px;
   }
-  .hero-title {
+  .hero-banner-title {
     font-size: clamp(1.75rem, 6.2vw, 2.15rem);
-    line-height: 1.22;
+    line-height: 1.2;
     margin-bottom: 12px;
   }
-  .hero-lead {
+  .hero-banner-desc {
     font-size: 0.92rem;
     line-height: 1.55;
+    margin-bottom: 18px;
+  }
+  .hero-trust-box {
+    padding: 10px 14px;
+    gap: 10px;
     margin-bottom: 20px;
   }
-  .hero-actions {
+  .hero-trust-box strong {
+    font-size: 0.85rem;
+  }
+  .hero-trust-box span {
+    font-size: 0.75rem;
+  }
+  .hero-banner-actions {
     flex-direction: column;
     width: 100%;
     gap: 10px;
     margin-bottom: 24px;
   }
-  .hero-actions .btn {
+  .hero-banner-actions .btn,
+  .hero-banner-actions .btn-whatsapp-hero,
+  .hero-banner-actions .btn-outline-hero {
     width: 100%;
     justify-content: center;
-    padding: 12px 20px;
+    padding: 12px 18px;
     font-size: 0.92rem;
-  }
-  .hero-image-card img {
-    height: 230px;
-  }
-  .hero-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    padding-top: 16px;
-    text-align: center;
-    border-top: 1px solid var(--border-subtle);
   }
   .hero-stat-number {
     font-size: 1.45rem;
