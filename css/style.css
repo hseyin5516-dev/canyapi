@@ -771,62 +771,81 @@ body.light-theme .hero-banner-overlay {
   max-width: 580px;
 }
 
-/* Afişteki Orijinal Altın 3 Katmanlı Başlık Rozeti (Poster Badge) */
+/* Afişteki Orijinal 3 Katmanlı Kenetlenmiş Altın Amblem (Emblem Crest) */
 .hero-poster-badge {
   display: inline-flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
-  margin-bottom: 12px;
-  filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.7));
+  align-items: center;
+  position: relative;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.85));
+  margin-bottom: 8px;
+  user-select: none;
 }
 
+/* 1. ÜST ROZET: ANTALYA (Merkezde, Üstten Plakaya Kenetlenen) */
 .poster-pill-top {
   background: #000000;
-  border: 1.5px solid #333338;
+  border: 2px solid #FFFFFF;
   color: #FFFFFF;
-  font-family: var(--font-heading);
+  font-family: 'Montserrat', var(--font-heading);
   font-size: 1.05rem;
   font-weight: 900;
-  letter-spacing: 0.12em;
-  padding: 3px 18px;
-  border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  line-height: 1.2;
+  letter-spacing: 0.16em;
+  padding: 4px 24px;
+  border-radius: 7px;
+  margin-bottom: -11px;
+  z-index: 3;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.75);
+  line-height: 1.15;
+  text-transform: uppercase;
 }
 
+/* 2. ORTA ALTIN PLAKA: ANAHTAR TESLİM (Zengin Metalik Altın Şıklığı) */
 .poster-plate-gold {
-  background: linear-gradient(135deg, #FFE875 0%, #F5C518 35%, #D4AF37 70%, #A87900 100%);
-  border: 2px solid #FFF2A8;
-  border-radius: 8px;
-  padding: 5px 20px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.65), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+  background: linear-gradient(180deg, #FDE88F 0%, #EDB73E 26%, #CE9622 68%, #A3700E 100%);
+  border: 2px solid #141416;
+  border-radius: 9px;
+  padding: 12px 32px 10px;
+  z-index: 2;
+  position: relative;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.7),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .poster-plate-gold h1 {
   margin: 0;
-  font-family: var(--font-heading);
-  font-size: clamp(1.8rem, 3.4vw, 2.7rem);
-  font-weight: 950;
-  color: #0A0A0B;
-  letter-spacing: 0.02em;
-  line-height: 1.08;
+  font-family: 'Montserrat', var(--font-heading);
+  font-size: clamp(1.8rem, 3.2vw, 2.55rem);
+  font-weight: 900;
+  color: #0A0A0C;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
   text-transform: uppercase;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.45);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
 }
 
+/* 3. ALT ROZET: TADİLAT & İNŞAAT (Merkezde, Alttan Plakaya Kenetlenen) */
 .poster-pill-sub {
   background: #000000;
-  border: 1.5px solid #333338;
+  border: 2px solid #FFFFFF;
   color: #FFFFFF;
-  font-family: var(--font-heading);
+  font-family: 'Montserrat', var(--font-heading);
   font-size: 1.15rem;
   font-weight: 900;
-  letter-spacing: 0.10em;
-  padding: 3px 20px;
-  border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-  line-height: 1.2;
+  letter-spacing: 0.12em;
+  padding: 4px 26px;
+  border-radius: 7px;
+  margin-top: -11px;
+  z-index: 3;
+  position: relative;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.75);
+  line-height: 1.15;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .poster-pill-sub span {
@@ -835,12 +854,12 @@ body.light-theme .hero-banner-overlay {
 
 /* Rozet Altı Açıklama ve Hızlı Butonlar */
 .hero-poster-desc {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   line-height: 1.5;
-  color: #E2E2E8;
-  margin-bottom: 14px;
-  max-width: 520px;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  color: #E8E8ED;
+  margin: 12px 0 14px;
+  max-width: 480px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
 }
 
 .hero-poster-actions {
@@ -854,43 +873,44 @@ body.light-theme .hero-banner-overlay {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--primary-orange);
+  background: linear-gradient(135deg, #FF6600 0%, #FF4400 100%);
   color: #FFFFFF;
   font-weight: 800;
-  font-size: 0.90rem;
-  padding: 10px 18px;
-  border-radius: 6px;
-  border: none;
+  font-size: 0.88rem;
+  padding: 10px 20px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 14px rgba(255, 85, 0, 0.45);
+  box-shadow: 0 4px 16px rgba(255, 68, 0, 0.45);
 }
 
 .btn-poster-quote:hover {
-  background: #ff661a;
+  background: linear-gradient(135deg, #FF771A 0%, #FF5500 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 85, 0, 0.6);
+  box-shadow: 0 6px 22px rgba(255, 68, 0, 0.6);
 }
 
 .btn-poster-wa {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #25D366;
+  background: linear-gradient(135deg, #25D366 0%, #1EBE5D 100%);
   color: #FFFFFF;
   font-weight: 800;
-  font-size: 0.90rem;
-  padding: 10px 18px;
-  border-radius: 6px;
+  font-size: 0.88rem;
+  padding: 10px 20px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   text-decoration: none;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.35);
 }
 
 .btn-poster-wa:hover {
-  background: #20ba59;
+  background: linear-gradient(135deg, #2CE571 0%, #20BA59 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.55);
+  box-shadow: 0 6px 22px rgba(37, 211, 102, 0.55);
   color: #FFFFFF;
 }
 
@@ -1107,23 +1127,32 @@ body.light-theme .hero-banner-overlay {
   .slanted-card-tag {
     display: none;
   }
-  .hero-badge-title {
-    font-size: 1.45rem;
-    padding: 6px 14px;
+  .poster-pill-top {
+    font-size: 0.88rem;
+    padding: 3px 18px;
+    margin-bottom: -9px;
   }
-  .hero-badge-subtitle {
+  .poster-plate-gold {
+    padding: 10px 22px 8px;
+  }
+  .poster-plate-gold h1 {
+    font-size: 1.55rem;
+  }
+  .poster-pill-sub {
     font-size: 0.95rem;
-    letter-spacing: 0.12em;
+    padding: 3px 18px;
+    margin-top: -9px;
   }
   .hero-poster-desc {
     font-size: 0.82rem;
     line-height: 1.4;
+    margin: 8px 0 10px;
   }
   .hero-poster-actions {
     gap: 8px;
   }
   .btn-poster-quote, .btn-poster-wa {
-    font-size: 0.82rem;
+    font-size: 0.80rem;
     padding: 8px 14px;
   }
 }
