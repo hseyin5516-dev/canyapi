@@ -777,8 +777,8 @@ body.light-theme .hero-banner-overlay {
   flex-direction: column;
   align-items: center;
   position: relative;
-  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.85));
-  margin-bottom: 8px;
+  filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.88));
+  margin-bottom: 12px;
   user-select: none;
 }
 
@@ -790,27 +790,27 @@ body.light-theme .hero-banner-overlay {
   font-family: 'Montserrat', var(--font-heading);
   font-size: 1.05rem;
   font-weight: 900;
-  letter-spacing: 0.16em;
-  padding: 4px 24px;
+  letter-spacing: 0.18em;
+  padding: 5px 28px;
   border-radius: 7px;
-  margin-bottom: -11px;
+  margin-bottom: -7px;
   z-index: 3;
   position: relative;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.75);
-  line-height: 1.15;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.75);
+  line-height: 1.2;
   text-transform: uppercase;
 }
 
-/* 2. ORTA ALTIN PLAKA: ANAHTAR TESLİM (Zengin Metalik Altın Şıklığı) */
+/* 2. ORTA ALTIN PLAKA: ANAHTAR TESLİM (Zengin Metalik Altın Şıklığı, Ferah Boşluklar) */
 .poster-plate-gold {
   background: linear-gradient(180deg, #FDE88F 0%, #EDB73E 26%, #CE9622 68%, #A3700E 100%);
   border: 2px solid #141416;
   border-radius: 9px;
-  padding: 12px 32px 10px;
+  padding: 16px 42px 14px;
   z-index: 2;
   position: relative;
   box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.7),
+    0 10px 28px rgba(0, 0, 0, 0.7),
     inset 0 1px 2px rgba(255, 255, 255, 0.9),
     inset 0 -1px 2px rgba(0, 0, 0, 0.4);
 }
@@ -818,11 +818,11 @@ body.light-theme .hero-banner-overlay {
 .poster-plate-gold h1 {
   margin: 0;
   font-family: 'Montserrat', var(--font-heading);
-  font-size: clamp(1.8rem, 3.2vw, 2.55rem);
+  font-size: clamp(1.75rem, 2.9vw, 2.45rem);
   font-weight: 900;
   color: #0A0A0C;
-  letter-spacing: 0.03em;
-  line-height: 1.05;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
   text-transform: uppercase;
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
   white-space: nowrap;
@@ -834,16 +834,16 @@ body.light-theme .hero-banner-overlay {
   border: 2px solid #FFFFFF;
   color: #FFFFFF;
   font-family: 'Montserrat', var(--font-heading);
-  font-size: 1.15rem;
+  font-size: 1.12rem;
   font-weight: 900;
-  letter-spacing: 0.12em;
-  padding: 4px 26px;
+  letter-spacing: 0.14em;
+  padding: 5px 30px;
   border-radius: 7px;
-  margin-top: -11px;
+  margin-top: -7px;
   z-index: 3;
   position: relative;
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.75);
-  line-height: 1.15;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.75);
+  line-height: 1.2;
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -852,14 +852,15 @@ body.light-theme .hero-banner-overlay {
   color: var(--primary-orange);
 }
 
-/* Rozet Altı Açıklama ve Hızlı Butonlar */
+/* Rozet Altı Açıklama ve Hızlı Butonlar (Daha Ferah, Okunaklı) */
 .hero-poster-desc {
-  font-size: 0.92rem;
-  line-height: 1.5;
-  color: #E8E8ED;
-  margin: 12px 0 14px;
-  max-width: 480px;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: #F0F0F5;
+  margin: 16px 0 18px;
+  max-width: 520px;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.95);
+  letter-spacing: 0.01em;
 }
 
 .hero-poster-actions {
@@ -876,8 +877,8 @@ body.light-theme .hero-banner-overlay {
   background: linear-gradient(135deg, #FF6600 0%, #FF4400 100%);
   color: #FFFFFF;
   font-weight: 800;
-  font-size: 0.88rem;
-  padding: 10px 20px;
+  font-size: 0.92rem;
+  padding: 12px 24px;
   border-radius: 7px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
@@ -898,8 +899,8 @@ body.light-theme .hero-banner-overlay {
   background: linear-gradient(135deg, #25D366 0%, #1EBE5D 100%);
   color: #FFFFFF;
   font-weight: 800;
-  font-size: 0.88rem;
-  padding: 10px 20px;
+  font-size: 0.92rem;
+  padding: 12px 24px;
   border-radius: 7px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   text-decoration: none;
@@ -1136,24 +1137,24 @@ body.light-theme .hero-banner-overlay {
   }
   .poster-pill-top {
     font-size: 0.88rem;
-    padding: 3px 18px;
-    margin-bottom: -9px;
+    padding: 4px 18px;
+    margin-bottom: -6px;
   }
   .poster-plate-gold {
-    padding: 10px 22px 8px;
+    padding: 12px 24px 10px;
   }
   .poster-plate-gold h1 {
     font-size: 1.55rem;
   }
   .poster-pill-sub {
     font-size: 0.95rem;
-    padding: 3px 18px;
-    margin-top: -9px;
+    padding: 4px 18px;
+    margin-top: -6px;
   }
   .hero-poster-desc {
-    font-size: 0.82rem;
-    line-height: 1.4;
-    margin: 8px 0 10px;
+    font-size: 0.84rem;
+    line-height: 1.45;
+    margin: 10px 0 12px;
   }
   .hero-poster-actions {
     gap: 8px;
@@ -1179,8 +1180,8 @@ body.light-theme .hero-banner-overlay {
   background: var(--bg-black);
   border-top: 1px solid var(--border-subtle);
   border-bottom: 1px solid var(--border-subtle);
-  padding: 22px 0;
-  margin: 30px 0 70px;
+  padding: 16px 0;
+  margin: 0;
   position: relative;
 }
 
@@ -1218,7 +1219,7 @@ body.light-theme .hero-banner-overlay {
    SERVICES SECTION (8 Hizmet Kartı)
    ========================================================================== */
 .services-section {
-  padding: 90px 0;
+  padding: 46px 0 80px;
   background-color: var(--bg-dark);
 }
 
