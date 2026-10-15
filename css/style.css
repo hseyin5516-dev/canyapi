@@ -977,67 +977,121 @@ body.light-theme .hero-banner-overlay {
   color: #FFE57F;
 }
 
-/* 3. Afişteki 6'lı Çapraz/Slanted Fotoğraf Şeridi (Poster Ribbon) */
-.hero-poster-ribbon {
+/* 3. Kod ile Tasarlanan 6'lı Çapraz Vitrin Şeridi (Birebir Afiş Tasarımı & Gerçek Görseller) */
+:root {
+  --ribbon-slant: 28px;
+  --ribbon-gap: 3.5px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --ribbon-slant: 12px;
+    --ribbon-gap: 2.5px;
+  }
+}
+
+.hero-slanted-ribbon {
   position: relative;
   z-index: 3;
   width: 100%;
   height: 135px;
-  background: #000000;
-  border-top: 3px solid #FFFFFF;
+  background: #FFFFFF; /* Beyaz Zemin: Kartlar arasındaki çapraz boşluktan kusursuz beyaz çizgi olarak görünür */
+  border-top: 3.5px solid #FFFFFF;
   overflow: hidden;
-  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.6);
 }
 
-.poster-ribbon-img {
+.slanted-ribbon-track {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background: #FFFFFF;
+}
+
+.slanted-card {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
+  background: #111114;
+}
+
+/* 6 Kartın Çapraz Kesim Geometrisi */
+.slanted-card:nth-child(1) {
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--ribbon-slant)) 100%, 0 100%);
+}
+
+.slanted-card:nth-child(2),
+.slanted-card:nth-child(3),
+.slanted-card:nth-child(4),
+.slanted-card:nth-child(5) {
+  margin-left: calc(-1 * var(--ribbon-slant) + var(--ribbon-gap));
+  clip-path: polygon(var(--ribbon-slant) 0, 100% 0, calc(100% - var(--ribbon-slant)) 100%, 0 100%);
+}
+
+.slanted-card:nth-child(6) {
+  margin-left: calc(-1 * var(--ribbon-slant) + var(--ribbon-gap));
+  clip-path: polygon(var(--ribbon-slant) 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Görsel ve Hover Efekti */
+.slanted-card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center bottom;
+  object-position: center;
   display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
 }
 
-/* 6 Fotoğraf Üzerine Tıklanabilir Şeffaf İnteraktif Link Izgarası */
-.poster-ribbon-links {
+.slanted-card:hover .slanted-card-img {
+  transform: scale(1.10);
+  filter: brightness(1.15) contrast(1.05);
+}
+
+/* Karartma ve Hover Katmanı */
+.slanted-card-overlay {
   position: absolute;
   inset: 0;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-}
-
-.poster-ribbon-slot {
+  background: linear-gradient(to top, rgba(10, 10, 12, 0.82) 0%, rgba(10, 10, 12, 0.15) 50%, transparent 100%);
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 8px;
-  text-decoration: none;
-  transition: background 0.25s ease;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+  transition: all 0.3s ease;
+  z-index: 2;
 }
 
-.poster-ribbon-slot:hover {
-  background: rgba(255, 85, 0, 0.22);
+.slanted-card:hover .slanted-card-overlay {
+  background: linear-gradient(to top, rgba(255, 85, 0, 0.65) 0%, rgba(10, 10, 12, 0.35) 60%, transparent 100%);
 }
 
-.poster-slot-tag {
-  opacity: 0;
-  transform: translateY(6px);
-  background: rgba(10, 10, 11, 0.90);
-  border: 1px solid var(--primary-orange);
+/* Alt Rozet Etiketi */
+.slanted-card-tag {
+  background: rgba(10, 10, 12, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   color: #FFFFFF;
   font-family: var(--font-heading);
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   font-weight: 800;
-  padding: 3px 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 9px;
   border-radius: 4px;
-  letter-spacing: 0.03em;
-  transition: all 0.2s ease;
-  pointer-events: none;
   white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  transition: all 0.25s ease;
 }
 
-.poster-ribbon-slot:hover .poster-slot-tag {
-  opacity: 1;
-  transform: translateY(0);
+.slanted-card:hover .slanted-card-tag {
+  background: var(--primary-orange);
+  border-color: var(--primary-orange);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(255, 85, 0, 0.5);
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {
@@ -1046,8 +1100,12 @@ body.light-theme .hero-banner-overlay {
     min-height: calc(100vh - 122px);
     max-height: none;
   }
-  .hero-poster-ribbon {
+  .hero-slanted-ribbon {
     height: 85px;
+    border-top-width: 2.5px;
+  }
+  .slanted-card-tag {
+    display: none;
   }
   .hero-badge-title {
     font-size: 1.45rem;
