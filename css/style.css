@@ -315,6 +315,35 @@ h1, h2, h3, h4, h5, h6 {
   margin-right: 36px;
 }
 
+.brand-logo {
+  height: 70px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  display: block;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logo:hover .brand-logo {
+  transform: scale(1.03);
+}
+
+.logo-dark {
+  display: block;
+}
+
+.logo-light {
+  display: none;
+}
+
+body.light-theme .logo-dark {
+  display: none;
+}
+
+body.light-theme .logo-light {
+  display: block;
+}
+
 .logo-icon {
   width: 44px;
   height: 44px;
@@ -2125,6 +2154,10 @@ textarea.form-control {
   }
   .nav-container {
     height: 66px;
+  }
+  .brand-logo {
+    height: 48px;
+    max-width: 155px;
   }
   .logo-title {
     font-size: 1.1rem;
