@@ -336,12 +336,14 @@ h1, h2, h3, h4, h5, h6 {
   display: none;
 }
 
+[data-theme="light"] .logo-dark,
 body.light-theme .logo-dark {
-  display: none;
+  display: none !important;
 }
 
+[data-theme="light"] .logo-light,
 body.light-theme .logo-light {
-  display: block;
+  display: block !important;
 }
 
 .logo-icon {
@@ -731,6 +733,7 @@ body.light-theme .logo-light {
   overflow: hidden;
 }
 
+[data-theme="light"] .hero-service-section,
 body.light-theme .hero-service-section {
   background: #F8F9FA;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
@@ -776,6 +779,7 @@ body.light-theme .hero-service-section {
   letter-spacing: -0.02em;
 }
 
+[data-theme="light"] .hero-title,
 body.light-theme .hero-title {
   color: #111827;
 }
@@ -795,6 +799,7 @@ body.light-theme .hero-title {
   max-width: 580px;
 }
 
+[data-theme="light"] .hero-description,
 body.light-theme .hero-description {
   color: #4B5563;
 }
@@ -819,6 +824,7 @@ body.light-theme .hero-description {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+[data-theme="light"] .hero-image-card,
 body.light-theme .hero-image-card {
   border-color: rgba(0, 0, 0, 0.08);
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08);
@@ -900,6 +906,7 @@ body.light-theme .hero-image-card {
   );
 }
 
+[data-theme="light"] .hero-banner-overlay,
 body.light-theme .hero-banner-overlay {
   background: linear-gradient(
     90deg,

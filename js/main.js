@@ -43,6 +43,9 @@ function initTheme() {
 
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
+  if (document.body) {
+    document.body.classList.toggle('light-theme', theme === 'light');
+  }
   const toggleBtns = document.querySelectorAll('.js-theme-toggle');
   toggleBtns.forEach(btn => {
     if (theme === 'light') {
