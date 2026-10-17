@@ -98,7 +98,7 @@ const CanYapiAnalytics = (function() {
       if (href.startsWith('tel:') || target.classList.contains('js-track-phone')) {
         trackEvent('phone_call_click', {
           source: target.dataset.trackSource || 'phone_button',
-          phoneNumber: href.replace('tel:', '') || '+90 532 000 00 00'
+          phoneNumber: href.replace('tel:', '') || '+90 545 832 01 90'
         });
       }
 

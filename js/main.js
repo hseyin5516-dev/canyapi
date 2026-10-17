@@ -6,9 +6,9 @@
 
 // İletişim & Sosyal Medya Sabitleri (Buradan kolayca güncellenebilir)
 const CAN_YAPI_CONFIG = {
-  phone: "+90 532 555 07 24",
-  phoneRaw: "+905325550724",
-  whatsapp: "905325550724",
+  phone: "+90 545 832 01 90",
+  phoneRaw: "+905458320190",
+  whatsapp: "905458320190",
   email: "info@canyapiantalya.com",
   address: "Muratpaşa, Antalya / Türkiye",
   // Sosyal Medya Hesapları (Hesaplar açıldığında linkleri buraya eklemeniz yeterlidir)
