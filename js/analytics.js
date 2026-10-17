@@ -6,6 +6,71 @@
 
 const CanYapiAnalytics = (function() {
   const STORAGE_KEY = 'canyapi_analytics_events';
+  const MONTHLY_STORAGE_KEY = 'canyapi_monthly_visitors';
+  const VISITOR_ID_KEY = 'canyapi_visitor_uid';
+
+  function getVisitorId() {
+    let uid = localStorage.getItem(VISITOR_ID_KEY);
+    if (!uid) {
+      uid = 'usr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 8);
+      localStorage.setItem(VISITOR_ID_KEY, uid);
+    }
+    return uid;
+  }
+
+  function getMonthlyKey() {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+  }
+
+  function recordPageVisit() {
+    try {
+      const monthKey = getMonthlyKey();
+      const visitorId = getVisitorId();
+      const monthName = new Date().toLocaleString('tr-TR', { month: 'long', year: 'numeric' });
+
+      const data = JSON.parse(localStorage.getItem(MONTHLY_STORAGE_KEY) || '{}');
+      if (!data[monthKey]) {
+        data[monthKey] = {
+          monthLabel: monthName.charAt(0).toUpperCase() + monthName.slice(1),
+          uniqueVisitors: [],
+          pageViews: 0
+        };
+      }
+
+      data[monthKey].pageViews = (data[monthKey].pageViews || 0) + 1;
+
+      if (!data[monthKey].uniqueVisitors.includes(visitorId)) {
+        data[monthKey].uniqueVisitors.push(visitorId);
+      }
+
+      localStorage.setItem(MONTHLY_STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+      console.warn('Visitor tracking error:', e);
+    }
+  }
+
+  function getMonthlyStats(monthKey = null) {
+    try {
+      const key = monthKey || getMonthlyKey();
+      const data = JSON.parse(localStorage.getItem(MONTHLY_STORAGE_KEY) || '{}');
+      const monthName = new Date().toLocaleString('tr-TR', { month: 'long', year: 'numeric' });
+      const stats = data[key] || {
+        monthLabel: monthName.charAt(0).toUpperCase() + monthName.slice(1),
+        uniqueVisitors: [],
+        pageViews: 0
+      };
+      const uniqueCount = (stats.uniqueVisitors && stats.uniqueVisitors.length) ? stats.uniqueVisitors.length : 1;
+      return {
+        key: key,
+        monthLabel: stats.monthLabel || monthName,
+        uniqueVisitorsCount: uniqueCount,
+        pageViewsCount: stats.pageViews || 1
+      };
+    } catch (e) {
+      return { monthLabel: 'Bu Ay', uniqueVisitorsCount: 1, pageViewsCount: 1 };
+    }
+  }
 
   // Varsayılan metrik sayaçları
   function getStoredMetrics() {
@@ -111,18 +176,26 @@ const CanYapiAnalytics = (function() {
     });
   }
 
-  // Sayfa yüklendiğinde başlat
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initAutoTracking);
-  } else {
+  // Sayfa yüklendiğinde başlat ve ziyaretçi kaydet
+  function onPageLoad() {
+    recordPageVisit();
     initAutoTracking();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', onPageLoad);
+  } else {
+    onPageLoad();
   }
 
   return {
     track: trackEvent,
     getMetrics: getStoredMetrics,
+    getMonthlyStats: getMonthlyStats,
+    recordPageVisit: recordPageVisit,
     resetMetrics: function() {
       localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(MONTHLY_STORAGE_KEY);
     }
   };
 })();

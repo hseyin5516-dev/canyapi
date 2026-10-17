@@ -1,17 +1,94 @@
 /**
- * Can Yapı Antalya - Form ve Ölçümleme Yönetim Paneli (Lead & Analytics Admin)
+ * Can Yapı Antalya - Form, Ölçümleme & Sosyal Medya Yönetim Paneli (Lead & Analytics Admin)
  */
 
+const ADMIN_CREDENTIALS = {
+  username: 'canyapi',
+  passwords: ['05458320190', '5458320190']
+};
+
 document.addEventListener('DOMContentLoaded', function() {
+  initAdminAuth();
+  if (isUserAuthenticated()) {
+    initDashboard();
+  }
+});
+
+/* ==========================================================================
+   1. GÜVENLİK VE GİRİŞ KONTROLÜ (Authentication)
+   ========================================================================== */
+function isUserAuthenticated() {
+  return sessionStorage.getItem('canyapi_admin_auth') === 'true';
+}
+
+function initAdminAuth() {
+  const overlay = document.getElementById('adminLoginOverlay');
+  const loginForm = document.getElementById('adminLoginForm');
+  const errorMsg = document.getElementById('loginErrorMsg');
+  const logoutBtn = document.getElementById('adminLogoutBtn');
+
+  if (isUserAuthenticated()) {
+    if (overlay) overlay.classList.add('hidden');
+  } else {
+    if (overlay) overlay.classList.remove('hidden');
+  }
+
+  if (loginForm) {
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const user = document.getElementById('adminUsername')?.value.trim().toLowerCase();
+      const pass = document.getElementById('adminPassword')?.value.trim();
+
+      if (user === ADMIN_CREDENTIALS.username && ADMIN_CREDENTIALS.passwords.includes(pass)) {
+        sessionStorage.setItem('canyapi_admin_auth', 'true');
+        if (errorMsg) errorMsg.style.display = 'none';
+        if (overlay) overlay.classList.add('hidden');
+        initDashboard();
+        window.showToast?.('Yönetim paneline başarıyla giriş yapıldı.', 'success');
+      } else {
+        if (errorMsg) {
+          errorMsg.style.display = 'block';
+          errorMsg.textContent = 'Kullanıcı adı veya şifre hatalı. Lütfen kontrol ediniz.';
+        }
+      }
+    });
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function() {
+      sessionStorage.removeItem('canyapi_admin_auth');
+      if (overlay) {
+        overlay.classList.remove('hidden');
+        const passInput = document.getElementById('adminPassword');
+        if (passInput) passInput.value = '';
+      }
+      window.showToast?.('Güvenli çıkış yapıldı.', 'info');
+    });
+  }
+}
+
+/* ==========================================================================
+   2. DASHBOARD BAŞLATMA & VERİ YÜKLEME
+   ========================================================================== */
+function initDashboard() {
   loadMetrics();
   loadLeads();
+  loadSocialSettings();
   initAdminActions();
-});
+}
 
 function loadMetrics() {
   if (!window.CanYapiAnalytics) return;
   const metrics = window.CanYapiAnalytics.getMetrics();
+  const monthly = window.CanYapiAnalytics.getMonthlyStats();
 
+  // Aylık Ziyaretçi Sayısı
+  const monthlyEl = document.getElementById('metricMonthlyVisitors');
+  const monthNameEl = document.getElementById('metricMonthName');
+  if (monthlyEl) monthlyEl.innerText = monthly.uniqueVisitorsCount || 1;
+  if (monthNameEl) monthNameEl.innerText = `${monthly.monthLabel} (${monthly.uniqueVisitorsCount} Tekil Ziyaretçi / ${monthly.pageViewsCount} Sayfa Görüntüleme)`;
+
+  // Diğer Etkileşim Sayaçları
   document.getElementById('metricWhatsapp').innerText = metrics.whatsapp_clicks || 0;
   document.getElementById('metricPhone').innerText = metrics.phone_calls || 0;
   document.getElementById('metricForms').innerText = metrics.form_submissions || 0;
@@ -30,6 +107,77 @@ function loadMetrics() {
   }
 }
 
+/* ==========================================================================
+   3. SOSYAL MEDYA HESAPLARI YÖNETİMİ
+   ========================================================================== */
+function loadSocialSettings() {
+  const form = document.getElementById('socialLinksForm');
+  if (!form) return;
+
+  let social = {};
+  try {
+    const saved = localStorage.getItem('canyapi_social_links');
+    if (saved) {
+      social = JSON.parse(saved);
+    }
+  } catch (e) {
+    console.warn('Sosyal link yükleme hatası:', e);
+  }
+
+  const platforms = ['instagram', 'facebook', 'tiktok', 'x'];
+  platforms.forEach(p => {
+    const input = document.getElementById(`input${p.charAt(0).toUpperCase() + p.slice(1)}`);
+    const badge = document.getElementById(`badge${p.charAt(0).toUpperCase() + p.slice(1)}`);
+    const val = (social[p] || '').trim();
+
+    if (input) input.value = val;
+    updateBadgeStatus(badge, val);
+
+    if (input && badge) {
+      input.addEventListener('input', () => updateBadgeStatus(badge, input.value.trim()));
+    }
+  });
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const updatedSocial = {
+      instagram: document.getElementById('inputInstagram')?.value.trim() || '',
+      facebook: document.getElementById('inputFacebook')?.value.trim() || '',
+      tiktok: document.getElementById('inputTiktok')?.value.trim() || '',
+      x: document.getElementById('inputX')?.value.trim() || ''
+    };
+
+    localStorage.setItem('canyapi_social_links', JSON.stringify(updatedSocial));
+
+    // Badge durumlarını güncelle
+    platforms.forEach(p => {
+      const badge = document.getElementById(`badge${p.charAt(0).toUpperCase() + p.slice(1)}`);
+      updateBadgeStatus(badge, updatedSocial[p]);
+    });
+
+    // Varsa sitedeki açık footer alanını da anında güncelle
+    if (typeof window.initSocialLinks === 'function') {
+      window.initSocialLinks();
+    }
+
+    window.showToast?.('Sosyal medya bağlantıları başarıyla güncellendi ve sitede yayınlandı!', 'success');
+  });
+}
+
+function updateBadgeStatus(badge, value) {
+  if (!badge) return;
+  if (value && value.length > 5) {
+    badge.className = 'badge-status active';
+    badge.textContent = '✓ Sitede Aktif';
+  } else {
+    badge.className = 'badge-status inactive';
+    badge.textContent = '✕ Sitede Gizli';
+  }
+}
+
+/* ==========================================================================
+   4. GELEN TEKLİF & KEŞİF TALEPLERİ
+   ========================================================================== */
 function loadLeads() {
   const leadsContainer = document.getElementById('leadsTableBody');
   if (!leadsContainer) return;
@@ -100,10 +248,6 @@ window.viewLeadDetail = function(index) {
   const lead = leads[index];
   if (!lead) return;
 
-  const filesHtml = lead.files && lead.files.length > 0 
-    ? lead.files.map(f => `<li>📎 ${f.name} (${f.size})</li>`).join('') 
-    : '<li>Fotoğraf eklenmemiş</li>';
-
   alert(
     `Talep Detayları (${lead.id})\n` +
     `-----------------------------------\n` +
@@ -118,9 +262,13 @@ window.viewLeadDetail = function(index) {
   );
 };
 
+/* ==========================================================================
+   5. CSV İNDİRME VE SAYAÇ SIFIRLAMA
+   ========================================================================== */
 function initAdminActions() {
   const exportBtn = document.getElementById('exportCsvBtn');
-  if (exportBtn) {
+  if (exportBtn && !exportBtn.dataset.bound) {
+    exportBtn.dataset.bound = 'true';
     exportBtn.addEventListener('click', function() {
       const leads = JSON.parse(localStorage.getItem('canyapi_leads') || '[]');
       if (leads.length === 0) {
@@ -145,7 +293,8 @@ function initAdminActions() {
   }
 
   const resetMetricsBtn = document.getElementById('resetMetricsBtn');
-  if (resetMetricsBtn) {
+  if (resetMetricsBtn && !resetMetricsBtn.dataset.bound) {
+    resetMetricsBtn.dataset.bound = 'true';
     resetMetricsBtn.addEventListener('click', function() {
       if (confirm("Tüm ölçüm sayaçlarını sıfırlamak istediğinize emin misiniz?")) {
         window.CanYapiAnalytics.resetMetrics();

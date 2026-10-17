@@ -14,15 +14,15 @@
     }
     .metric-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
       margin: 30px 0;
     }
     .metric-card {
       background: var(--bg-dark-card);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-md);
-      padding: 24px;
+      padding: 22px 20px;
       display: flex;
       flex-direction: column;
       position: relative;
@@ -45,7 +45,7 @@
       margin: 8px 0 4px;
     }
     .metric-title {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
       color: var(--text-muted);
@@ -93,32 +93,106 @@
       border: 1px solid var(--border-orange);
       white-space: nowrap;
     }
-    @media (max-width: 991px) {
-      .metric-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+    .badge-status {
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      transition: all 0.2s ease;
     }
-    @media (max-width: 600px) {
-      .metric-grid {
-        grid-template-columns: 1fr;
-      }
+    .badge-status.active {
+      background: rgba(0, 230, 118, 0.15);
+      color: #00E676;
+      border: 1px solid rgba(0, 230, 118, 0.4);
+    }
+    .badge-status.inactive {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      border: 1px solid var(--border-subtle);
+    }
+
+    /* Giriş Şifre Ekranı (Login Overlay) */
+    .admin-login-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(6, 7, 9, 0.97);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999;
+      padding: 20px;
+    }
+    .admin-login-overlay.hidden {
+      display: none !important;
+    }
+    .admin-login-card {
+      background: var(--bg-dark-card);
+      border: 1px solid var(--border-orange);
+      border-radius: var(--radius-lg);
+      padding: 38px 34px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(234, 88, 12, 0.2);
+      animation: fadeInScale 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes fadeInScale {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
-<body style="padding-bottom: 40px;">
+<body style="padding-bottom: 50px;">
+
+  <!-- GÜVENLİK GİRİŞ EKRANI (Admin Login Screen) -->
+  <div id="adminLoginOverlay" class="admin-login-overlay">
+    <div class="admin-login-card">
+      <div style="text-align: center; margin-bottom: 24px;">
+        <img src="images/logo-dark-mode.png" alt="Can Yapı Antalya" style="height: 52px; margin-bottom: 14px;">
+        <h2 style="font-size: 1.45rem; color: #FFF; margin-bottom: 6px;">Yönetim Paneli Girişi</h2>
+        <p class="text-muted" style="font-size: 0.86rem; line-height: 1.5;">Yetkili erişimi için lütfen kullanıcı adı ve şifrenizi giriniz.</p>
+      </div>
+
+      <form id="adminLoginForm">
+        <div id="loginErrorMsg" style="display:none; background: rgba(255, 51, 51, 0.15); border: 1px solid #FF3333; color: #FF8888; padding: 10px 14px; border-radius: 6px; font-size: 0.84rem; margin-bottom: 18px; text-align: center;">
+          Kullanıcı adı veya şifre hatalı.
+        </div>
+
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label" style="font-size: 0.85rem;">Kullanıcı Adı</label>
+          <input type="text" id="adminUsername" class="form-control" placeholder="canyapi" autocomplete="username" required autofocus>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label class="form-label" style="font-size: 0.85rem;">Şifre</label>
+          <input type="password" id="adminPassword" class="form-control" placeholder="••••••••••" autocomplete="current-password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 13px; font-size: 1rem;">
+          <span>Güvenli Giriş Yap</span>
+        </button>
+      </form>
+    </div>
+  </div>
 
   <!-- Admin Header -->
   <header class="admin-header">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
       <a href="index.html" class="logo" aria-label="Can Yapı Antalya" style="text-decoration: none;">
         <img src="images/logo-dark-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 48px;">
         <img src="images/logo-light-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-light" style="height: 48px;">
       </a>
-      <div style="display: flex; gap: 12px; align-items: center;">
+      <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
         <a href="index.html" class="btn btn-sm btn-outline">← Siteyi Görüntüle</a>
         <button id="exportCsvBtn" class="btn btn-sm btn-primary">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           <span>Excel / CSV İndir</span>
+        </button>
+        <button id="adminLogoutBtn" class="btn btn-sm btn-outline" style="color: #FF5555; border-color: rgba(255,85,85,0.4);">
+          <span>Çıkış Yap</span>
         </button>
       </div>
     </div>
@@ -129,35 +203,46 @@
     <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
       <div>
         <div class="section-tag">Canlı Ölçümleme & CRM</div>
-        <h1 style="font-size: 2rem;">Gelen Teklifler ve Müşteri Etkileşimleri</h1>
-        <p class="text-muted">Web sitenizden gelen WhatsApp tıklamaları, telefon aramaları, keşif ve teklif formları bu panelde anlık kaydedilir.</p>
+        <h1 style="font-size: 2rem;">Gelen Teklifler ve Ziyaretçi Etkileşimleri</h1>
+        <p class="text-muted">Web sitenizden gelen aylık ziyaretçi sayısı, WhatsApp tıklamaları, telefon aramaları ve teklif formları bu panelde canlı kaydedilir.</p>
       </div>
-      <div>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
         <button onclick="createSampleLead()" class="btn btn-sm btn-outline-orange">+ Örnek Talep Ekle (Test)</button>
         <button id="resetMetricsBtn" class="btn btn-sm btn-outline" style="color: #FF5555; border-color: rgba(255,85,85,0.3);">Sayaçları Sıfırla</button>
       </div>
     </div>
 
-    <!-- Metrik Kartları (WhatsApp Tıklamaları, Telefon Aramaları, Form Gönderimleri, Keşif Talepleri) -->
+    <!-- Metrik Kartları (Aylık Ziyaretçi Sayısı, WhatsApp, Telefon, Teklif Formları, Keşif Talepleri) -->
     <div class="metric-grid">
+      <!-- 1. Aylık Ziyaretçi Sayısı (YENİ) -->
+      <div class="metric-card" style="border-left-color: #8B5CF6;">
+        <span class="metric-title">Aylık Ziyaretçi Sayısı</span>
+        <div class="metric-value text-white" id="metricMonthlyVisitors">0</div>
+        <span style="font-size: 0.78rem; color: #A78BFA;" id="metricMonthName">Bu Ay (Tekil Ziyaretçi)</span>
+      </div>
+
+      <!-- 2. WhatsApp Tıklamaları -->
       <div class="metric-card" style="border-left-color: #25D366;">
         <span class="metric-title">WhatsApp Tıklamaları</span>
         <div class="metric-value text-white" id="metricWhatsapp">0</div>
         <span style="font-size: 0.78rem; color: #25D366;">Tüm butonlar ve sabit WhatsApp</span>
       </div>
 
+      <!-- 3. Telefon Aramaları -->
       <div class="metric-card" style="border-left-color: #FF5500;">
         <span class="metric-title">Telefon Aramaları (Bizi Arayın)</span>
         <div class="metric-value text-white" id="metricPhone">0</div>
         <span style="font-size: 0.78rem; color: var(--primary-orange);">Mobil ve masaüstü aramaları</span>
       </div>
 
+      <!-- 4. Teklif Formları -->
       <div class="metric-card" style="border-left-color: #00B0FF;">
         <span class="metric-title">Teklif Formu Gönderimleri</span>
         <div class="metric-value text-white" id="metricForms">0</div>
         <span style="font-size: 0.78rem; color: #00B0FF;">Mutfak, banyo, komple tadilat vb.</span>
       </div>
 
+      <!-- 5. Keşif Talepleri -->
       <div class="metric-card" style="border-left-color: #00E676;">
         <span class="metric-title">Ücretsiz Keşif Talepleri</span>
         <div class="metric-value text-white" id="metricDiscovery">0</div>
@@ -165,9 +250,69 @@
       </div>
     </div>
 
+    <!-- SOSYAL MEDYA BAĞLANTILARI YÖNETİMİ (YENİ) -->
+    <div style="margin-top: 36px; background: var(--bg-dark-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 26px;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <div class="section-tag" style="margin-bottom: 6px;">Web Sitesi Entegrasyonu</div>
+          <h3 style="font-size: 1.35rem; margin: 0; color: #FFF;">Sosyal Medya Hesapları Yönetimi</h3>
+        </div>
+        <div style="color: var(--text-muted); font-size: 0.84rem; max-width: 480px; text-align: right;">
+          💡 <strong>Kural:</strong> Yalnızca linkini girdiğiniz hesaplar sitenin alt bilgisinde (footer) gösterilir; boş bıraktıklarınız sitede tamamen gizli kalır.
+        </div>
+      </div>
+
+      <form id="socialLinksForm">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-bottom: 22px;">
+          <!-- Instagram -->
+          <div class="form-group">
+            <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
+              <span>📸 Instagram</span>
+              <span id="badgeInstagram" class="badge-status inactive">Gizli</span>
+            </label>
+            <input type="url" id="inputInstagram" class="form-control" placeholder="https://instagram.com/canyapiantalya">
+          </div>
+
+          <!-- Facebook -->
+          <div class="form-group">
+            <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
+              <span>📘 Facebook</span>
+              <span id="badgeFacebook" class="badge-status inactive">Gizli</span>
+            </label>
+            <input type="url" id="inputFacebook" class="form-control" placeholder="https://facebook.com/canyapiantalya">
+          </div>
+
+          <!-- TikTok -->
+          <div class="form-group">
+            <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
+              <span>🎵 TikTok</span>
+              <span id="badgeTiktok" class="badge-status inactive">Gizli</span>
+            </label>
+            <input type="url" id="inputTiktok" class="form-control" placeholder="https://tiktok.com/@canyapiantalya">
+          </div>
+
+          <!-- X (Twitter) -->
+          <div class="form-group">
+            <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
+              <span>✖️ X (Twitter)</span>
+              <span id="badgeX" class="badge-status inactive">Gizli</span>
+            </label>
+            <input type="url" id="inputX" class="form-control" placeholder="https://x.com/canyapiantalya">
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end;">
+          <button type="submit" class="btn btn-primary" style="padding: 11px 24px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Bağlantıları Kaydet ve Yayınla</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
     <!-- Gelen Talepler Tablosu -->
     <div style="margin-top: 40px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
         <h3 style="font-size: 1.3rem;">Gelen Teklif & Keşif Talepleri</h3>
         <span class="text-muted" style="font-size: 0.85rem;">Veriler güvenli yerel depolama ve Google dataLayer ile takip edilir.</span>
       </div>
@@ -221,7 +366,7 @@
       const sample = {
         id: 'CY-' + Math.floor(100000 + Math.random() * 900000),
         name: 'Deniz Ersoy',
-        phone: '0533 123 45 67',
+        phone: '0545 832 01 90',
         service: 'Komple Ev Tadilatı',
         location: 'Konyaaltı / Antalya',
         notes: '130 m2 3+1 dairenin mutfak, banyo ve parkeleri sıfırdan yenilenecek. Yerinde keşif rica ediyoruz.',
@@ -245,4 +390,3 @@
   </script>
 </body>
 </html>
-
