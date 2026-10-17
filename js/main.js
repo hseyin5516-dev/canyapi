@@ -4,19 +4,28 @@
  * form doğrulama, talep saklama ve etkileşimler.
  */
 
-// İletişim Sabitleri (Kolayca güncellenebilir)
+// İletişim & Sosyal Medya Sabitleri (Buradan kolayca güncellenebilir)
 const CAN_YAPI_CONFIG = {
   phone: "+90 532 555 07 24",
   phoneRaw: "+905325550724",
   whatsapp: "905325550724",
   email: "info@canyapiantalya.com",
-  address: "Muratpaşa, Antalya / Türkiye"
+  address: "Muratpaşa, Antalya / Türkiye",
+  // Sosyal Medya Hesapları (Hesaplar açıldığında linkleri buraya eklemeniz yeterlidir)
+  social: {
+    instagram: "", // Örn: "https://instagram.com/canyapiantalya"
+    facebook: "",  // Örn: "https://facebook.com/canyapiantalya"
+    youtube: "",   // Örn: "https://youtube.com/@canyapiantalya"
+    linkedin: ""   // Örn: "https://linkedin.com/company/canyapiantalya"
+  }
 };
 
 document.addEventListener('DOMContentLoaded', function() {
   initTheme();
   initHeader();
   initMobileNav();
+  syncContactLinks();
+  initSocialLinks();
   initQuoteModal();
   initForms();
   initCounters();
@@ -112,13 +121,110 @@ function initMobileNav() {
 }
 
 /* ==========================================================================
-   QUOTE / FREE DISCOVERY MODAL LOGIC
+   QUOTE / FREE DISCOVERY MODAL LOGIC (Evrensel Dinamik Modal)
    ========================================================================== */
 let selectedFilesStore = [];
 
+function ensureQuoteModalExists() {
+  let modalOverlay = document.getElementById('quoteModal');
+  if (modalOverlay) return modalOverlay;
+
+  modalOverlay = document.createElement('div');
+  modalOverlay.className = 'modal-overlay';
+  modalOverlay.id = 'quoteModal';
+  modalOverlay.innerHTML = `
+    <div class="modal-card">
+      <button class="modal-close-btn" id="modalCloseBtn" aria-label="Kapat">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+
+      <div style="margin-bottom: 24px;">
+        <div class="section-tag">Hızlı Çözüm</div>
+        <h3 id="modalTitle" style="font-size: 1.6rem; color: #FFF; margin-bottom: 6px;">Hemen Teklif Alın</h3>
+        <p class="text-muted" style="font-size: 0.9rem;">Formu doldurun, projenize en uygun fiyatlandırmayı hazırlayalım.</p>
+      </div>
+
+      <form class="js-quote-form" enctype="multipart/form-data">
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">Adınız Soyadınız <span class="required">*</span></label>
+            <input type="text" name="name" class="form-control" placeholder="Ad Soyad" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Telefon Numaranız <span class="required">*</span></label>
+            <input type="tel" name="phone" class="form-control" placeholder="05XX XXX XX XX" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Hizmet Türü <span class="required">*</span></label>
+            <select name="service" id="modalServiceSelect" class="form-control" required>
+              <option value="">Hizmet Seçiniz</option>
+              <option value="Mutfak Tadilatı">Mutfak Tadilatı</option>
+              <option value="Banyo Tadilatı">Banyo Tadilatı & Islak Zemin</option>
+              <option value="Seramik ve Fayans">Seramik ve Fayans</option>
+              <option value="Boya ve Badana">Boya, Badana & Alçı</option>
+              <option value="Mantolama ve Yalıtım">Dış Cephe Mantolama & Yalıtım</option>
+              <option value="Çatı ve İzolasyon">Çatı Onarımı & İzolasyon</option>
+              <option value="Komple Ev Tadilatı">Komple Ev / Villa Tadilatı</option>
+              <option value="Prefabrik Yapı">Prefabrik Yapı & Çelik Ev</option>
+              <option value="Genel Teklif">Diğer / Genel Keşif</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Konum (Antalya İlçesi)</label>
+            <select name="location" class="form-control">
+              <option value="Muratpaşa">Muratpaşa</option>
+              <option value="Konyaaltı">Konyaaltı</option>
+              <option value="Kepez">Kepez</option>
+              <option value="Döşemealtı">Döşemealtı</option>
+              <option value="Alanya">Alanya</option>
+              <option value="Manavgat">Manavgat</option>
+              <option value="Kemer">Kemer</option>
+              <option value="Serik / Belek">Serik / Belek</option>
+              <option value="Diğer">Diğer İlçe</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label class="form-label">Proje Açıklaması</label>
+            <textarea name="notes" class="form-control" style="min-height: 80px;" placeholder="Yapılacak işler, yaklaşık ölçü veya istekleriniz..."></textarea>
+          </div>
+
+          <!-- Dosya Yükleme -->
+          <div class="form-group full-width">
+            <label class="form-label">Fotoğraf Yükleyin (İsteğe Bağlı)</label>
+            <div class="file-upload-box" id="modalUploadBox" style="padding: 16px;">
+              <input type="file" id="modalFileInput" multiple accept="image/*,.pdf">
+              <div class="upload-text" style="font-size: 0.82rem;">Fotoğrafları buraya sürükleyin veya tıklayarak seçin</div>
+            </div>
+            <div class="file-preview-list" id="modalFilePreview"></div>
+          </div>
+
+          <div class="form-group full-width">
+            <label class="checkbox-wrap">
+              <input type="checkbox" name="discovery" id="modalDiscoveryCheck">
+              <span><strong>Ücretsiz keşif istiyorum.</strong> Uzmanınız adresime gelerek inceleme yapsın.</span>
+            </label>
+          </div>
+
+          <div class="form-group full-width" style="margin-top: 10px;">
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 14px;">
+              <span>Teklifi Gönder & Keşif İste</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  `;
+  document.body.appendChild(modalOverlay);
+  return modalOverlay;
+}
+
 function initQuoteModal() {
-  const modalOverlay = document.getElementById('quoteModal');
-  const modalCloseBtn = document.getElementById('modalCloseBtn');
+  const modalOverlay = ensureQuoteModalExists();
+  const modalCloseBtn = modalOverlay.querySelector('#modalCloseBtn');
   const triggerBtns = document.querySelectorAll('.js-open-quote-modal');
 
   triggerBtns.forEach(btn => {
@@ -147,7 +253,7 @@ function initQuoteModal() {
 }
 
 window.openQuoteModal = function(serviceName = '', isDiscovery = false) {
-  const modalOverlay = document.getElementById('quoteModal');
+  const modalOverlay = ensureQuoteModalExists();
   if (!modalOverlay) return;
 
   const serviceSelect = document.getElementById('modalServiceSelect');
@@ -163,7 +269,7 @@ window.openQuoteModal = function(serviceName = '', isDiscovery = false) {
   }
 
   if (modalTitle) {
-    modalTitle.innerText = isDiscovery ? 'Ücretsiz Keşif Talebi' : 'Hemen Teklif Alın';
+    modalTitle.innerText = isDiscovery ? 'Ücretsiz Keşif & Randevu Talebi' : 'Hemen Teklif Alın';
   }
 
   modalOverlay.classList.add('open');
@@ -184,6 +290,82 @@ window.closeQuoteModal = function() {
     document.body.style.overflow = '';
   }
 };
+
+/* ==========================================================================
+   İLETİŞİM BAĞLANTILARI SENKRONİZASYONU (Telefon & WhatsApp)
+   ========================================================================== */
+function syncContactLinks() {
+  // 1. Tüm tel: bağlantılarını CAN_YAPI_CONFIG'e senkronize et
+  document.querySelectorAll('a[href^="tel:"]').forEach(link => {
+    link.href = `tel:${CAN_YAPI_CONFIG.phoneRaw}`;
+  });
+
+  // 2. Belirtilen özel telefon metinlerini güncelle
+  document.querySelectorAll('.js-contact-phone').forEach(el => {
+    el.textContent = CAN_YAPI_CONFIG.phone;
+  });
+
+  // 3. WhatsApp linklerinin numara kısmını doğrula ve güncelle
+  document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+    try {
+      const url = new URL(link.href);
+      const query = url.search; // Varsa ?text=... kısmını koru
+      link.href = `https://wa.me/${CAN_YAPI_CONFIG.whatsapp}${query}`;
+    } catch (e) {
+      // Düz metin bağlantısı
+      const parts = link.href.split('?');
+      const query = parts.length > 1 ? '?' + parts[1] : '';
+      link.href = `https://wa.me/${CAN_YAPI_CONFIG.whatsapp}${query}`;
+    }
+  });
+}
+
+/* ==========================================================================
+   SOSYAL MEDYA BAĞLANTILARI ALTYAPISI
+   ========================================================================== */
+function initSocialLinks() {
+  const containers = document.querySelectorAll('.footer-social-links, #footerSocialLinks');
+  if (!containers.length) return;
+
+  const social = CAN_YAPI_CONFIG.social || {};
+  const activePlatforms = [];
+
+  const icons = {
+    instagram: `<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`,
+    facebook: `<svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`,
+    youtube: `<svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>`,
+    linkedin: `<svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>`
+  };
+
+  Object.keys(social).forEach(key => {
+    const url = (social[key] || '').trim();
+    if (url) {
+      activePlatforms.push({
+        platform: key,
+        url: url,
+        title: key.charAt(0).toUpperCase() + key.slice(1),
+        svg: icons[key] || ''
+      });
+    }
+  });
+
+  // Eğer hiçbir link tanımlı değilse konteyner boş kalır (CSS :empty kuralı ile görünmez)
+  containers.forEach(container => {
+    container.innerHTML = '';
+    if (activePlatforms.length > 0) {
+      activePlatforms.forEach(item => {
+        const link = document.createElement('a');
+        link.href = item.url;
+        link.className = 'social-icon-btn';
+        link.setAttribute('target', '_blank');
+        link.setAttribute('rel', 'noopener noreferrer');
+        link.setAttribute('aria-label', `Can Yapı ${item.title}`);
+        link.innerHTML = item.svg;
+        container.appendChild(link);
+      });
+    }
+  });
+}
 
 /* ==========================================================================
    FILE UPLOAD & PREVIEW (Fotoğraf Yükleme Desteği)
@@ -270,53 +452,66 @@ function initForms() {
       const phone = form.querySelector('[name="phone"]')?.value.trim();
       const service = form.querySelector('[name="service"]')?.value;
       const location = form.querySelector('[name="location"]')?.value;
-      const notes = form.querySelector('[name="notes"]')?.value.trim();
-      const discovery = form.querySelector('[name="discovery"]')?.checked || false;
+      const notes = form.querySelector('[name="notes"]')?.value?.trim() || '';
+      const discoveryCheck = form.querySelector('[name="discovery"]');
+      const discovery = discoveryCheck ? (discoveryCheck.type === 'checkbox' ? discoveryCheck.checked : discoveryCheck.value === 'yes') : false;
 
-      if (!name || !phone || !service) {
-        showToast('Lütfen Ad Soyad, Telefon ve Hizmet Türü alanlarını doldurun.', 'error');
+      if (!name || !phone) {
+        showToast('Lütfen Ad Soyad ve Telefon Numaranızı eksiksiz giriniz.', 'error');
         return;
       }
 
-      // Yeni Teklif Nesnesi
-      const newLead = {
-        id: 'CY-' + Date.now().toString().slice(-6),
-        name: name,
-        phone: phone,
-        service: service,
-        location: location || 'Antalya / Belirtilmedi',
-        notes: notes || '-',
-        isDiscovery: discovery,
-        files: [...selectedFilesStore],
-        date: new Date().toLocaleString('tr-TR'),
-        status: 'Yeni'
-      };
-
-      // localStorage kaydı (Can Yapı Yönetim Paneli için)
-      saveLeadToStorage(newLead);
-
-      // Ölçümleme (Analytics Event)
-      if (window.CanYapiAnalytics) {
-        window.CanYapiAnalytics.track('quote_form_submit', {
-          service: service,
-          location: location,
-          isDiscovery: discovery
-        });
+      // Telefon numarası doğrulaması (en az 10 rakam)
+      const digitsOnly = phone.replace(/\D/g, '');
+      if (digitsOnly.length < 10) {
+        showToast('Lütfen geçerli bir telefon numarası giriniz (en az 10 hane).', 'error');
+        return;
       }
 
-      // Başarılı Mesajı
-      showToast('Talebiniz başarıyla alındı! Ekibimiz en kısa sürede sizinle iletişime geçecektir.', 'success');
-      form.reset();
-      selectedFilesStore = [];
-      const preview = form.querySelector('.file-preview-list');
-      if (preview) preview.innerHTML = '';
+      try {
+        // Yeni Teklif Nesnesi
+        const newLead = {
+          id: 'CY-' + Date.now().toString().slice(-6),
+          name: name,
+          phone: phone,
+          service: service || 'Genel Keşif / Danışmanlık',
+          location: location || 'Antalya / Belirtilmedi',
+          notes: notes || '-',
+          isDiscovery: Boolean(discovery),
+          files: [...selectedFilesStore],
+          date: new Date().toLocaleString('tr-TR'),
+          status: 'Yeni'
+        };
 
-      closeQuoteModal();
+        // localStorage kaydı (Can Yapı Yönetim Paneli için)
+        saveLeadToStorage(newLead);
 
-      // WhatsApp ile hızlı bildirim opsiyonu (Kullanıcı dilerse direkt WhatsApp'a da yollar)
-      setTimeout(() => {
-        askSendToWhatsApp(newLead);
-      }, 700);
+        // Ölçümleme (Analytics Event)
+        if (window.CanYapiAnalytics) {
+          window.CanYapiAnalytics.track('quote_form_submit', {
+            service: newLead.service,
+            location: newLead.location,
+            isDiscovery: newLead.isDiscovery
+          });
+        }
+
+        // Başarılı Mesajı
+        showToast('Talebiniz başarıyla alındı! Ekibimiz en kısa sürede sizinle iletişime geçecektir.', 'success');
+        form.reset();
+        selectedFilesStore = [];
+        const preview = form.querySelector('.file-preview-list');
+        if (preview) preview.innerHTML = '';
+
+        closeQuoteModal();
+
+        // WhatsApp ile hızlı bildirim opsiyonu (Kullanıcı dilerse direkt WhatsApp'a da yollar)
+        setTimeout(() => {
+          askSendToWhatsApp(newLead);
+        }, 700);
+      } catch (err) {
+        console.error('Form gönderim hatası:', err);
+        showToast('Talebiniz kaydedilirken bir hata oluştu. Lütfen doğrudan bizi arayın.', 'error');
+      }
     });
   });
 }

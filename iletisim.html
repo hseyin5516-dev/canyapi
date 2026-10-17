@@ -39,6 +39,7 @@
 
         <nav class="nav-menu">
           <a href="index.html" class="nav-link">Ana Sayfa</a>
+          <a href="hakkimizda.html" class="nav-link">Hakkımızda</a>
           <div class="nav-item-dropdown">
             <a href="hizmetler.html" class="nav-link">Hizmetlerimiz</a>
             <div class="dropdown-menu">
@@ -58,16 +59,69 @@
         </nav>
 
         <div class="header-actions">
-          <!-- Üst Menüde Telefon Numarası Belirgin Şekilde -->
-          
           <button class="theme-toggle-btn js-theme-toggle" aria-label="Açık/Koyu Tema">☀️ <span>Açık</span></button>
           <button class="btn btn-primary js-open-quote-modal" data-service="İletişim Formu">
             <span>Teklif Alın</span>
+          </button>
+          <!-- Mobil Hamburger Butonu -->
+          <button class="hamburger-btn" aria-label="Menüyü Aç">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
           </button>
         </div>
       </div>
     </div>
   </header>
+
+  <!-- Mobil Çekmece Menü (Mobile Drawer) -->
+  <div class="mobile-nav-overlay"></div>
+  <div class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <a href="index.html" class="logo" aria-label="Can Yapı Antalya">
+        <img src="images/logo-dark-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 42px;">
+        <img src="images/logo-light-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-light" style="height: 42px;">
+      </a>
+      <button class="mobile-close-btn" aria-label="Menüyü Kapat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="mobile-nav-list">
+      <a href="index.html" class="mobile-nav-link">Ana Sayfa</a>
+      <a href="hakkimizda.html" class="mobile-nav-link">Hakkımızda</a>
+      <div>
+        <a href="#" class="mobile-nav-link js-mobile-services-toggle">
+          <span>Hizmetlerimiz</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mobile-submenu">
+          <a href="hizmet-mutfak.html" class="mobile-sub-link">Mutfak Tadilatı</a>
+          <a href="hizmet-banyo.html" class="mobile-sub-link">Banyo & Islak Zemin</a>
+          <a href="hizmet-seramik-fayans.html" class="mobile-sub-link">Seramik & Fayans</a>
+          <a href="hizmet-boya.html" class="mobile-sub-link">Boya & Badana</a>
+          <a href="hizmet-mantolama.html" class="mobile-sub-link">Dış Cephe & Mantolama</a>
+          <a href="hizmet-cati.html" class="mobile-sub-link">Çatı Onarımı & İzolasyon</a>
+          <a href="hizmet-tadilat.html" class="mobile-sub-link">Komple Ev & Villa Tadilatı</a>
+          <a href="hizmet-prefabrik.html" class="mobile-sub-link">Prefabrik Yapı & Çelik Ev</a>
+        </div>
+      </div>
+      <a href="projeler.html" class="mobile-nav-link">Projelerimiz</a>
+      <a href="ucretsiz-kesif.html" class="mobile-nav-link">Ücretsiz Keşif</a>
+      <a href="iletisim.html" class="mobile-nav-link active">İletişim</a>
+    </div>
+
+    <div class="mobile-nav-actions">
+      <button class="theme-toggle-btn js-theme-toggle" style="width: 100%; justify-content: center; margin-bottom: 8px;" aria-label="Açık/Koyu Tema">
+        ☀️ <span>Açık Tema</span>
+      </button>
+      <a href="tel:+905325550724" class="btn btn-outline js-track-phone" data-track-source="drawer_phone">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>Bizi Arayın: 0532 555 07 24</span>
+      </a>
+      <button class="btn btn-primary js-open-quote-modal" data-service="İletişim Formu">
+        <span>Teklif Alın</span>
+      </button>
+    </div>
+  </div>
 
   <section class="hero" style="padding: 44px 0 16px;">
     <div class="container text-center">
@@ -192,11 +246,79 @@
     </div>
   </section>
 
+  <!-- Alt Bilgi (Footer) -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-bottom" style="border:none; padding:0;">
+      <div class="footer-grid">
+        <div class="footer-col footer-about">
+          <a href="index.html" class="logo" aria-label="Can Yapı Antalya" style="margin-bottom: 16px;">
+            <img src="images/logo-dark-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 58px;">
+            <img src="images/logo-light-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-light" style="height: 58px;">
+          </a>
+          <p>
+            Can Yapı Antalya; 15 yılı aşkın tecrübesiyle Antalya genelinde anahtar teslim tadilat, konut & villa renovasyonu ve çelik prefabrik yapılarda güven ve kalite inşa eder.
+          </p>
+          <div style="display: flex; gap: 10px; margin-bottom: 14px;">
+            <a href="https://wa.me/905325550724" target="_blank" class="btn btn-sm btn-outline js-track-whatsapp" data-track-source="footer_whatsapp">WhatsApp</a>
+            <a href="tel:+905325550724" class="btn btn-sm btn-primary js-track-phone" data-track-source="footer_phone">Hemen Arayın</a>
+          </div>
+          <!-- Sosyal Medya İkonları (Otomatik Altyapı) -->
+          <div class="footer-social-links" id="footerSocialLinks"></div>
+        </div>
+
+        <div class="footer-col footer-links">
+          <h5>Hizmetlerimiz</h5>
+          <ul>
+            <li><a href="hizmet-mutfak.html">Mutfak Tadilatı</a></li>
+            <li><a href="hizmet-banyo.html">Banyo Yenileme</a></li>
+            <li><a href="hizmet-seramik-fayans.html">Seramik & Granit</a></li>
+            <li><a href="hizmet-boya.html">Boya & Alçı Sıva</a></li>
+            <li><a href="hizmet-mantolama.html">Dış Cephe Mantolama</a></li>
+            <li><a href="hizmet-cati.html">Çatı İzolasyonu</a></li>
+            <li><a href="hizmet-tadilat.html">Komple Villa Tadilatı</a></li>
+            <li><a href="hizmet-prefabrik.html">Prefabrik Yapılar</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-links">
+          <h5>Hızlı Bağlantılar</h5>
+          <ul>
+            <li><a href="index.html">Ana Sayfa</a></li>
+            <li><a href="hakkimizda.html">Hakkımızda</a></li>
+            <li><a href="projeler.html">Referans Projeler</a></li>
+            <li><a href="ucretsiz-kesif.html">Ücretsiz Keşif Başvurusu</a></li>
+            <li><a href="iletisim.html">İletişim & Konum</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>İletişim Bilgileri</h5>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>Muratpaşa / Antalya, Türkiye</div>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <div>
+              <a href="tel:+905325550724" class="js-track-phone" data-track-source="footer_info_phone" style="color: #FFF; font-weight: 700;">+90 (532) 555 07 24</a>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <div>info@canyapiantalya.com</div>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <div>Haftanın 6 Günü Hizmetinizdeyiz</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
         <div>© 2026 Can Yapı Antalya. Tüm Hakları Saklıdır.</div>
-        <div><a href="index.html" style="color:var(--primary-orange);">← Ana Sayfaya Dön</a></div>
+        <div style="color: var(--text-muted);">
+          Antalya İnşaat, Mimarlık & Tadilat Hizmetleri
+        </div>
       </div>
     </div>
   </footer>

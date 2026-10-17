@@ -2029,6 +2029,77 @@ textarea.form-control {
   color: var(--text-muted);
 }
 
+/* Sosyal Medya İkonları (Gelecekte Kolayca Etkinleştirilebilir Altyapı) */
+.footer-social-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.footer-social-links:empty {
+  display: none !important;
+}
+
+.social-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm, 8px);
+  background: var(--bg-dark-card);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+}
+
+.social-icon-btn svg {
+  width: 17px;
+  height: 17px;
+  fill: currentColor;
+}
+
+.social-icon-btn:hover {
+  background: var(--primary-orange);
+  color: #FFFFFF;
+  border-color: var(--primary-orange);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(234, 88, 12, 0.4);
+}
+
+/* 1200px altı masaüstü menü sıkışmasını önleyen kural */
+@media (min-width: 992px) and (max-width: 1200px) {
+  .nav-menu {
+    gap: 16px;
+  }
+  .nav-link {
+    font-size: 0.86rem;
+  }
+}
+
+/* Standart Rozet İkonları (Feature Cards & Services) */
+.badge-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-sm, 8px);
+  background: rgba(234, 88, 12, 0.12);
+  border: 1px solid var(--border-orange);
+  color: var(--primary-orange);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.badge-icon svg {
+  width: 22px;
+  height: 22px;
+  max-width: 22px;
+  max-height: 22px;
+}
+
 /* ==========================================================================
    FIXED WHATSAPP BUTTON (Turuncu, Siyah, Beyaz - Sıfır Parlama)
    ========================================================================== */

@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hakkımızda | Can Yapı Antalya</title>
+  <meta name="description" content="15+ yıllık tecrübeyle Antalya ve çevresinde anahtar teslim tadilat, yenileme, banyo & mutfak, seramik, çatı, yalıtım ve prefabrik yapı çözümleri.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FF5500'/><text x='50%' y='68%' font-size='60' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>CY</text></svg>">
+</head>
+<body>
+  <!-- Üst Bilgi Çubuğu (Top Bar) -->
+  <div class="top-bar">
+    <div class="container">
+      <div class="top-bar-content">
+        <div class="top-bar-left">
+          <div class="top-bar-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Muratpaşa, Antalya / Türkiye</span>
+          </div>
+        </div>
+        <div class="top-bar-right">
+          <a href="tel:+905325550724" class="top-bar-item js-track-phone" data-track-source="top_bar">
+            <strong style="color:#FFF;">+90 (532) 555 07 24</strong>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ana Başlık & Navigasyon (Header) -->
+  <header class="header">
+    <div class="container">
+      <div class="nav-container">
+        <!-- Logo -->
+        <a href="index.html" class="logo" aria-label="Can Yapı Antalya">
+          <img src="images/logo-dark-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-dark">
+          <img src="images/logo-light-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-light">
+        </a>
+
+        <!-- Menü Linkleri -->
+        <nav class="nav-menu">
+          <a href="index.html" class="nav-link">Ana Sayfa</a>
+          <a href="hakkimizda.html" class="nav-link active">Hakkımızda</a>
+          
+          <div class="nav-item-dropdown">
+            <a href="hizmetler.html" class="nav-link">
+              Hizmetlerimiz
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown-menu">
+              <a href="hizmet-mutfak.html" class="dropdown-item">Mutfak Tadilatı & Tasarım</a>
+              <a href="hizmet-banyo.html" class="dropdown-item">Banyo & Islak Zemin Yenileme</a>
+              <a href="hizmet-seramik-fayans.html" class="dropdown-item">Seramik, Granit & Fayans</a>
+              <a href="hizmet-boya.html" class="dropdown-item">Boya, Badana & Alçıpan</a>
+              <a href="hizmet-mantolama.html" class="dropdown-item">Dış Cephe Mantolama & Yalıtım</a>
+              <a href="hizmet-cati.html" class="dropdown-item">Çatı Onarımı & İzolasyon</a>
+              <a href="hizmet-tadilat.html" class="dropdown-item">Komple Ev & Villa Tadilatı</a>
+              <a href="hizmet-prefabrik.html" class="dropdown-item">Prefabrik Yapı & Çelik Ev</a>
+            </div>
+          </div>
+
+          <a href="projeler.html" class="nav-link">Projelerimiz</a>
+          <a href="ucretsiz-kesif.html" class="nav-link">Ücretsiz Keşif</a>
+          <a href="iletisim.html" class="nav-link">İletişim</a>
+        </nav>
+
+        <!-- Eylemler -->
+        <div class="header-actions">
+          <button class="theme-toggle-btn js-theme-toggle" aria-label="Açık/Koyu Tema" title="Açık/Koyu Tema Değiştir">
+            ☀️ <span>Açık</span>
+          </button>
+
+          <button class="btn btn-primary js-open-quote-modal" data-service="Genel Teklif">
+            <span>Teklif Alın</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+
+          <!-- Mobil Hamburger Butonu -->
+          <button class="hamburger-btn" aria-label="Menüyü Aç">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobil Çekmece Menü (Mobile Drawer) -->
+  <div class="mobile-nav-overlay"></div>
+  <div class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <a href="index.html" class="logo" aria-label="Can Yapı Antalya">
+        <img src="images/logo-dark-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 42px;">
+        <img src="images/logo-light-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-light" style="height: 42px;">
+      </a>
+      <button class="mobile-close-btn" aria-label="Menüyü Kapat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="mobile-nav-list">
+      <a href="index.html" class="mobile-nav-link">Ana Sayfa</a>
+      <a href="hakkimizda.html" class="mobile-nav-link active">Hakkımızda</a>
+      <div>
+        <a href="#" class="mobile-nav-link js-mobile-services-toggle">
+          <span>Hizmetlerimiz</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mobile-submenu">
+          <a href="hizmet-mutfak.html" class="mobile-sub-link">Mutfak Tadilatı</a>
+          <a href="hizmet-banyo.html" class="mobile-sub-link">Banyo & Islak Zemin</a>
+          <a href="hizmet-seramik-fayans.html" class="mobile-sub-link">Seramik & Fayans</a>
+          <a href="hizmet-boya.html" class="mobile-sub-link">Boya & Badana</a>
+          <a href="hizmet-mantolama.html" class="mobile-sub-link">Dış Cephe & Mantolama</a>
+          <a href="hizmet-cati.html" class="mobile-sub-link">Çatı Onarımı & İzolasyon</a>
+          <a href="hizmet-tadilat.html" class="mobile-sub-link">Komple Ev & Villa Tadilatı</a>
+          <a href="hizmet-prefabrik.html" class="mobile-sub-link">Prefabrik Yapı & Çelik Ev</a>
+        </div>
+      </div>
+      <a href="projeler.html" class="mobile-nav-link">Projelerimiz</a>
+      <a href="ucretsiz-kesif.html" class="mobile-nav-link">Ücretsiz Keşif</a>
+      <a href="iletisim.html" class="mobile-nav-link">İletişim</a>
+    </div>
+
+    <div class="mobile-nav-actions">
+      <button class="theme-toggle-btn js-theme-toggle" style="width: 100%; justify-content: center; margin-bottom: 8px;" aria-label="Açık/Koyu Tema">
+        ☀️ <span>Açık Tema</span>
+      </button>
+      <a href="tel:+905325550724" class="btn btn-outline js-track-phone" data-track-source="drawer_phone">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>Bizi Arayın: 0532 555 07 24</span>
+      </a>
+      <button class="btn btn-primary js-open-quote-modal" data-service="Genel Teklif">
+        <span>Teklif Alın</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Hero Bölümü -->
+  <section class="hero" style="padding: 56px 0 36px; background: linear-gradient(180deg, rgba(234, 88, 12, 0.08) 0%, rgba(10, 10, 11, 0) 100%);">
+    <div class="container text-center">
+      <div class="section-tag" style="margin: 0 auto 16px;">Hakkımızda | Can Yapı Antalya</div>
+      <h1 class="hero-title" style="margin: 0 auto 18px; max-width: 900px;">
+        15+ Yıllık Tecrübeyle <span class="highlight">Yaşam Alanlarınıza</span> Değer Katıyoruz
+      </h1>
+      <p class="hero-description" style="margin: 0 auto 28px; max-width: 760px; font-size: 1.15rem; line-height: 1.75;">
+        Can Yapı Antalya olarak, 15 yılı aşkın tecrübemizle evlerinizi, villalarınızı ve yaşam alanlarınızı ihtiyaçlarınıza uygun, estetik ve kullanışlı mekânlara dönüştürmek için çalışıyoruz.
+      </p>
+      <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+        <button class="btn btn-primary js-open-quote-modal" data-discovery="true" data-service="Hakkımızda Ücretsiz Keşif">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          <span>Ücretsiz Keşif İsteyin</span>
+        </button>
+        <a href="https://wa.me/905325550724?text=Merhaba%20Can%20Yapı%2C%20hakkınızda%20ve%20hizmetleriniz%20için%20bilgi%20almak%20istiyorum." target="_blank" class="btn btn-secondary js-track-whatsapp">
+          <span>WhatsApp ile İletişime Geçin</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hikaye & Hizmet Alanları -->
+  <section style="padding: 40px 0 60px; background: var(--bg-dark);">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 36px; align-items: center;">
+        <div>
+          <div class="section-tag" style="margin-bottom: 12px;">Kapsamlı Mimari & Yapı Çözümleri</div>
+          <h2 class="section-title" style="margin-bottom: 20px; font-size: 1.85rem;">
+            Antalya ve Çevresinde Güvenilir Çözüm Ortağınız
+          </h2>
+          <p style="color: var(--text-muted); font-size: 1.02rem; line-height: 1.8; margin-bottom: 18px;">
+            Antalya ve çevresinde tadilat ve yenileme, banyo ve mutfak tadilatı, seramik ve fayans uygulamaları, boya ve alçı işleri, dış cephe mantolama ve yalıtım, çatı onarımı ve izolasyon ile prefabrik yapı imalatı ve montajı alanlarında hizmet sunuyoruz.
+          </p>
+          <p style="color: var(--text-muted); font-size: 1.02rem; line-height: 1.8; margin-bottom: 24px;">
+            Her projeyi müşterilerimizin beklentilerini, kullanım ihtiyaçlarını ve bütçesini dikkate alarak değerlendiriyoruz. Amacımız yalnızca bir işi tamamlamak değil, özenli işçilikle estetik, kullanışlı ve uzun yıllar keyifle kullanılabilecek yaşam alanları ortaya çıkarmaktır.
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;">
+            <div style="background: var(--bg-dark-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 14px 16px;">
+              <div style="color: var(--primary-orange); font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800;">15+ Yıl</div>
+              <div style="color: var(--text-muted); font-size: 0.85rem;">Sektörel Tecrübe</div>
+            </div>
+            <div style="background: var(--bg-dark-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 14px 16px;">
+              <div style="color: var(--primary-orange); font-family: var(--font-heading); font-size: 1.6rem; font-weight: 800;">Antalya</div>
+              <div style="color: var(--text-muted); font-size: 0.85rem;">Tüm İlçelerde Keşif</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+            <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle); box-shadow: 0 12px 30px rgba(0,0,0,0.4);">
+              <img src="images/real/proje-luks-mutfak.jpg" alt="Can Yapı Mutfak Uygulaması" style="width: 100%; height: 210px; object-fit: cover;">
+            </div>
+            <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle); box-shadow: 0 12px 30px rgba(0,0,0,0.4); margin-top: 24px;">
+              <img src="images/real/proje-luks-banyo.jpg" alt="Can Yapı Banyo Uygulaması" style="width: 100%; height: 210px; object-fit: cover;">
+            </div>
+            <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle); box-shadow: 0 12px 30px rgba(0,0,0,0.4);">
+              <img src="images/real/proje-celik-villa.jpg" alt="Can Yapı Villa ve Prefabrik" style="width: 100%; height: 210px; object-fit: cover;">
+            </div>
+            <div style="border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-subtle); box-shadow: 0 12px 30px rgba(0,0,0,0.4); margin-top: 24px;">
+              <img src="images/real/proje-seramik-usta.jpg" alt="Can Yapı İnce İşçilik" style="width: 100%; height: 210px; object-fit: cover;">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hizmet Anlayışımız (Service Philosophy) -->
+  <section style="padding: 50px 0; background: var(--bg-dark-surface); border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
+    <div class="container">
+      <div style="max-width: 860px; margin: 0 auto; background: var(--bg-dark-card); border: 1px solid var(--border-orange); border-radius: var(--radius-lg); padding: 36px 32px; position: relative; box-shadow: 0 16px 40px rgba(0,0,0,0.5);">
+        <div class="section-tag" style="margin-bottom: 12px;">Çalışma İlkelerimiz</div>
+        <h2 style="font-size: 1.85rem; color: #FFF; margin-bottom: 16px;">Hizmet Anlayışımız</h2>
+        <p style="color: var(--text-white); font-size: 1.08rem; line-height: 1.85; margin-bottom: 18px;">
+          Yıllar içinde edindiğimiz tecrübeyi her projemize yansıtmaya önem veriyoruz. İşimizin temelinde özenli işçilik, uygun malzeme seçimi, açık iletişim ve planlı çalışma anlayışı bulunuyor.
+        </p>
+        <p style="color: var(--text-muted); font-size: 1.02rem; line-height: 1.8; margin-bottom: 0;">
+          Yapılacak işleri müşterilerimizle birlikte değerlendiriyor, ihtiyaçları doğru anlamaya ve sürecin mümkün olduğunca düzenli ilerlemesine önem veriyoruz. Her yapının ve her müşterinin farklı ihtiyaçları olduğunu biliyor, çözümlerimizi buna göre şekillendiriyoruz.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Neden Can Yapı Antalya? (7 Temel Madde) -->
+  <section style="padding: 60px 0; background: var(--bg-dark);">
+    <div class="container">
+      <div class="text-center" style="max-width: 760px; margin: 0 auto 40px;">
+        <div class="section-tag" style="margin: 0 auto 12px;">Fark Yaratan Standartlarımız</div>
+        <h2 class="section-title">Neden Can Yapı Antalya?</h2>
+        <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.7;">
+          Antalya genelinde yüzlerce konut ve villaya imza atan ekibimizin temel ilkeleri
+        </p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <!-- 1 -->
+        <div class="service-card" style="padding: 24px; border-radius: var(--radius-md);">
+          <div class="badge-icon" style="margin-bottom: 16px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3 style="font-size: 1.2rem; color: #FFF; margin-bottom: 10px;">15+ Yıllık Tecrübe</h3>
+          <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin: 0;">
+            Yapı, tadilat ve yenileme alanlarında edindiğimiz bilgi ve deneyim.
+          </p>
+        </div>
+
+        <!-- 2 -->
+        <div class="service-card" style="padding: 24px; border-radius: var(--radius-md);">
+          <div class="badge-icon" style="margin-bottom: 16px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <h3 style="font-size: 1.2rem; color: #FFF; margin-bottom: 10px;">İhtiyaca Uygun Çözümler</h3>
+          <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin: 0;">
+            Her projeyi müşterimizin beklentilerine ve yapının özelliklerine göre değerlendirme.
+          </p>
+        </div>
+
+        <!-- 3 -->
+        <div class="service-card" style="padding: 24px; border-radius: var(--radius-md);">
+          <div class="badge-icon" style="margin-bottom: 16px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          </div>
+          <h3 style="font-size: 1.2rem; color: #FFF; margin-bottom: 10px;">Özenli İşçilik</h3>
+          <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin: 0;">
+            Uygulama detaylarına ve işin düzgün tamamlanmasına önem verme.
+          </p>
+        </div>
+
+        <!-- 4 -->
+        <div class="service-card" style="padding: 24px; border-radius: var(--radius-md);">
+          <div class="badge-icon" style="margin-bottom: 16px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+          </div>
+          <h3 style="font-size: 1.2rem; color: #FFF; margin-bottom: 10px;">Estetik ve İşlevsellik</h3>
+          <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin: 0;">
+            Yaşam alanlarının görünümü kadar kullanım kolaylığını da gözetme.
+          </p>
+        </div>
+
+        <!-- 5 -->
+        <div class="service-card" style="padding: 24px; border-radius: var(--radius-md);">
+          <div class="badge-icon" style="margin-bottom: 16px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+          </div>
+          <h3 style="font-size: 1.2rem; color: #FFF; margin-bottom: 10px;">Geniş Hizmet Yelpazesi</h3>
+          <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin: 0;">
+            Tadilat, yenileme, çatı, yalıtım, seramik ve prefabrik yapı hizmetleri.
+          </p>
+        </div>
+
+        <!-- 6 -->
+        <div class="service-card" style="padding: 24px; border-radius: var(--radius-md);">
+          <div class="badge-icon" style="margin-bottom: 16px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3 style="font-size: 1.2rem; color: #FFF; margin-bottom: 10px;">Antalya ve Çevresinde Hizmet</h3>
+          <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin: 0;">
+            Bölgedeki konut, villa ve farklı yapı projelerine yönelik çözümler.
+          </p>
+        </div>
+
+        <!-- 7 -->
+        <div class="service-card" style="padding: 24px; border-radius: var(--radius-md); grid-column: 1 / -1; max-width: 600px; margin: 0 auto; width: 100%;">
+          <div class="badge-icon" style="margin-bottom: 16px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3 style="font-size: 1.2rem; color: #FFF; margin-bottom: 10px;">Müşteri Memnuniyeti</h3>
+          <p style="color: var(--text-muted); font-size: 0.92rem; line-height: 1.65; margin: 0;">
+            Güvene, açık iletişime ve beklentilerin doğru anlaşılmasına değer verme.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Bölümü: Hayalinizdeki Projeyi Birlikte Gerçekleştirelim -->
+  <section style="padding: 50px 0 70px; background: linear-gradient(180deg, var(--bg-dark) 0%, rgba(234, 88, 12, 0.12) 100%);">
+    <div class="container">
+      <div style="background: var(--bg-dark-card); border: 1px solid var(--border-orange); border-radius: var(--radius-lg); padding: 42px 36px; text-align: center; max-width: 900px; margin: 0 auto; box-shadow: 0 20px 50px rgba(0,0,0,0.6);">
+        <div class="section-tag" style="margin: 0 auto 16px;">Birlikte İnşa Edelim</div>
+        <h2 style="font-size: 2rem; color: #FFF; margin-bottom: 16px;">Hayalinizdeki Projeyi Birlikte Gerçekleştirelim</h2>
+        <p style="color: var(--text-white); font-size: 1.08rem; line-height: 1.8; max-width: 760px; margin: 0 auto 14px;">
+          Banyonuzu yenilemek, mutfağınızı modernleştirmek, evinizi baştan sona tadilattan geçirmek, çatınızı yenilemek veya prefabrik yapı yaptırmak istiyorsanız Can Yapı Antalya olarak projenizi değerlendirmeye hazırız.
+        </p>
+        <p style="color: var(--text-muted); font-size: 1rem; line-height: 1.7; max-width: 720px; margin: 0 auto 28px;">
+          İhtiyaçlarınızı birlikte değerlendirelim, size uygun çözümleri konuşalım ve yaşam alanlarınıza değer katacak bir çalışma planlayalım.
+        </p>
+
+        <!-- Can Yapı Antalya | Yapı, Tadilat ve Prefabrik İmzası -->
+        <div style="background: rgba(234, 88, 12, 0.08); border: 1px dashed rgba(234, 88, 12, 0.35); border-radius: var(--radius-sm); padding: 18px 24px; margin-bottom: 30px; display: inline-block;">
+          <div style="color: var(--primary-orange); font-family: var(--font-heading); font-weight: 700; font-size: 1.1rem; margin-bottom: 6px;">
+            Can Yapı Antalya | Yapı, Tadilat ve Prefabrik
+          </div>
+          <div style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 6px;">
+            15 yılı aşkın tecrübemizle Antalya ve çevresinde yaşam alanlarınıza değer katmak için çalışıyoruz.
+          </div>
+          <div style="color: #FFF; font-size: 0.95rem; font-weight: 600;">
+            Projeniz hakkında bilgi almak ve ücretsiz keşif talebinizi iletmek için bizimle iletişime geçebilirsiniz.
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+          <button class="btn btn-primary btn-lg js-open-quote-modal" data-discovery="true" data-service="Genel Teklif">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>Ücretsiz Keşif Randevusu Alın</span>
+          </button>
+          <a href="tel:+905325550724" class="btn btn-outline js-track-phone" data-track-source="about_cta_call" style="font-size: 1rem; padding: 12px 24px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>Bizi Arayın: 0532 555 07 24</span>
+          </a>
+          <a href="https://wa.me/905325550724?text=Merhaba%20Can%20Yapı%2C%20ücretsiz%20keşif%20ve%20proje%20danışmanlığı%20için%20yazıyorum." target="_blank" class="btn js-track-whatsapp" style="background:#25D366; color:#FFF; font-weight:600; padding:12px 24px;">
+            <span>WhatsApp ile Yazın</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Alt Bilgi (Footer) -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-about">
+          <a href="index.html" class="logo" aria-label="Can Yapı Antalya" style="margin-bottom: 16px;">
+            <img src="images/logo-dark-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 58px;">
+            <img src="images/logo-light-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-light" style="height: 58px;">
+          </a>
+          <p>
+            Can Yapı Antalya; 15 yılı aşkın tecrübesiyle Antalya genelinde anahtar teslim tadilat, konut & villa renovasyonu ve çelik prefabrik yapılarda güven ve kalite inşa eder.
+          </p>
+          <div style="display: flex; gap: 10px; margin-bottom: 14px;">
+            <a href="https://wa.me/905325550724" target="_blank" class="btn btn-sm btn-outline js-track-whatsapp" data-track-source="footer_whatsapp">WhatsApp</a>
+            <a href="tel:+905325550724" class="btn btn-sm btn-primary js-track-phone" data-track-source="footer_phone">Hemen Arayın</a>
+          </div>
+          <!-- Sosyal Medya İkonları (Otomatik Altyapı) -->
+          <div class="footer-social-links" id="footerSocialLinks"></div>
+        </div>
+
+        <div class="footer-col footer-links">
+          <h5>Hizmetlerimiz</h5>
+          <ul>
+            <li><a href="hizmet-mutfak.html">Mutfak Tadilatı</a></li>
+            <li><a href="hizmet-banyo.html">Banyo Yenileme</a></li>
+            <li><a href="hizmet-seramik-fayans.html">Seramik & Granit</a></li>
+            <li><a href="hizmet-boya.html">Boya & Alçı Sıva</a></li>
+            <li><a href="hizmet-mantolama.html">Dış Cephe Mantolama</a></li>
+            <li><a href="hizmet-cati.html">Çatı İzolasyonu</a></li>
+            <li><a href="hizmet-tadilat.html">Komple Villa Tadilatı</a></li>
+            <li><a href="hizmet-prefabrik.html">Prefabrik Yapılar</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-links">
+          <h5>Hızlı Bağlantılar</h5>
+          <ul>
+            <li><a href="index.html">Ana Sayfa</a></li>
+            <li><a href="hakkimizda.html">Hakkımızda</a></li>
+            <li><a href="hizmetler.html">Hizmetlerimiz</a></li>
+            <li><a href="projeler.html">Referans Projeler</a></li>
+            <li><a href="ucretsiz-kesif.html">Ücretsiz Keşif Başvurusu</a></li>
+            <li><a href="iletisim.html">İletişim & Konum</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>İletişim Bilgileri</h5>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>Muratpaşa / Antalya, Türkiye</div>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <div>
+              <a href="tel:+905325550724" class="js-track-phone" data-track-source="footer_info_phone" style="color: #FFF; font-weight: 700;">+90 (532) 555 07 24</a>
+            </div>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <div>info@canyapiantalya.com</div>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <div>Haftanın 6 Günü Hizmetinizdeyiz</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>© 2026 Can Yapı Antalya. Tüm Hakları Saklıdır.</div>
+        <div style="color: var(--text-muted);">
+          Antalya İnşaat, Mimarlık & Tadilat Hizmetleri
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Sabit WhatsApp & Mobil Dock -->
+  <a href="https://wa.me/905325550724?text=Merhaba%2C%20Can%20Yapı%20Antalya%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="floating-whatsapp js-track-whatsapp" data-track-source="floating_about">
+    <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 17.03c-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.03 8.03 0 0 1-1.24-4.26c0-4.47 3.64-8.11 8.12-8.11 2.17 0 4.21.85 5.74 2.38 1.53 1.53 2.37 3.57 2.37 5.74 0 4.47-3.64 8.11-8.11 8.11zm4.45-6.09c-.24-.12-1.45-.71-1.68-.79-.23-.09-.39-.12-.56.12-.17.24-.65.79-.8 1.03-.15.24-.29.27-.53.15-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.45-1.35-1.69-.14-.24-.02-.37.1-.49.11-.11.24-.29.37-.43.12-.14.17-.24.25-.4.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.86.84-.86 2.05 0 1.21.88 2.38 1 2.55.12.17 1.74 2.65 4.21 3.72.59.25 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.45-.59 1.66-1.16.2-.58.2-1.07.14-1.16-.06-.1-.23-.15-.47-.27z"/></svg>
+    <span class="whatsapp-text">WhatsApp ile Yazın</span>
+  </a>
+
+  <div class="mobile-action-bar">
+    <a href="tel:+905325550724" class="mobile-action-item btn-call js-track-phone" data-track-source="mobile_action_bar_call">
+      <span>Bizi Arayın</span>
+    </a>
+    <a href="https://wa.me/905325550724" target="_blank" class="mobile-action-item btn-whatsapp-mobile js-track-whatsapp">
+      <span>WhatsApp</span>
+    </a>
+    <button class="mobile-action-item btn-quote-mobile js-open-quote-modal" data-service="Genel Teklif">
+      <span>Teklif Al</span>
+    </button>
+  </div>
+
+  <script src="js/analytics.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
