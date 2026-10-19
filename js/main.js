@@ -717,13 +717,13 @@ async function initDynamicCmsContent() {
 
   if (!window.CmsClient) return;
 
-  // Projeler Sayfasında Dinamik Listeleme
+  // 1. Projeler Sayfasında Çoklu Görsel Slider & Dinamik Listeleme
   const projectsGrid = document.querySelector('.projects-grid');
   if (projectsGrid && window.location.pathname.includes('projeler.html')) {
     try {
       const projects = await window.CmsClient.getProjects();
       if (projects && projects.length > 0) {
-        projectsGrid.innerHTML = projects.map(p => {
+        projectsGrid.innerHTML = projects.map((p, pIdx) => {
           const specsHtml = (p.specs || []).map(s => `
             <div class="spec-row">
               <span class="spec-label">${s.label}</span>
@@ -731,11 +731,45 @@ async function initDynamicCmsContent() {
             </div>
           `).join('');
 
+          const imagesList = (Array.isArray(p.images) && p.images.length > 0) ? p.images : [p.image || 'images/real/proje-luks-mutfak.jpg'];
+          const hasMultiple = imagesList.length > 1;
+
+          let thumbHtml = '';
+          if (hasMultiple) {
+            const slidesHtml = imagesList.map((imgUrl, idx) => `
+              <div class="project-slider-slide gallery-item" data-index="${idx}">
+                <img src="${imgUrl}" alt="${p.title} - Görsel ${idx+1}" loading="lazy" onerror="this.src='images/real/proje-luks-mutfak.jpg'">
+              </div>
+            `).join('');
+
+            const dotsHtml = imagesList.map((_, idx) => `
+              <span class="project-slider-dot ${idx === 0 ? 'active' : ''}" data-target="${idx}"></span>
+            `).join('');
+
+            thumbHtml = `
+              <div class="project-slider" id="slider-${p.id || pIdx}">
+                <div class="project-slider-badge">📷 <span class="slider-counter">1/${imagesList.length}</span></div>
+                <button type="button" class="project-slider-btn prev" aria-label="Önceki Görsel">‹</button>
+                <div class="project-slider-track">
+                  ${slidesHtml}
+                </div>
+                <button type="button" class="project-slider-btn next" aria-label="Sonraki Görsel">›</button>
+                <div class="project-slider-dots">
+                  ${dotsHtml}
+                </div>
+              </div>
+            `;
+          } else {
+            thumbHtml = `
+              <div class="project-thumb gallery-item">
+                <img src="${imagesList[0]}" alt="${p.title}" loading="lazy" onerror="this.src='images/real/proje-luks-mutfak.jpg'">
+              </div>
+            `;
+          }
+
           return `
             <div class="project-card">
-              <div class="project-thumb">
-                <img src="${p.image || 'images/real/proje-luks-mutfak.jpg'}" alt="${p.title}" loading="lazy" onerror="this.src='images/real/proje-luks-mutfak.jpg'">
-              </div>
+              ${thumbHtml}
               <div class="project-spec-table">
                 <div class="spec-header">
                   <h4>${p.title}</h4>
@@ -746,13 +780,49 @@ async function initDynamicCmsContent() {
             </div>
           `;
         }).join('');
+
+        initProjectSliders();
+        initGalleryLightbox();
       }
     } catch (err) {
       console.warn('Dinamik proje listeleme:', err);
     }
   }
 
-  // Genel Site Metinleri (Hero vb.) Senkronizasyonu
+  // 2. Hizmet Sayfalarında Alt Grid Galeri Senkronizasyonu
+  const serviceGalleryGrid = document.querySelector('.service-gallery-section .gallery-grid');
+  if (serviceGalleryGrid) {
+    try {
+      const services = await window.CmsClient.getServices();
+      const currentPath = window.location.pathname.toLowerCase();
+
+      const matchedService = services.find(s => {
+        if (!s.slug) return false;
+        return currentPath.includes(s.slug.toLowerCase());
+      });
+
+      if (matchedService && Array.isArray(matchedService.gallery) && matchedService.gallery.length > 0) {
+        serviceGalleryGrid.innerHTML = matchedService.gallery.map((imgUrl, i) => `
+          <div class="gallery-item">
+            <img src="${imgUrl}" alt="${matchedService.title} Uygulaması ${i+1}" loading="lazy" onerror="this.src='images/logo.png'">
+            <div class="gallery-overlay">
+              <span class="gallery-badge">Antalya Projesi</span>
+              <h4 class="gallery-caption">${matchedService.title} Uygulaması #${i+1}</h4>
+            </div>
+            <div class="gallery-zoom-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+            </div>
+          </div>
+        `).join('');
+
+        initGalleryLightbox();
+      }
+    } catch (e) {
+      console.warn('Hizmet galeri senkronizasyon hatası:', e);
+    }
+  }
+
+  // 3. Genel Site Metinleri (Hero vb.) Senkronizasyonu
   try {
     const settings = await window.CmsClient.getSettings();
     if (settings) {
@@ -769,4 +839,66 @@ async function initDynamicCmsContent() {
       }
     }
   } catch (e) {}
+}
+
+/* ==========================================================================
+   PROJECT SLIDER CONTROLS (Swipe & Navigation)
+   ========================================================================== */
+function initProjectSliders() {
+  document.querySelectorAll('.project-slider').forEach(slider => {
+    const track = slider.querySelector('.project-slider-track');
+    const slides = slider.querySelectorAll('.project-slider-slide');
+    const prevBtn = slider.querySelector('.project-slider-btn.prev');
+    const nextBtn = slider.querySelector('.project-slider-btn.next');
+    const dots = slider.querySelectorAll('.project-slider-dot');
+    const counter = slider.querySelector('.slider-counter');
+    if (!track || !slides.length) return;
+
+    const total = slides.length;
+    let currentIndex = 0;
+
+    const updateSliderUI = (index) => {
+      currentIndex = index;
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+      if (counter) counter.innerText = `${index + 1}/${total}`;
+    };
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const newIndex = (currentIndex - 1 + total) % total;
+        track.scrollTo({ left: newIndex * track.clientWidth, behavior: 'smooth' });
+        updateSliderUI(newIndex);
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const newIndex = (currentIndex + 1) % total;
+        track.scrollTo({ left: newIndex * track.clientWidth, behavior: 'smooth' });
+        updateSliderUI(newIndex);
+      });
+    }
+
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        track.scrollTo({ left: idx * track.clientWidth, behavior: 'smooth' });
+        updateSliderUI(idx);
+      });
+    });
+
+    track.addEventListener('scroll', () => {
+      const scrollPos = track.scrollLeft;
+      const width = track.clientWidth || 1;
+      const index = Math.round(scrollPos / width);
+      if (index !== currentIndex && index >= 0 && index < total) {
+        updateSliderUI(index);
+      }
+    }, { passive: true });
+  });
 }

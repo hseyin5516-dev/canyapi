@@ -5,6 +5,12 @@
     "category": "Mutfak",
     "location": "Muratpaşa / Antalya",
     "image": "images/real/proje-luks-mutfak.jpg",
+    "images": [
+      "images/real/proje-luks-mutfak.jpg",
+      "images/services/mutfak/mutfak-1.jpg",
+      "images/services/mutfak/mutfak-2.jpg",
+      "images/services/mutfak/mutfak-3.jpg"
+    ],
     "description": "Lara bölgesinde lüks rezidans dairesi için özel lake mutfak dolapları, kuvars tezgah ve modern ada mutfak konsepti uygulaması.",
     "specs": [
       { "label": "Tezgah & Dolap", "val": "✓ Kuvars & Akrilik Lake", "isPassed": true },
@@ -20,6 +26,12 @@
     "category": "Banyo",
     "location": "Konyaaltı / Antalya",
     "image": "images/real/proje-luks-banyo.jpg",
+    "images": [
+      "images/real/proje-luks-banyo.jpg",
+      "images/real/banyo-dusakabin.jpg",
+      "images/real/banyo-mermer.jpg",
+      "images/services/banyo/banyo-1.jpg"
+    ],
     "description": "Konyaaltı lüks konut projesinde çift lavabolu ahşap tezgah, temperli cam walk-in duşakabin ve su yalıtımlı seramik banyo uygulaması.",
     "specs": [
       { "label": "Sızdırmazlık Testi", "val": "✓ Sıfır Kaçak Onayı", "isPassed": true },
@@ -35,6 +47,11 @@
     "category": "Prefabrik",
     "location": "Döşemealtı / Antalya",
     "image": "images/real/proje-celik-villa.jpg",
+    "images": [
+      "images/real/proje-celik-villa.jpg",
+      "images/real/celik-santiye.jpg",
+      "images/real/prefabrik-villa.jpg"
+    ],
     "description": "Döşemealtı bölgesinde depreme dayanıklı hafif çelik karkas sistemiyle inşa edilen, modern yalıtımlı müstakil villa projesi.",
     "specs": [
       { "label": "Statik Proje Onayı", "val": "✓ Depreme Dayanıklı", "isPassed": true },
@@ -50,6 +67,11 @@
     "category": "Seramik",
     "location": "Konyaaltı / Antalya",
     "image": "images/real/proje-seramik-usta.jpg",
+    "images": [
+      "images/real/proje-seramik-usta.jpg",
+      "images/real/kolaj-mermer-merdiven.jpg",
+      "images/services/seramik-fayans/seramik-1.jpg"
+    ],
     "description": "60x120 lazer kesim granit seramik döşeme, lazer nivo ile milimetrik terazi ayarı ve eksiksiz derz dolgu uygulaması.",
     "specs": [
       { "label": "Zemin & Duvar", "val": "✓ 60x120 Lazer Kesim Granit", "isPassed": true },
@@ -65,6 +87,11 @@
     "category": "Tadilat",
     "location": "Muratpaşa / Antalya",
     "image": "images/real/dis-cephe-mantolama.jpg",
+    "images": [
+      "images/real/dis-cephe-mantolama.jpg",
+      "images/real/proje-mantolama-iskele.jpg",
+      "images/real/kolaj-mantolama-bina.jpg"
+    ],
     "description": "Antalya iklimine uygun karbonlu EPS dış cephe ısı yalıtımı, dekoratif sıva ve silikonlu dış cephe boyası uygulaması.",
     "specs": [
       { "label": "Enerji Verimliliği", "val": "✓ %45 Isı Tasarrufu", "isPassed": true },
@@ -80,6 +107,11 @@
     "category": "Tadilat",
     "location": "Döşemealtı / Antalya",
     "image": "images/real/kolaj-tv-unitesi.jpg",
+    "images": [
+      "images/real/kolaj-tv-unitesi.jpg",
+      "images/real/tv-unitesi.jpg",
+      "images/real/dekoratif-duvar.jpg"
+    ],
     "description": "Özel tasarım akustik ahşap panel kaplama, gizli LED ışık bantlı asma tavan ve mermer desenli TV ünitesi tasarımı.",
     "specs": [
       { "label": "Özel Üretim Mobilya", "val": "✓ Akustik Ahşap Panel & LED", "isPassed": true },
@@ -95,6 +127,11 @@
     "category": "Prefabrik",
     "location": "Döşemealtı / Antalya",
     "image": "images/real/prefabrik-villa.jpg",
+    "images": [
+      "images/real/prefabrik-villa.jpg",
+      "images/real/proje-celik-villa.jpg",
+      "images/services/prefabrik/prefabrik-1.jpg"
+    ],
     "description": "120m² 3+1 hafif çelik konstrüksiyon villa. İleri kaba ve ince işçilik anahtar teslim olarak tamamlanmıştır.",
     "specs": [
       { "label": "Deprem Güvenliği", "val": "✓ 1. Derece Deprem Standardı", "isPassed": true },
@@ -110,6 +147,11 @@
     "category": "Çatı",
     "location": "Kepez / Antalya",
     "image": "images/real/cati-tamiri-gercek.jpg",
+    "images": [
+      "images/real/cati-tamiri-gercek.jpg",
+      "images/services/cati/cati-1.jpg",
+      "images/services/cati/cati-2.jpg"
+    ],
     "description": "Mevcut çatının kiremitlerinin aktarılması, çift kat şalümo alevli su yalıtım membranı ve yağmur oluklarının sıfırlanması.",
     "specs": [
       { "label": "Su Yalıtımı", "val": "✓ 10 Yıl Sızdırmazlık", "isPassed": true },

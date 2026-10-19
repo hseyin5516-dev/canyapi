@@ -1580,6 +1580,135 @@ body.light-theme .hero-banner-overlay {
   transform: scale(1.05);
 }
 
+/* ==========================================================================
+   PROJECT MULTI-IMAGE CAROUSEL (Kaydırmalı Çoklu Fotoğraf)
+   ========================================================================== */
+.project-slider {
+  position: relative;
+  height: 240px;
+  overflow: hidden;
+  background: var(--bg-dark-surface);
+  user-select: none;
+}
+
+.project-slider-track {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.project-slider-track::-webkit-scrollbar {
+  display: none;
+}
+
+.project-slider-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  position: relative;
+  cursor: pointer;
+}
+
+.project-slider-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.project-slider:hover .project-slider-slide img {
+  transform: scale(1.03);
+}
+
+.project-slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(10, 10, 12, 0.75);
+  backdrop-filter: blur(6px);
+  color: #FFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  opacity: 0.85;
+}
+
+.project-slider:hover .project-slider-btn {
+  opacity: 1;
+}
+
+.project-slider-btn:hover {
+  background: var(--primary-orange);
+  border-color: var(--primary-orange);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.project-slider-btn.prev {
+  left: 8px;
+}
+
+.project-slider-btn.next {
+  right: 8px;
+}
+
+.project-slider-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(10, 10, 12, 0.82);
+  backdrop-filter: blur(6px);
+  color: #FFF;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.project-slider-dots {
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.project-slider-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.45);
+  transition: all 0.2s ease;
+}
+
+.project-slider-dot.active {
+  background: var(--primary-orange);
+  width: 14px;
+  border-radius: 4px;
+}
+
 .project-spec-table {
   padding: 18px 20px 22px;
   background: var(--bg-dark-card);

@@ -178,8 +178,10 @@ function updateCounts() {
 }
 
 /* ==========================================================================
-   3. PROJELER YÖNETİMİ (CRUD)
+   3. PROJELER YÖNETİMİ (CRUD & ÇOKLU GÖRSEL SLIDER)
    ========================================================================== */
+let currentModalProjectImages = [];
+
 function renderProjectsTable() {
   const tbody = document.getElementById('projectsTableBody');
   if (!tbody) return;
@@ -191,10 +193,14 @@ function renderProjectsTable() {
 
   tbody.innerHTML = currentProjects.map((p, idx) => {
     const spec1 = p.specs && p.specs[0] ? p.specs[0].val : (p.description ? p.description.slice(0, 30) + '...' : '-');
+    const imgCount = (p.images && p.images.length) ? p.images.length : (p.image ? 1 : 0);
     return `
       <tr>
         <td>
-          <img src="${p.image || 'images/real/proje-luks-mutfak.jpg'}" alt="${p.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);" onerror="this.src='images/logo.png'">
+          <div style="position: relative; width: 50px; height: 50px;">
+            <img src="${p.image || 'images/real/proje-luks-mutfak.jpg'}" alt="${p.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);" onerror="this.src='images/logo.png'">
+            <span style="position: absolute; bottom: 0; right: 0; background: rgba(0,0,0,0.8); color: #FFF; font-size: 0.65rem; padding: 1px 4px; border-radius: 3px; font-weight: 700;">${imgCount} 📷</span>
+          </div>
         </td>
         <td>
           <strong style="color: #FFF; font-size: 0.95rem;">${p.title}</strong>
@@ -203,13 +209,43 @@ function renderProjectsTable() {
         <td><span class="text-muted">${p.location || 'Antalya'}</span></td>
         <td><small style="color: #A78BFA;">${spec1}</small></td>
         <td style="text-align: right; white-space: nowrap;">
-          <button onclick="editProject('${p.id}')" class="btn btn-sm btn-outline" style="padding: 4px 10px; font-size: 0.78rem;">Düzenle</button>
+          <button onclick="editProject('${p.id}')" class="btn btn-sm btn-outline" style="padding: 4px 10px; font-size: 0.78rem;">Düzenle / Fotoğraflar</button>
           <button onclick="deleteProject('${p.id}')" class="btn btn-sm" style="padding: 4px 10px; font-size: 0.78rem; background: #FF3333; color: white;">Sil</button>
         </td>
       </tr>
     `;
   }).join('');
 }
+
+function renderModalProjectImages() {
+  const container = document.getElementById('projImagesPreviewList');
+  const jsonInput = document.getElementById('projImagesJson');
+  if (!container) return;
+
+  if (jsonInput) jsonInput.value = JSON.stringify(currentModalProjectImages);
+
+  if (currentModalProjectImages.length === 0) {
+    container.innerHTML = '<span class="text-muted" style="font-size: 0.8rem; padding: 6px;">Henüz çoklu fotoğraf eklenmedi. "Çoklu Fotoğraf Ekle" butonuyla şantiyeden çektiğiniz birden fazla fotoğrafı ekleyebilirsiniz.</span>';
+    return;
+  }
+
+  container.innerHTML = currentModalProjectImages.map((imgUrl, i) => `
+    <div style="position: relative; width: 64px; height: 64px; border-radius: 6px; overflow: hidden; border: 1px solid var(--admin-border); background: #000;">
+      <img src="${imgUrl}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='images/logo.png'">
+      <button type="button" onclick="removeModalProjectImage(${i})" style="position: absolute; top: 2px; right: 2px; background: rgba(255,0,0,0.85); color: white; border: none; width: 18px; height: 18px; border-radius: 50%; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1;" title="Fotoğrafı Kaldır">✕</button>
+      <span style="position: absolute; bottom: 2px; left: 2px; background: rgba(0,0,0,0.7); color: #FFF; font-size: 9px; padding: 1px 3px; border-radius: 2px;">${i+1}</span>
+    </div>
+  `).join('');
+}
+
+window.removeModalProjectImage = function(index) {
+  currentModalProjectImages.splice(index, 1);
+  renderModalProjectImages();
+  if (currentModalProjectImages.length > 0) {
+    const mainImg = document.getElementById('projImage');
+    if (mainImg) mainImg.value = currentModalProjectImages[0];
+  }
+};
 
 window.openProjectModal = function(id = null) {
   const modal = document.getElementById('projectModal');
@@ -219,11 +255,12 @@ window.openProjectModal = function(id = null) {
 
   form.reset();
   document.getElementById('projId').value = '';
+  currentModalProjectImages = [];
 
   if (id) {
     const p = currentProjects.find(item => item.id === id);
     if (p) {
-      title.innerText = 'Projeyi Düzenle';
+      title.innerText = 'Projeyi Düzenle & Fotoğrafları Yönet';
       document.getElementById('projId').value = p.id;
       document.getElementById('projTitle').value = p.title || '';
       document.getElementById('projCategory').value = p.category || 'Tadilat';
@@ -232,12 +269,20 @@ window.openProjectModal = function(id = null) {
       document.getElementById('projDesc').value = p.description || '';
       document.getElementById('projSpec1').value = p.specs && p.specs[0] ? p.specs[0].val : '';
       document.getElementById('projSpec2').value = p.specs && p.specs[1] ? p.specs[1].val : '';
+
+      if (Array.isArray(p.images) && p.images.length > 0) {
+        currentModalProjectImages = [...p.images];
+      } else if (p.image) {
+        currentModalProjectImages = [p.image];
+      }
     }
   } else {
     title.innerText = 'Yeni Proje Ekle';
     document.getElementById('projLocation').value = 'Muratpaşa / Antalya';
+    currentModalProjectImages = [];
   }
 
+  renderModalProjectImages();
   modal.classList.remove('hidden');
 };
 
@@ -261,7 +306,7 @@ window.deleteProject = async function(id) {
 };
 
 /* ==========================================================================
-   4. HİZMETLER YÖNETİMİ (CRUD)
+   4. HİZMETLER VE SAYFA ALTI GRİD GALERİ YÖNETİMİ
    ========================================================================== */
 function renderServicesTable() {
   const tbody = document.getElementById('servicesTableBody');
@@ -272,23 +317,85 @@ function renderServicesTable() {
     return;
   }
 
-  tbody.innerHTML = currentServices.map(s => `
-    <tr>
-      <td>
-        <img src="${s.image || 'images/services/tadilat/tadilat-1.jpg'}" alt="${s.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);" onerror="this.src='images/logo.png'">
-      </td>
-      <td>
-        <strong style="color: #FFF; font-size: 0.95rem;">${s.title}</strong>
-      </td>
-      <td><small class="text-muted">${(s.shortDesc || '').slice(0, 65)}...</small></td>
-      <td><small style="color: #00E676;">${Array.isArray(s.features) ? s.features.slice(0, 2).join(', ') : ''}</small></td>
-      <td style="text-align: right; white-space: nowrap;">
-        <button onclick="editService('${s.id}')" class="btn btn-sm btn-outline" style="padding: 4px 10px; font-size: 0.78rem;">Düzenle</button>
-        <button onclick="deleteService('${s.id}')" class="btn btn-sm" style="padding: 4px 10px; font-size: 0.78rem; background: #FF3333; color: white;">Sil</button>
-      </td>
-    </tr>
+  tbody.innerHTML = currentServices.map(s => {
+    const galleryCount = (s.gallery && Array.isArray(s.gallery)) ? s.gallery.length : 0;
+    return `
+      <tr>
+        <td>
+          <img src="${s.image || 'images/services/tadilat/tadilat-1.jpg'}" alt="${s.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);" onerror="this.src='images/logo.png'">
+        </td>
+        <td>
+          <strong style="color: #FFF; font-size: 0.95rem;">${s.title}</strong>
+        </td>
+        <td><small class="text-muted">${(s.shortDesc || '').slice(0, 60)}...</small></td>
+        <td>
+          <span style="color: #00E676; font-size: 0.8rem; font-weight: 600;">${galleryCount} Fotoğraf</span>
+        </td>
+        <td style="text-align: right; white-space: nowrap;">
+          <button onclick="openServiceGalleryModal('${s.id}')" class="btn btn-sm btn-outline-orange" style="padding: 4px 10px; font-size: 0.78rem;" title="Sayfa altındaki grid galeri fotoğraflarını yönet">
+            🖼️ Alt Grid Galeri (${galleryCount})
+          </button>
+          <button onclick="editService('${s.id}')" class="btn btn-sm btn-outline" style="padding: 4px 10px; font-size: 0.78rem;">Düzenle</button>
+          <button onclick="deleteService('${s.id}')" class="btn btn-sm" style="padding: 4px 10px; font-size: 0.78rem; background: #FF3333; color: white;">Sil</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// Hizmet Sayfa Altı Grid Galeri Modalı Fonksiyonları
+window.openServiceGalleryModal = function(serviceId) {
+  const modal = document.getElementById('serviceGalleryModal');
+  const s = currentServices.find(item => item.id === serviceId);
+  if (!modal || !s) return;
+
+  document.getElementById('servGalleryServiceId').value = s.id;
+  document.getElementById('servGalleryTitle').innerText = `${s.title} — Sayfa Altı Grid Galeri Fotoğrafları`;
+
+  renderServiceGalleryGrid(s);
+  modal.classList.remove('hidden');
+};
+
+window.closeServiceGalleryModal = function() {
+  const modal = document.getElementById('serviceGalleryModal');
+  if (modal) modal.classList.add('hidden');
+};
+
+function renderServiceGalleryGrid(service) {
+  const container = document.getElementById('servGalleryGrid');
+  if (!container) return;
+
+  const gallery = Array.isArray(service.gallery) ? service.gallery : [];
+
+  if (gallery.length === 0) {
+    container.innerHTML = '<div class="text-muted" style="grid-column: 1/-1; padding: 30px; text-align: center;">Bu hizmetin sayfa altı galerisinde henüz fotoğraf yok. Yukarıdaki "+ Fotoğrafları Seç & Yükle" butonunu kullanarak şantiyeden çektiğiniz fotoğrafları ekleyebilirsiniz.</div>';
+    return;
+  }
+
+  container.innerHTML = gallery.map((imgUrl, idx) => `
+    <div style="position: relative; aspect-ratio: 1; border-radius: 8px; overflow: hidden; border: 1px solid var(--admin-border); background: #000;">
+      <img src="${imgUrl}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='images/logo.png'">
+      <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.6); opacity: 0; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center;" onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0'">
+        <button type="button" onclick="removePhotoFromService('${service.id}', ${idx})" class="btn btn-sm" style="background: #FF3333; color: white; padding: 4px 8px; font-size: 0.75rem;">Fotoğrafı Sil</button>
+      </div>
+      <span style="position: absolute; bottom: 4px; left: 6px; background: rgba(0,0,0,0.7); color: #FFF; font-size: 10px; padding: 1px 5px; border-radius: 3px;">#${idx+1}</span>
+    </div>
   `).join('');
 }
+
+window.removePhotoFromService = async function(serviceId, photoIndex) {
+  const s = currentServices.find(item => item.id === serviceId);
+  if (!s || !Array.isArray(s.gallery)) return;
+
+  if (confirm("Bu fotoğrafı hizmetin sayfasındaki galeriden kaldırmak istediğinize emin misiniz?")) {
+    s.gallery.splice(photoIndex, 1);
+    await window.CmsClient.saveService(s);
+    currentServices = await window.CmsClient.getServices();
+    renderServiceGalleryGrid(s);
+    renderServicesTable();
+    window.showToast?.('Fotoğraf hizmet galerisinden kaldırıldı.', 'info');
+  }
+};
 
 window.openServiceModal = function(id = null) {
   const modal = document.getElementById('serviceModal');
@@ -487,12 +594,16 @@ function setupEventListeners() {
     projForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       const id = document.getElementById('projId').value;
+      const mainCover = document.getElementById('projImage').value.trim();
+      const images = currentModalProjectImages.length > 0 ? currentModalProjectImages : (mainCover ? [mainCover] : []);
+
       const projectData = {
         id: id || undefined,
         title: document.getElementById('projTitle').value.trim(),
         category: document.getElementById('projCategory').value,
         location: document.getElementById('projLocation').value.trim(),
-        image: document.getElementById('projImage').value.trim(),
+        image: mainCover || (images[0] || 'images/real/proje-luks-mutfak.jpg'),
+        images: images,
         description: document.getElementById('projDesc').value.trim(),
         specs: [
           { label: 'Özellik', val: document.getElementById('projSpec1').value.trim() || 'Kusursuz İşçilik', isPassed: true },
@@ -505,22 +616,74 @@ function setupEventListeners() {
       renderProjectsTable();
       updateCounts();
       closeProjectModal();
-      window.showToast?.('Proje başarıyla kaydedildi ve sitede yayınlandı!', 'success');
+      window.showToast?.('Proje ve çoklu fotoğrafları kaydedildi!', 'success');
     });
   }
 
-  // Proje Görseli Yükleme
+  // Proje Tekil Görsel Yükleme
   const projFileInput = document.getElementById('projImageFile');
   if (projFileInput) {
     projFileInput.addEventListener('change', async function() {
       if (this.files && this.files[0]) {
-        window.showToast?.('Fotoğraf yükleniyor...', 'info');
+        window.showToast?.('Kapak fotoğrafı yükleniyor...', 'info');
         const res = await window.CmsClient.uploadPhoto(this.files[0]);
         if (res.success && res.url) {
           document.getElementById('projImage').value = res.url;
-          window.showToast?.('Fotoğraf yüklendi!', 'success');
+          if (!currentModalProjectImages.includes(res.url)) {
+            currentModalProjectImages.unshift(res.url);
+            renderModalProjectImages();
+          }
+          window.showToast?.('Kapak fotoğrafı yüklendi!', 'success');
         }
       }
+    });
+  }
+
+  // Proje Çoklu Fotoğraf Yükleme (Kaydırmalı Slider İçin)
+  const projMultiFiles = document.getElementById('projMultiImageFiles');
+  if (projMultiFiles) {
+    projMultiFiles.addEventListener('change', async function() {
+      if (this.files && this.files.length > 0) {
+        window.showToast?.(`${this.files.length} fotoğraf yükleniyor...`, 'info');
+        for (let i = 0; i < this.files.length; i++) {
+          const res = await window.CmsClient.uploadPhoto(this.files[i]);
+          if (res.success && res.url) {
+            currentModalProjectImages.push(res.url);
+          }
+        }
+        if (currentModalProjectImages.length > 0) {
+          const mainImg = document.getElementById('projImage');
+          if (mainImg && !mainImg.value) mainImg.value = currentModalProjectImages[0];
+        }
+        renderModalProjectImages();
+        window.showToast?.('Fotoğraflar projeye eklendi!', 'success');
+      }
+    });
+  }
+
+  // Hizmet Sayfa Altı Grid Galeri Fotoğraf Yükleme
+  const servGalleryFileInput = document.getElementById('servGalleryFileInput');
+  if (servGalleryFileInput) {
+    servGalleryFileInput.addEventListener('change', async function() {
+      const serviceId = document.getElementById('servGalleryServiceId')?.value;
+      const s = currentServices.find(item => item.id === serviceId);
+      if (!s || !this.files || this.files.length === 0) return;
+
+      if (!Array.isArray(s.gallery)) s.gallery = [];
+
+      window.showToast?.(`${this.files.length} fotoğraf hizmet galerisine yükleniyor...`, 'info');
+      for (let i = 0; i < this.files.length; i++) {
+        const res = await window.CmsClient.uploadPhoto(this.files[i]);
+        if (res.success && res.url) {
+          s.gallery.push(res.url);
+        }
+      }
+
+      await window.CmsClient.saveService(s);
+      currentServices = await window.CmsClient.getServices();
+      renderServiceGalleryGrid(s);
+      renderServicesTable();
+      window.showToast?.('Fotoğraflar hizmetin alt galerisine başarıyla eklendi!', 'success');
     });
   }
 
