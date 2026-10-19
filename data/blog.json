@@ -1,0 +1,28 @@
+[
+  {
+    "id": "blog-1",
+    "title": "Antalya'da Ev Tadilatı Yaparken Nelere Dikkat Edilmeli?",
+    "slug": "antalyada-ev-tadilati-yaparken-nelere-dikkat-edilmeli",
+    "category": "Tadilat Rehberi",
+    "coverImage": "images/real/proje-luks-mutfak.jpg",
+    "date": "19 Ekim 2026",
+    "readTime": "4 dk okuma",
+    "author": "Can Yapı Antalya",
+    "status": "published",
+    "excerpt": "Akdeniz ikliminin yüksek nem ve sıcaklık şartlarında doğru malzeme seçimi, su yalıtımı ve anahtar teslim tadilatta dikkat edilmesi gereken altın kurallar.",
+    "content": "<p>Antalya ve sahil şeridinde ev veya villa tadilatı yaptırırken, iç Anadolu veya Marmara bölgesindeki standart inşaat alışkanlıkları her zaman doğru sonuç vermez. Yılın büyük bölümünde süren yüksek nem ve sıcaklık, kullanılan boyadan seramik yapıştırıcısına kadar her detayda özel önlemler gerektirir.</p><h3>1. Islak Hacimlerde Çift Kat Elastik Su Yalıtımı</h3><p>Banyo, balkon ve mutfak zeminlerinde seramik döşenmeden önce mutlaka elastik sürme su yalıtımı (çift bileşenli) uygulanmalıdır. Akdeniz bölgesinde nemli hava kılcal çatlaklardan sızarak alt kata rutubet ve dökülme yapabilir.</p><h3>2. Mutfak ve Banyo Mobilyalarında Nem Dayanımı</h3><p>Sıradan sunta malzemeler Antalya'nın nemli havasında kısa sürede şişme ve kabarma yapar. Bu nedenle Can Yapı olarak banyo ve mutfak gövdelerinde suya dayanıklı MDF-Lam, kapaklarda ise çizilmez akrilik veya kaliteli lake tercih ediyoruz.</p><h3>3. Doğru Usta ve Tek Elden Sözleşmeli Çalışma</h3><p>Farklı işler için ayrı ayrı ustalarla anlaşmak süreç uzamasına, koordinasyonsuzluğa ve beklenmedik maliyet artışlarına yol açar. Anahtar teslim çalışan, net teslim tarihi veren ve işinin arkasında duran bir kurumsal firma ile çalışmak size hem zaman hem para kazandırır.</p>"
+  },
+  {
+    "id": "blog-2",
+    "title": "Antalya Çatı Tamiri ve Su İzolasyonunda Kalıcı Çözümler",
+    "slug": "antalya-cati-tamiri-ve-su-izolasyonu",
+    "category": "Çatı & İzolasyon",
+    "coverImage": "images/real/cati-tamiri-gercek.jpg",
+    "date": "15 Ekim 2026",
+    "readTime": "3 dk okuma",
+    "author": "Can Yapı Antalya",
+    "status": "published",
+    "excerpt": "Kış aylarında yaşanan şiddetli fırtına ve yağmurlarda tavan akmalarını önlemek için kiremit aktarma ve membran kaplama yöntemleri.",
+    "content": "<p>Antalya'da kış aylarında etkili olan ani sağanak yağışlar ve lodos fırtınaları, bakımsız çatılarda ciddi su sızıntılarına ve tavan sararmalarına yol açar. Çatınızı her fırtınada yamamak yerine kalıcı bir çözümle güvence altına alabilirsiniz.</p><h3>Kiremit Aktarma ve Şalümo Membran Uygulaması</h3><p>Mevcut kiremitler tek tek sökülerek kırıklar ayıklanır. Çatı ahşap iskeleti kontrol edilerek çürüyen karkaslar yenilenir. Üzerine polyester keçeli kalın su yalıtım membranı şalümo aleviyle yapıştırılır. Böylece kiremit kaysa bile alttaki membran suyun binaya girmesini %100 engeller.</p><h3>Yağmur Oluklarının Yenilenmesi</h3><p>Eski PVC oluklar güneşten gevreyip kırılabilir. Eksiz çinko veya elektrostatik boyalı alüminyum dere olukları tercih edildiğinde uzun yıllar sorunsuz tahliye sağlanır.</p>"
+  }
+]

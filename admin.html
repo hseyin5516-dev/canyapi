@@ -3,61 +3,133 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Can Yapı Antalya - Talep & Ölçümleme Yönetim Paneli</title>
+  <title>Can Yapı Antalya - Kurumsal İçerik & Talep Yönetim Paneli (CMS)</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FF5500'/><text x='50%' y='68%' font-size='60' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>CY</text></svg>">
   <style>
+    :root {
+      --admin-bg: #07080A;
+      --admin-sidebar: #0D0F12;
+      --admin-card: #12151A;
+      --admin-border: rgba(255, 255, 255, 0.08);
+      --admin-orange: #EA580C;
+    }
+    body {
+      background: var(--admin-bg);
+      color: #E2E8F0;
+      min-height: 100vh;
+      font-family: var(--font-body);
+    }
     .admin-header {
-      background: #060709;
-      border-bottom: 1px solid var(--border-subtle);
-      padding: 16px 0;
+      background: var(--admin-sidebar);
+      border-bottom: 1px solid var(--admin-border);
+      padding: 14px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 12px 0 0;
+      border-bottom: 1px solid var(--admin-border);
+      scrollbar-width: none;
+    }
+    .nav-tabs::-webkit-scrollbar { display: none; }
+    .nav-tab-btn {
+      background: transparent;
+      border: none;
+      color: #94A3B8;
+      font-size: 0.92rem;
+      font-weight: 600;
+      padding: 12px 18px;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+    .nav-tab-btn:hover {
+      color: #FFF;
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .nav-tab-btn.active {
+      color: var(--primary-orange);
+      border-bottom-color: var(--primary-orange);
+      background: rgba(234, 88, 12, 0.08);
+    }
+    .tab-content-panel {
+      display: none;
+      padding: 28px 0 60px;
+      animation: fadeIn 0.25s ease-in-out;
+    }
+    .tab-content-panel.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .admin-card {
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .admin-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 14px;
     }
     .metric-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
       gap: 18px;
-      margin: 30px 0;
+      margin-bottom: 28px;
     }
     .metric-card {
-      background: var(--bg-dark-card);
-      border: 1px solid var(--border-subtle);
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
       border-radius: var(--radius-md);
-      padding: 22px 20px;
-      display: flex;
-      flex-direction: column;
+      padding: 20px;
       position: relative;
       overflow: hidden;
     }
     .metric-card::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
+      top: 0; left: 0; width: 4px; height: 100%;
       background: var(--primary-orange);
     }
     .metric-value {
-      font-size: 2.2rem;
+      font-size: 2.1rem;
       font-weight: 800;
-      color: #FFFFFF;
+      color: #FFF;
       font-family: var(--font-heading);
       margin: 8px 0 4px;
     }
     .metric-title {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--text-muted);
+      color: #94A3B8;
       font-weight: 600;
     }
     .table-responsive {
       width: 100%;
       overflow-x: auto;
-      background: var(--bg-dark-card);
-      border: 1px solid var(--border-subtle);
+      background: var(--admin-card);
+      border: 1px solid var(--admin-border);
       border-radius: var(--radius-md);
-      margin-top: 20px;
     }
     table {
       width: 100%;
@@ -66,39 +138,26 @@
       font-size: 0.88rem;
     }
     th {
-      background: var(--bg-dark-surface);
-      color: var(--text-muted);
+      background: #0B0E13;
+      color: #94A3B8;
       font-weight: 600;
-      padding: 14px 18px;
-      border-bottom: 1px solid var(--border-subtle);
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--admin-border);
+      font-size: 0.76rem;
       text-transform: uppercase;
-      font-size: 0.75rem;
-      letter-spacing: 0.05em;
     }
     td {
-      padding: 14px 18px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      color: var(--text-light);
+      padding: 13px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #E2E8F0;
+      vertical-align: middle;
     }
-    tr:hover td {
-      background: var(--bg-dark-hover);
-    }
-    .badge-service {
-      background: var(--primary-orange-light);
-      color: var(--primary-orange);
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 0.78rem;
-      border: 1px solid var(--border-orange);
-      white-space: nowrap;
-    }
+    tr:hover td { background: rgba(255, 255, 255, 0.02); }
     .badge-status {
       font-size: 0.72rem;
       padding: 3px 8px;
       border-radius: 4px;
       font-weight: 600;
-      transition: all 0.2s ease;
     }
     .badge-status.active {
       background: rgba(0, 230, 118, 0.15);
@@ -107,11 +166,84 @@
     }
     .badge-status.inactive {
       background: rgba(255, 255, 255, 0.06);
-      color: var(--text-muted);
-      border: 1px solid var(--border-subtle);
+      color: #94A3B8;
+      border: 1px solid var(--admin-border);
     }
+    /* Modal Tasarımı */
+    .cms-modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(4, 5, 7, 0.88);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 16px;
+    }
+    .cms-modal-overlay.hidden { display: none !important; }
+    .cms-modal-card {
+      background: #111419;
+      border: 1px solid var(--border-orange);
+      border-radius: var(--radius-lg);
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 30px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.85);
+    }
+    /* Sürükle Bırak Fotoğraf Yükleyici Alanı */
+    .dropzone-area {
+      border: 2px dashed rgba(234, 88, 12, 0.5);
+      border-radius: var(--radius-md);
+      padding: 32px 20px;
+      text-align: center;
+      background: rgba(234, 88, 12, 0.03);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .dropzone-area:hover, .dropzone-area.dragover {
+      border-color: var(--primary-orange);
+      background: rgba(234, 88, 12, 0.09);
+    }
+    /* Medya Izgarası */
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+    .media-item {
+      background: #0B0D11;
+      border: 1px solid var(--admin-border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .media-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .media-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      opacity: 0;
+      transition: opacity 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px;
+    }
+    .media-item:hover .media-item-overlay { opacity: 1; }
 
-    /* Giriş Şifre Ekranı (Login Overlay) */
+    /* Admin Login Overlay */
     .admin-login-overlay {
       position: fixed;
       top: 0;
@@ -130,22 +262,17 @@
       display: none !important;
     }
     .admin-login-card {
-      background: var(--bg-dark-card);
+      background: var(--admin-card);
       border: 1px solid var(--border-orange);
       border-radius: var(--radius-lg);
       padding: 38px 34px;
       max-width: 440px;
       width: 100%;
       box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85), 0 0 40px rgba(234, 88, 12, 0.2);
-      animation: fadeInScale 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    @keyframes fadeInScale {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
-<body style="padding-bottom: 50px;">
+<body>
 
   <!-- GÜVENLİK GİRİŞ EKRANI (Admin Login Screen) -->
   <div id="adminLoginOverlay" class="admin-login-overlay">
@@ -181,212 +308,641 @@
   <!-- Admin Header -->
   <header class="admin-header">
     <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-      <a href="index.html" class="logo" aria-label="Can Yapı Antalya" style="text-decoration: none;">
-        <img src="images/logo-dark-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 48px;">
-        <img src="images/logo-light-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-light" style="height: 48px;">
-      </a>
+      <div style="display: flex; align-items: center; gap: 16px;">
+        <a href="index.html" class="logo" style="text-decoration: none;">
+          <img src="images/logo-dark-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 44px;">
+        </a>
+        <span id="apiStatusBadge" class="badge-status" style="background: rgba(234,88,12,0.15); color: var(--primary-orange); border: 1px solid var(--border-orange); font-size: 0.74rem;">
+          ⚡ Kontrol Ediliyor...
+        </span>
+      </div>
+
       <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-        <a href="index.html" class="btn btn-sm btn-outline">← Siteyi Görüntüle</a>
-        <button id="exportCsvBtn" class="btn btn-sm btn-primary">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          <span>Excel / CSV İndir</span>
-        </button>
+        <a href="index.html" target="_blank" class="btn btn-sm btn-outline">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          <span>Siteyi Aç</span>
+        </a>
         <button id="adminLogoutBtn" class="btn btn-sm btn-outline" style="color: #FF5555; border-color: rgba(255,85,85,0.4);">
           <span>Çıkış Yap</span>
         </button>
       </div>
     </div>
+
+    <!-- Menü Sekmeleri (Tabs) -->
+    <div class="container">
+      <nav class="nav-tabs" id="adminTabs">
+        <button class="nav-tab-btn active" data-tab="tab-dashboard">
+          <span>📊</span> Gösterge Paneli
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-projects">
+          <span>🏗️</span> Projelerimiz
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-services">
+          <span>🛠️</span> Hizmetler
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-blog">
+          <span>📰</span> Blog & Makaleler
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-texts">
+          <span>✍️</span> Site Metinleri & İletişim
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-media">
+          <span>🖼️</span> Fotoğraf / Medya Yükleyici
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-social">
+          <span>🌐</span> Sosyal Medya
+        </button>
+        <button class="nav-tab-btn" data-tab="tab-leads">
+          <span>📋</span> Gelen Talepler (CRM)
+        </button>
+      </nav>
+    </div>
   </header>
 
-  <main class="container" style="margin-top: 30px;">
-    <!-- Üst Başlık & Açıklama -->
-    <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
-      <div>
-        <div class="section-tag">Canlı Ölçümleme & CRM</div>
-        <h1 style="font-size: 2rem;">Gelen Teklifler ve Ziyaretçi Etkileşimleri</h1>
-        <p class="text-muted">Web sitenizden gelen aylık ziyaretçi sayısı, WhatsApp tıklamaları, telefon aramaları ve teklif formları bu panelde canlı kaydedilir.</p>
-      </div>
-      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-        <button onclick="createSampleLead()" class="btn btn-sm btn-outline-orange">+ Örnek Talep Ekle (Test)</button>
-        <button id="resetMetricsBtn" class="btn btn-sm btn-outline" style="color: #FF5555; border-color: rgba(255,85,85,0.3);">Sayaçları Sıfırla</button>
-      </div>
-    </div>
-
-    <!-- Metrik Kartları (Aylık Ziyaretçi Sayısı, WhatsApp, Telefon, Teklif Formları, Keşif Talepleri) -->
-    <div class="metric-grid">
-      <!-- 1. Aylık Ziyaretçi Sayısı (YENİ) -->
-      <div class="metric-card" style="border-left-color: #8B5CF6;">
-        <span class="metric-title">Aylık Ziyaretçi Sayısı</span>
-        <div class="metric-value text-white" id="metricMonthlyVisitors">0</div>
-        <span style="font-size: 0.78rem; color: #A78BFA;" id="metricMonthName">Bu Ay (Tekil Ziyaretçi)</span>
-      </div>
-
-      <!-- 2. WhatsApp Tıklamaları -->
-      <div class="metric-card" style="border-left-color: #25D366;">
-        <span class="metric-title">WhatsApp Tıklamaları</span>
-        <div class="metric-value text-white" id="metricWhatsapp">0</div>
-        <span style="font-size: 0.78rem; color: #25D366;">Tüm butonlar ve sabit WhatsApp</span>
-      </div>
-
-      <!-- 3. Telefon Aramaları -->
-      <div class="metric-card" style="border-left-color: #FF5500;">
-        <span class="metric-title">Telefon Aramaları (Bizi Arayın)</span>
-        <div class="metric-value text-white" id="metricPhone">0</div>
-        <span style="font-size: 0.78rem; color: var(--primary-orange);">Mobil ve masaüstü aramaları</span>
-      </div>
-
-      <!-- 4. Teklif Formları -->
-      <div class="metric-card" style="border-left-color: #00B0FF;">
-        <span class="metric-title">Teklif Formu Gönderimleri</span>
-        <div class="metric-value text-white" id="metricForms">0</div>
-        <span style="font-size: 0.78rem; color: #00B0FF;">Mutfak, banyo, komple tadilat vb.</span>
-      </div>
-
-      <!-- 5. Keşif Talepleri -->
-      <div class="metric-card" style="border-left-color: #00E676;">
-        <span class="metric-title">Ücretsiz Keşif Talepleri</span>
-        <div class="metric-value text-white" id="metricDiscovery">0</div>
-        <span style="font-size: 0.78rem; color: #00E676;">Yerinde inceleme isteyen müşteriler</span>
-      </div>
-    </div>
-
-    <!-- SOSYAL MEDYA BAĞLANTILARI YÖNETİMİ (YENİ) -->
-    <div style="margin-top: 36px; background: var(--bg-dark-card); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 26px;">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+  <main class="container">
+    
+    <!-- =========================================================================
+         SEKME 1: GÖSTERGE PANELİ (DASHBOARD)
+         ========================================================================= -->
+    <section id="tab-dashboard" class="tab-content-panel active">
+      <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 14px; margin-bottom: 24px;">
         <div>
-          <div class="section-tag" style="margin-bottom: 6px;">Web Sitesi Entegrasyonu</div>
-          <h3 style="font-size: 1.35rem; margin: 0; color: #FFF;">Sosyal Medya Hesapları Yönetimi</h3>
+          <div class="section-tag">Genel Bakış</div>
+          <h1 style="font-size: 1.85rem; margin-bottom: 6px;">Can Yapı Antalya Yönetim Paneli</h1>
+          <p class="text-muted" style="margin: 0;">Sitenizin aylık ziyaretçi sayısı, telefon-whatsapp etkileşimleri ve içerik istatistikleri.</p>
         </div>
-        <div style="color: var(--text-muted); font-size: 0.84rem; max-width: 480px; text-align: right;">
-          💡 <strong>Kural:</strong> Yalnızca linkini girdiğiniz hesaplar sitenin alt bilgisinde (footer) gösterilir; boş bıraktıklarınız sitede tamamen gizli kalır.
+        <div style="display: flex; gap: 10px;">
+          <button onclick="switchTab('tab-projects')" class="btn btn-sm btn-primary">+ Yeni Proje Ekle</button>
+          <button onclick="switchTab('tab-blog')" class="btn btn-sm btn-outline-orange">+ Yeni Blog Yazısı</button>
         </div>
       </div>
 
-      <form id="socialLinksForm">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-bottom: 22px;">
-          <!-- Instagram -->
-          <div class="form-group">
-            <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
-              <span>📸 Instagram</span>
-              <span id="badgeInstagram" class="badge-status inactive">Gizli</span>
-            </label>
-            <input type="url" id="inputInstagram" class="form-control" placeholder="https://instagram.com/canyapiantalya">
-          </div>
+      <!-- Metrik Kartları -->
+      <div class="metric-grid">
+        <div class="metric-card" style="border-left-color: #8B5CF6;">
+          <span class="metric-title">Aylık Tekil Ziyaretçi</span>
+          <div class="metric-value text-white" id="metricMonthlyVisitors">0</div>
+          <span style="font-size: 0.78rem; color: #A78BFA;" id="metricMonthName">Bu Ay</span>
+        </div>
 
-          <!-- Facebook -->
-          <div class="form-group">
-            <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
-              <span>📘 Facebook</span>
-              <span id="badgeFacebook" class="badge-status inactive">Gizli</span>
-            </label>
-            <input type="url" id="inputFacebook" class="form-control" placeholder="https://facebook.com/canyapiantalya">
-          </div>
+        <div class="metric-card" style="border-left-color: #25D366;">
+          <span class="metric-title">WhatsApp Tıklamaları</span>
+          <div class="metric-value text-white" id="metricWhatsapp">0</div>
+          <span style="font-size: 0.78rem; color: #25D366;">Sohbet Başlatanlar</span>
+        </div>
 
-          <!-- TikTok -->
-          <div class="form-group">
-            <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
-              <span>🎵 TikTok</span>
-              <span id="badgeTiktok" class="badge-status inactive">Gizli</span>
-            </label>
-            <input type="url" id="inputTiktok" class="form-control" placeholder="https://tiktok.com/@canyapiantalya">
-          </div>
+        <div class="metric-card" style="border-left-color: #FF5500;">
+          <span class="metric-title">Telefon Aramaları</span>
+          <div class="metric-value text-white" id="metricPhone">0</div>
+          <span style="font-size: 0.78rem; color: var(--primary-orange);">Bizi Arayın Butonları</span>
+        </div>
 
-          <!-- X (Twitter) -->
-          <div class="form-group">
-            <label class="form-label" style="display: flex; justify-content: space-between; align-items: center;">
-              <span>✖️ X (Twitter)</span>
-              <span id="badgeX" class="badge-status inactive">Gizli</span>
-            </label>
-            <input type="url" id="inputX" class="form-control" placeholder="https://x.com/canyapiantalya">
+        <div class="metric-card" style="border-left-color: #00B0FF;">
+          <span class="metric-title">Toplam Teklif Talebi</span>
+          <div class="metric-value text-white" id="metricForms">0</div>
+          <span style="font-size: 0.78rem; color: #00B0FF;">Form Gönderimleri</span>
+        </div>
+      </div>
+
+      <!-- Hızlı İçerik Durumu -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3 style="font-size: 1.15rem; margin: 0; color: #FFF;">İçerik Durumu ve Hızlı İşlemler</h3>
+          <span class="text-muted" style="font-size: 0.85rem;">Tüm içerikleri ilgili sekmelerden anında güncelleyebilirsiniz.</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+          <div style="padding: 16px; background: #0B0E13; border-radius: 8px; border: 1px solid var(--admin-border);">
+            <div class="text-muted" style="font-size: 0.8rem;">YAYINDAKİ PROJELER</div>
+            <div style="font-size: 1.6rem; font-weight: 700; color: #FFF; margin: 4px 0;" id="countProjects">8</div>
+            <button onclick="switchTab('tab-projects')" class="btn btn-sm btn-outline" style="width: 100%; margin-top: 8px; font-size: 0.78rem;">Projeleri Yönet →</button>
+          </div>
+          <div style="padding: 16px; background: #0B0E13; border-radius: 8px; border: 1px solid var(--admin-border);">
+            <div class="text-muted" style="font-size: 0.8rem;">AKTİF HİZMETLER</div>
+            <div style="font-size: 1.6rem; font-weight: 700; color: #FFF; margin: 4px 0;" id="countServices">8</div>
+            <button onclick="switchTab('tab-services')" class="btn btn-sm btn-outline" style="width: 100%; margin-top: 8px; font-size: 0.78rem;">Hizmetleri Yönet →</button>
+          </div>
+          <div style="padding: 16px; background: #0B0E13; border-radius: 8px; border: 1px solid var(--admin-border);">
+            <div class="text-muted" style="font-size: 0.8rem;">BLOG VE REHBERLER</div>
+            <div style="font-size: 1.6rem; font-weight: 700; color: #FFF; margin: 4px 0;" id="countBlog">2</div>
+            <button onclick="switchTab('tab-blog')" class="btn btn-sm btn-outline" style="width: 100%; margin-top: 8px; font-size: 0.78rem;">Yazıları Yönet →</button>
+          </div>
+          <div style="padding: 16px; background: #0B0E13; border-radius: 8px; border: 1px solid var(--admin-border);">
+            <div class="text-muted" style="font-size: 0.8rem;">YÜKLENEN FOTOĞRAFLAR</div>
+            <div style="font-size: 1.6rem; font-weight: 700; color: #FFF; margin: 4px 0;" id="countMedia">0</div>
+            <button onclick="switchTab('tab-media')" class="btn btn-sm btn-outline" style="width: 100%; margin-top: 8px; font-size: 0.78rem;">Fotoğraf Yükle →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SEKME 2: PROJELERİMİZ YÖNETİMİ
+         ========================================================================= -->
+    <section id="tab-projects" class="tab-content-panel">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <div>
+            <div class="section-tag" style="margin-bottom: 4px;">Portföy</div>
+            <h2 style="font-size: 1.35rem; margin: 0; color: #FFF;">Projelerimiz Yönetimi</h2>
+          </div>
+          <button onclick="openProjectModal()" class="btn btn-primary">
+            <span>+ Yeni Proje Ekle</span>
+          </button>
+        </div>
+
+        <p class="text-muted" style="font-size: 0.88rem; margin-bottom: 18px;">
+          Buraya eklediğiniz projeler web sitesindeki <strong>Projelerimiz</strong> sayfasında ve ana sayfada anında yayınlanır. Fotoğrafı doğrudan telefonunuzdan veya bilgisayarınızdan yükleyebilirsiniz.
+        </p>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 70px;">Görsel</th>
+                <th>Proje Başlığı</th>
+                <th>Kategori</th>
+                <th>Konum</th>
+                <th>Öne Çıkan Özellik</th>
+                <th style="text-align: right;">İşlemler</th>
+              </tr>
+            </thead>
+            <tbody id="projectsTableBody">
+              <!-- JS doldurur -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SEKME 3: HİZMETLER YÖNETİMİ
+         ========================================================================= -->
+    <section id="tab-services" class="tab-content-panel">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <div>
+            <div class="section-tag" style="margin-bottom: 4px;">Hizmet Kataloğu</div>
+            <h2 style="font-size: 1.35rem; margin: 0; color: #FFF;">Hizmetler Yönetimi</h2>
+          </div>
+          <button onclick="openServiceModal()" class="btn btn-primary">
+            <span>+ Yeni Hizmet Ekle</span>
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 70px;">Görsel</th>
+                <th>Hizmet Adı</th>
+                <th>Kısa Açıklama</th>
+                <th>Özellikler</th>
+                <th style="text-align: right;">İşlemler</th>
+              </tr>
+            </thead>
+            <tbody id="servicesTableBody">
+              <!-- JS doldurur -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SEKME 4: BLOG & MAKALELER YÖNETİMİ
+         ========================================================================= -->
+    <section id="tab-blog" class="tab-content-panel">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <div>
+            <div class="section-tag" style="margin-bottom: 4px;">İçerik Pazarlaması & SEO</div>
+            <h2 style="font-size: 1.35rem; margin: 0; color: #FFF;">Blog & Makaleler Yönetimi</h2>
+          </div>
+          <button onclick="openBlogModal()" class="btn btn-primary">
+            <span>+ Yeni Blog Yazısı Ekle</span>
+          </button>
+        </div>
+
+        <p class="text-muted" style="font-size: 0.88rem; margin-bottom: 18px;">
+          Antalya tadilat rehberleri, çatı yalıtımı ipuçları ve villa yenileme içeriklerini buradan yayınlayarak Google aramalarında sitenizin en üst sıralara çıkmasını sağlayabilirsiniz.
+        </p>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 70px;">Kapak</th>
+                <th>Yazı Başlığı</th>
+                <th>Kategori</th>
+                <th>Tarih</th>
+                <th>Durum</th>
+                <th style="text-align: right;">İşlemler</th>
+              </tr>
+            </thead>
+            <tbody id="blogTableBody">
+              <!-- JS doldurur -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SEKME 5: SİTE METİNLERİ & İLETİŞİM
+         ========================================================================= -->
+    <section id="tab-texts" class="tab-content-panel">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <div>
+            <div class="section-tag" style="margin-bottom: 4px;">Metin & İletişim Editörü</div>
+            <h2 style="font-size: 1.35rem; margin: 0; color: #FFF;">Sitedeki Bütün Yazıları & İletişim Bilgilerini Düzenle</h2>
+          </div>
+          <button id="saveSiteTextsBtn" class="btn btn-primary">
+            <span>Değişiklikleri Kaydet & Yayınla</span>
+          </button>
+        </div>
+
+        <form id="siteTextsForm">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+            <!-- İletişim Bilgileri -->
+            <div style="background: #0B0E13; padding: 20px; border-radius: 8px; border: 1px solid var(--admin-border);">
+              <h4 style="color: var(--primary-orange); margin-bottom: 16px; font-size: 1rem;">📞 İletişim ve Adres Bilgileri</h4>
+
+              <div class="form-group" style="margin-bottom: 14px;">
+                <label class="form-label">Telefon Numarası (Görünen)</label>
+                <input type="text" id="settingPhone" class="form-control" value="0545 832 01 90">
+              </div>
+
+              <div class="form-group" style="margin-bottom: 14px;">
+                <label class="form-label">WhatsApp Numarası (Görünen)</label>
+                <input type="text" id="settingWhatsapp" class="form-control" value="0545 832 01 90">
+              </div>
+
+              <div class="form-group" style="margin-bottom: 14px;">
+                <label class="form-label">E-Posta Adresi</label>
+                <input type="email" id="settingEmail" class="form-control" value="info@canyapiantalya.com">
+              </div>
+
+              <div class="form-group" style="margin-bottom: 14px;">
+                <label class="form-label">Açık Adres / Bölge</label>
+                <input type="text" id="settingAddress" class="form-control" value="Muratpaşa, Antalya">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Çalışma Saatleri</label>
+                <input type="text" id="settingWorkingHours" class="form-control" value="Pazartesi - Cumartesi: 08:30 - 19:30">
+              </div>
+            </div>
+
+            <!-- Ana Sayfa & Hero Metinleri -->
+            <div style="background: #0B0E13; padding: 20px; border-radius: 8px; border: 1px solid var(--admin-border);">
+              <h4 style="color: var(--primary-orange); margin-bottom: 16px; font-size: 1rem;">🏠 Ana Sayfa & Başlık Alanı</h4>
+
+              <div class="form-group" style="margin-bottom: 14px;">
+                <label class="form-label">Ana Sayfa Büyük Başlık (Hero Title)</label>
+                <input type="text" id="settingHeroTitle" class="form-control" value="Antalya'da Hayalinizdeki Yaşam Alanlarını İnşa Ediyoruz">
+              </div>
+
+              <div class="form-group" style="margin-bottom: 14px;">
+                <label class="form-label">Ana Sayfa Açıklama Cümlesi (Hero Subtitle)</label>
+                <textarea id="settingHeroSubtitle" class="form-control" rows="3">15+ yıllık tecrübemizle anahtar teslim villa tadilatı, modern mutfak & banyo yenileme, çatı tamiri ve hafif çelik prefabrik yapılar.</textarea>
+              </div>
+
+              <div class="form-group" style="margin-bottom: 14px;">
+                <label class="form-label">Hakkımızda Başlığı</label>
+                <input type="text" id="settingAboutTitle" class="form-control" value="15+ Yıllık Tecrübeyle Yaşam Alanlarınıza Değer Katıyoruz">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Hakkımızda Özet Metni</label>
+                <textarea id="settingAboutExcerpt" class="form-control" rows="3">Can Yapı Antalya olarak, 15 yılı aşkın tecrübemizle evlerinizi, villalarınızı ve yaşam alanlarınızı ihtiyaçlarınıza uygun, estetik ve kullanışlı mekânlara dönüştürmek için çalışıyoruz.</textarea>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SEKME 6: FOTOĞRAF / MEDYA YÜKLEYİCİ
+         ========================================================================= -->
+    <section id="tab-media" class="tab-content-panel">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <div>
+            <div class="section-tag" style="margin-bottom: 4px;">Medya Kütüphanesi</div>
+            <h2 style="font-size: 1.35rem; margin: 0; color: #FFF;">Fotoğraf Yükle ve Yönet</h2>
+          </div>
+          <span class="text-muted" style="font-size: 0.85rem;">Şantiyeden çektiğiniz fotoğrafları doğrudan buradan yükleyebilirsiniz.</span>
+        </div>
+
+        <!-- Sürükle Bırak Yükleme Alanı -->
+        <div id="mediaDropzone" class="dropzone-area">
+          <input type="file" id="mediaFileInput" accept="image/*" style="display:none;" multiple>
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color: var(--primary-orange); margin-bottom: 10px;">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <div style="font-weight: 700; color: #FFF; font-size: 1.05rem; margin-bottom: 4px;">Fotoğrafları Buraya Sürükleyin veya Tıklayın</div>
+          <p class="text-muted" style="font-size: 0.84rem; margin: 0;">JPG, PNG, WEBP formatları desteklenir. Yüklenen fotoğraflar projelerde ve blogda kullanılabilir.</p>
+        </div>
+
+        <!-- Yüklenen Fotoğraflar Listesi -->
+        <h4 style="margin: 26px 0 12px; font-size: 1rem; color: #FFF;">Yüklenen Görseller</h4>
+        <div id="mediaGalleryContainer" class="media-grid">
+          <!-- JS doldurur -->
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SEKME 7: SOSYAL MEDYA
+         ========================================================================= -->
+    <section id="tab-social" class="tab-content-panel">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <div>
+            <div class="section-tag" style="margin-bottom: 4px;">Entegrasyon</div>
+            <h2 style="font-size: 1.35rem; margin: 0; color: #FFF;">Sosyal Medya Hesapları Yönetimi</h2>
+          </div>
+          <div style="color: var(--text-muted); font-size: 0.84rem;">
+            💡 Yalnızca linkini girdiğiniz hesaplar footer'da gösterilir, boş bıraktıklarınız otomatik gizlenir.
           </div>
         </div>
 
-        <div style="display: flex; justify-content: flex-end;">
-          <button type="submit" class="btn btn-primary" style="padding: 11px 24px;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            <span>Bağlantıları Kaydet ve Yayınla</span>
-          </button>
+        <form id="socialLinksForm">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-bottom: 22px;">
+            <div class="form-group">
+              <label class="form-label" style="display: flex; justify-content: space-between;">
+                <span>📸 Instagram</span>
+                <span id="badgeInstagram" class="badge-status inactive">Gizli</span>
+              </label>
+              <input type="url" id="inputInstagram" class="form-control" placeholder="https://instagram.com/canyapiantalya">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" style="display: flex; justify-content: space-between;">
+                <span>📘 Facebook</span>
+                <span id="badgeFacebook" class="badge-status inactive">Gizli</span>
+              </label>
+              <input type="url" id="inputFacebook" class="form-control" placeholder="https://facebook.com/canyapiantalya">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" style="display: flex; justify-content: space-between;">
+                <span>🎵 TikTok</span>
+                <span id="badgeTiktok" class="badge-status inactive">Gizli</span>
+              </label>
+              <input type="url" id="inputTiktok" class="form-control" placeholder="https://tiktok.com/@canyapiantalya">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" style="display: flex; justify-content: space-between;">
+                <span>✖️ X (Twitter)</span>
+                <span id="badgeX" class="badge-status inactive">Gizli</span>
+              </label>
+              <input type="url" id="inputX" class="form-control" placeholder="https://x.com/canyapiantalya">
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end;">
+            <button type="submit" class="btn btn-primary" style="padding: 11px 24px;">
+              <span>Sosyal Medya Linklerini Kaydet</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SEKME 8: GELEN TALEPLER & CRM
+         ========================================================================= -->
+    <section id="tab-leads" class="tab-content-panel">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <div>
+            <div class="section-tag" style="margin-bottom: 4px;">Müşteri İletişimleri</div>
+            <h2 style="font-size: 1.35rem; margin: 0; color: #FFF;">Gelen Teklif & Keşif Talepleri</h2>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button id="exportCsvBtn" class="btn btn-sm btn-outline">Excel / CSV İndir</button>
+            <button id="resetMetricsBtn" class="btn btn-sm btn-outline" style="color: #FF5555; border-color: rgba(255,85,85,0.3);">Sayaçları Sıfırla</button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Talep ID</th>
+                <th>Tarih</th>
+                <th>Müşteri & Telefon</th>
+                <th>Hizmet Türü</th>
+                <th>Konum</th>
+                <th>Keşif</th>
+                <th>Durum</th>
+                <th>İşlemler</th>
+              </tr>
+            </thead>
+            <tbody id="leadsTableBody">
+              <!-- JS doldurur -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       MODAL: PROJE EKLE / DÜZENLE
+       ========================================================================= -->
+  <div id="projectModal" class="cms-modal-overlay hidden">
+    <div class="cms-modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 id="projectModalTitle" style="margin: 0; font-size: 1.3rem; color: #FFF;">Yeni Proje Ekle</h3>
+        <button onclick="closeProjectModal()" style="background: none; border: none; color: #94A3B8; font-size: 1.5rem; cursor: pointer;">✕</button>
+      </div>
+
+      <form id="projectForm">
+        <input type="hidden" id="projId">
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Proje Başlığı *</label>
+          <input type="text" id="projTitle" class="form-control" placeholder="Örn: Lara Rezidans Mutfak & Salon" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+          <div class="form-group">
+            <label class="form-label">Kategori *</label>
+            <select id="projCategory" class="form-control">
+              <option value="Mutfak">Mutfak</option>
+              <option value="Banyo">Banyo</option>
+              <option value="Tadilat">Komple Tadilat</option>
+              <option value="Prefabrik">Prefabrik / Çelik Villa</option>
+              <option value="Seramik">Seramik & Zemin</option>
+              <option value="Çatı">Çatı & Mantolama</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Konum *</label>
+            <input type="text" id="projLocation" class="form-control" placeholder="Örn: Muratpaşa / Antalya" required>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Proje Görseli * (Fotoğraf Yükleyin veya Yol Girin)</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="projImage" class="form-control" placeholder="images/real/proje-luks-mutfak.jpg" required>
+            <label class="btn btn-sm btn-outline-orange" style="margin: 0; display: flex; align-items: center; cursor: pointer; white-space: nowrap;">
+              <span>Fotoğraf Seç</span>
+              <input type="file" id="projImageFile" accept="image/*" style="display: none;">
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Proje Açıklaması</label>
+          <textarea id="projDesc" class="form-control" rows="3" placeholder="Projenin detayları, yapılan işlemler..."></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
+          <div class="form-group">
+            <label class="form-label">Öne Çıkan Özellik (Madde 1)</label>
+            <input type="text" id="projSpec1" class="form-control" placeholder="Örn: ✓ Kuvars & Akrilik Lake">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Teslim Süresi / Durumu (Madde 2)</label>
+            <input type="text" id="projSpec2" class="form-control" placeholder="Örn: 18 Günde Tamamlandı">
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button type="button" onclick="closeProjectModal()" class="btn btn-outline">İptal</button>
+          <button type="submit" class="btn btn-primary">Kaydet & Yayınla</button>
         </div>
       </form>
     </div>
+  </div>
 
-    <!-- Gelen Talepler Tablosu -->
-    <div style="margin-top: 40px;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; flex-wrap: wrap; gap: 10px;">
-        <h3 style="font-size: 1.3rem;">Gelen Teklif & Keşif Talepleri</h3>
-        <span class="text-muted" style="font-size: 0.85rem;">Veriler güvenli yerel depolama ve Google dataLayer ile takip edilir.</span>
+  <!-- =========================================================================
+       MODAL: HİZMET EKLE / DÜZENLE
+       ========================================================================= -->
+  <div id="serviceModal" class="cms-modal-overlay hidden">
+    <div class="cms-modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 id="serviceModalTitle" style="margin: 0; font-size: 1.3rem; color: #FFF;">Hizmet Düzenle / Ekle</h3>
+        <button onclick="closeServiceModal()" style="background: none; border: none; color: #94A3B8; font-size: 1.5rem; cursor: pointer;">✕</button>
       </div>
 
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Talep ID</th>
-              <th>Tarih</th>
-              <th>Müşteri & Telefon</th>
-              <th>Hizmet Türü</th>
-              <th>Konum</th>
-              <th>Keşif</th>
-              <th>Durum</th>
-              <th>İşlemler</th>
-            </tr>
-          </thead>
-          <tbody id="leadsTableBody">
-            <!-- JavaScript ile doldurulur -->
-          </tbody>
-        </table>
-      </div>
+      <form id="serviceForm">
+        <input type="hidden" id="servId">
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Hizmet Adı *</label>
+          <input type="text" id="servTitle" class="form-control" placeholder="Örn: Mutfak Tadilatı" required>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Hizmet Görseli (Fotoğraf Yükleyin veya Yol Girin)</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="servImage" class="form-control" placeholder="images/services/mutfak/mutfak-1.jpg" required>
+            <label class="btn btn-sm btn-outline-orange" style="margin: 0; display: flex; align-items: center; cursor: pointer; white-space: nowrap;">
+              <span>Fotoğraf Seç</span>
+              <input type="file" id="servImageFile" accept="image/*" style="display: none;">
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Kısa Açıklama (Kartlarda Görünür)</label>
+          <textarea id="servShortDesc" class="form-control" rows="2" placeholder="Özet açıklama..." required></textarea>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Detaylı Açıklama</label>
+          <textarea id="servFullDesc" class="form-control" rows="3" placeholder="Detaylı hizmet içeriği..."></textarea>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label class="form-label">Hizmet Özellikleri (Virgülle Ayırın)</label>
+          <input type="text" id="servFeatures" class="form-control" placeholder="Örn: Kişiye Özel Dolap İmalatı, Kuvars Tezgah, 5 Yıl Garanti">
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button type="button" onclick="closeServiceModal()" class="btn btn-outline">İptal</button>
+          <button type="submit" class="btn btn-primary">Kaydet & Yayınla</button>
+        </div>
+      </form>
     </div>
+  </div>
 
-    <!-- Olay Geçmişi (Event Log) -->
-    <div style="margin-top: 50px;">
-      <h3 style="font-size: 1.15rem; margin-bottom: 12px;">Son Ziyaretçi Etkileşim Geçmişi (Google Analytics & dataLayer Log)</h3>
-      <div class="table-responsive" style="max-height: 250px;">
-        <table>
-          <thead>
-            <tr>
-              <th>Olay Adı</th>
-              <th>Detaylar</th>
-              <th>Zaman Damgası</th>
-            </tr>
-          </thead>
-          <tbody id="historyList">
-            <!-- JS doldurur -->
-          </tbody>
-        </table>
+  <!-- =========================================================================
+       MODAL: BLOG YAZISI EKLE / DÜZENLE
+       ========================================================================= -->
+  <div id="blogModal" class="cms-modal-overlay hidden">
+    <div class="cms-modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 id="blogModalTitle" style="margin: 0; font-size: 1.3rem; color: #FFF;">Yeni Blog Yazısı Ekle</h3>
+        <button onclick="closeBlogModal()" style="background: none; border: none; color: #94A3B8; font-size: 1.5rem; cursor: pointer;">✕</button>
       </div>
+
+      <form id="blogForm">
+        <input type="hidden" id="blogId">
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Yazı Başlığı *</label>
+          <input type="text" id="blogTitle" class="form-control" placeholder="Örn: Antalya'da Ev Tadilatı Yaparken Nelere Dikkat Edilmeli?" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+          <div class="form-group">
+            <label class="form-label">Kategori</label>
+            <input type="text" id="blogCategory" class="form-control" placeholder="Örn: Tadilat Rehberi">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Yayın Durumu</label>
+            <select id="blogStatus" class="form-control">
+              <option value="published">Yayında (Sitede Görünür)</option>
+              <option value="draft">Taslak (Gizli)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Kapak Görseli * (Fotoğraf Yükleyin veya Yol Girin)</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="blogCoverImage" class="form-control" placeholder="images/real/proje-luks-mutfak.jpg" required>
+            <label class="btn btn-sm btn-outline-orange" style="margin: 0; display: flex; align-items: center; cursor: pointer; white-space: nowrap;">
+              <span>Fotoğraf Seç</span>
+              <input type="file" id="blogCoverFile" accept="image/*" style="display: none;">
+            </label>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 14px;">
+          <label class="form-label">Özet / Giriş Cümlesi *</label>
+          <textarea id="blogExcerpt" class="form-control" rows="2" placeholder="Yazının kısa özeti..." required></textarea>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label class="form-label">Yazı İçeriği (Paragraflar & Başlıklar)</label>
+          <textarea id="blogContent" class="form-control" rows="6" placeholder="Yazınızı buraya yazabilirsiniz. Alt başlıklar ve paragraflar oluşturabilirsiniz..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px;">
+          <button type="button" onclick="closeBlogModal()" class="btn btn-outline">İptal</button>
+          <button type="submit" class="btn btn-primary">Kaydet & Yayınla</button>
+        </div>
+      </form>
     </div>
-  </main>
+  </div>
 
   <script src="js/analytics.js"></script>
+  <script src="js/cms-client.js"></script>
   <script src="js/main.js"></script>
   <script src="js/admin.js"></script>
-  <script>
-    function createSampleLead() {
-      const sample = {
-        id: 'CY-' + Math.floor(100000 + Math.random() * 900000),
-        name: 'Deniz Ersoy',
-        phone: '0545 832 01 90',
-        service: 'Komple Ev Tadilatı',
-        location: 'Konyaaltı / Antalya',
-        notes: '130 m2 3+1 dairenin mutfak, banyo ve parkeleri sıfırdan yenilenecek. Yerinde keşif rica ediyoruz.',
-        isDiscovery: true,
-        files: [{ name: 'daire-plan.pdf', size: '1.4 MB' }],
-        date: new Date().toLocaleString('tr-TR'),
-        status: 'Yeni'
-      };
-
-      const leads = JSON.parse(localStorage.getItem('canyapi_leads') || '[]');
-      leads.unshift(sample);
-      localStorage.setItem('canyapi_leads', JSON.stringify(leads));
-
-      // Sayaç artır
-      if (window.CanYapiAnalytics) {
-        window.CanYapiAnalytics.track('quote_form_submit', { service: 'Komple Ev Tadilatı', isDiscovery: true });
-      }
-
-      location.reload();
-    }
-  </script>
 </body>
 </html>

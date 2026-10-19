@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tadilat & İnşaat Rehberi | Can Yapı Antalya Blog</title>
+  <meta name="description" content="Antalya ev tadilatı, mutfak & banyo yenileme, çatı tamiri, mantolama ve prefabrik yapı ipuçları. Can Yapı uzmanlığında güncel rehberler.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FF5500'/><text x='50%' y='68%' font-size='60' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>CY</text></svg>">
+  <style>
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+      margin-top: 24px;
+    }
+    .blog-card {
+      background: var(--bg-dark-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .blog-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--border-orange);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+    }
+    .blog-thumb {
+      aspect-ratio: 16/10;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    .blog-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .blog-card:hover .blog-thumb img {
+      transform: scale(1.05);
+    }
+    .blog-category-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(10, 10, 11, 0.85);
+      backdrop-filter: blur(6px);
+      color: var(--primary-orange);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border-orange);
+    }
+    .blog-body {
+      padding: 22px 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .blog-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .blog-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 12px;
+      color: #FFF;
+      font-family: var(--font-heading);
+    }
+    .blog-excerpt {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 18px;
+      flex-grow: 1;
+    }
+    .blog-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--primary-orange);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: gap 0.2s ease;
+    }
+    .blog-link:hover {
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Üst Bilgi Çubuğu (Top Bar) -->
+  <div class="top-bar">
+    <div class="container top-bar-inner">
+      <div class="top-bar-left">
+        <span class="location-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Antalya & Çevresi
+        </span>
+        <span class="experience-badge">15+ Yıl Saha Tecrübesi</span>
+      </div>
+      <div class="top-bar-right">
+        <a href="tel:+905458320190" class="top-phone js-track-phone" data-track-source="topbar_phone">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>0545 832 01 90</span>
+        </a>
+        <a href="https://wa.me/905458320190?text=Merhaba,%20blog%20yazilarinizi%20inceledim,%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" class="top-whatsapp js-track-whatsapp" data-track-source="topbar_whatsapp">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+          <span>WhatsApp Destek</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ana Navigasyon (Header) -->
+  <header class="main-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="index.html" class="logo" aria-label="Can Yapı Antalya">
+          <img src="images/logo-dark-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 48px;">
+          <img src="images/logo-light-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-light" style="height: 48px;">
+        </a>
+
+        <nav class="nav-menu">
+          <a href="index.html" class="nav-link">Ana Sayfa</a>
+          <a href="hakkimizda.html" class="nav-link">Hakkımızda</a>
+          
+          <div class="nav-dropdown">
+            <a href="hizmetler.html" class="nav-link dropdown-toggle">
+              <span>Hizmetlerimiz</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </a>
+            <div class="dropdown-menu">
+              <a href="hizmet-mutfak.html" class="dropdown-item">Mutfak Tadilatı & Tasarım</a>
+              <a href="hizmet-banyo.html" class="dropdown-item">Banyo & Islak Zemin Yenileme</a>
+              <a href="hizmet-seramik-fayans.html" class="dropdown-item">Seramik, Granit & Fayans</a>
+              <a href="hizmet-boya.html" class="dropdown-item">Boya, Badana & Alçıpan</a>
+              <a href="hizmet-mantolama.html" class="dropdown-item">Dış Cephe Mantolama & Yalıtım</a>
+              <a href="hizmet-cati.html" class="dropdown-item">Çatı Onarımı & İzolasyon</a>
+              <a href="hizmet-tadilat.html" class="dropdown-item">Komple Ev & Villa Tadilatı</a>
+              <a href="hizmet-prefabrik.html" class="dropdown-item">Prefabrik Yapı & Çelik Ev</a>
+            </div>
+          </div>
+
+          <a href="projeler.html" class="nav-link">Projelerimiz</a>
+          <a href="blog.html" class="nav-link active">Blog</a>
+          <a href="ucretsiz-kesif.html" class="nav-link">Ücretsiz Keşif</a>
+          <a href="iletisim.html" class="nav-link">İletişim</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="theme-toggle-btn js-theme-toggle" aria-label="Açık/Koyu Tema" title="Açık/Koyu Tema Değiştir">
+            ☀️ <span>Açık</span>
+          </button>
+          <button class="btn btn-primary js-open-quote-modal" data-service="Genel Teklif">
+            <span>Teklif Alın</span>
+          </button>
+          <button class="hamburger-btn" aria-label="Menüyü Aç">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobil Menü Çekmecesi -->
+  <div class="mobile-nav-overlay"></div>
+  <div class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <a href="index.html" class="logo" aria-label="Can Yapı Antalya">
+        <img src="images/logo-dark-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 42px;">
+      </a>
+      <button class="mobile-close-btn" aria-label="Menüyü Kapat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="mobile-nav-list">
+      <a href="index.html" class="mobile-nav-link">Ana Sayfa</a>
+      <a href="hakkimizda.html" class="mobile-nav-link">Hakkımızda</a>
+      <a href="hizmetler.html" class="mobile-nav-link">Hizmetlerimiz</a>
+      <a href="projeler.html" class="mobile-nav-link">Projelerimiz</a>
+      <a href="blog.html" class="mobile-nav-link active">Blog & Rehber</a>
+      <a href="ucretsiz-kesif.html" class="mobile-nav-link">Ücretsiz Keşif</a>
+      <a href="iletisim.html" class="mobile-nav-link">İletişim</a>
+    </div>
+  </div>
+
+  <!-- Hero Başlık Alanı -->
+  <section class="hero" style="padding: 54px 0 24px;">
+    <div class="container text-center">
+      <div class="section-tag" style="margin: 0 auto 16px;">Tadilat & Yapı Rehberi</div>
+      <h1 class="hero-title" style="margin: 0 auto 16px; max-width: 800px;">
+        Antalya İçin Uzman <span class="highlight">Yapı & Tadilat İpuçları</span>
+      </h1>
+      <p class="hero-description" style="margin: 0 auto 28px; max-width: 680px;">
+        15 yılı aşkın saha tecrübemizle Akdeniz iklimine uygun malzeme seçimi, usta tavsiyeleri ve yenileme rehberleri.
+      </p>
+    </div>
+  </section>
+
+  <!-- Blog Listesi -->
+  <section class="blog-section" style="background: var(--bg-dark); padding: 20px 0 80px;">
+    <div class="container">
+      <div id="blogCardsContainer" class="blog-grid">
+        <!-- Varsayılan Kart 1 -->
+        <article class="blog-card">
+          <div class="blog-thumb">
+            <img src="images/real/proje-luks-mutfak.jpg" alt="Antalya'da Ev Tadilatı Yaparken Nelere Dikkat Edilmeli?">
+            <span class="blog-category-badge">Tadilat Rehberi</span>
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <span>📅 19 Ekim 2026</span>
+              <span>⏱️ 4 dk okuma</span>
+            </div>
+            <h2 class="blog-title">Antalya'da Ev Tadilatı Yaparken Nelere Dikkat Edilmeli?</h2>
+            <p class="blog-excerpt">Akdeniz ikliminin yüksek nem ve sıcaklık şartlarında doğru malzeme seçimi, su yalıtımı ve anahtar teslim tadilatta dikkat edilmesi gereken altın kurallar.</p>
+            <a href="blog-detay.html?slug=antalyada-ev-tadilati-yaparken-nelere-dikkat-edilmeli" class="blog-link">
+              <span>Devamını Oku</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <!-- Varsayılan Kart 2 -->
+        <article class="blog-card">
+          <div class="blog-thumb">
+            <img src="images/real/cati-tamiri-gercek.jpg" alt="Antalya Çatı Tamiri ve Su İzolasyonunda Kalıcı Çözümler">
+            <span class="blog-category-badge">Çatı & İzolasyon</span>
+          </div>
+          <div class="blog-body">
+            <div class="blog-meta">
+              <span>📅 15 Ekim 2026</span>
+              <span>⏱️ 3 dk okuma</span>
+            </div>
+            <h2 class="blog-title">Antalya Çatı Tamiri ve Su İzolasyonunda Kalıcı Çözümler</h2>
+            <p class="blog-excerpt">Kış aylarında yaşanan şiddetli fırtına ve yağmurlarda tavan akmalarını önlemek için kiremit aktarma ve membran kaplama yöntemleri.</p>
+            <a href="blog-detay.html?slug=antalya-cati-tamiri-ve-su-izolasyonu" class="blog-link">
+              <span>Devamını Oku</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Alt Bilgi (Footer) -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <img src="images/logo-dark-mode.png" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 48px; margin-bottom: 16px;">
+          <p class="footer-text">
+            Antalya ve çevresinde 15 yılı aşkın tecrübeyle anahtar teslim tadilat, lüks mutfak & banyo yenileme, çatı yalıtımı ve prefabrik yapı çözümleri sunuyoruz.
+          </p>
+          <div class="footer-social-links" id="footerSocialLinks"></div>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-title">Hizmetlerimiz</h4>
+          <ul class="footer-links">
+            <li><a href="hizmet-mutfak.html">Mutfak Tadilatı</a></li>
+            <li><a href="hizmet-banyo.html">Banyo & Islak Zemin</a></li>
+            <li><a href="hizmet-seramik-fayans.html">Seramik & Granit</a></li>
+            <li><a href="hizmet-boya.html">Boya & Badana</a></li>
+            <li><a href="hizmet-mantolama.html">Dış Cephe Mantolama</a></li>
+            <li><a href="hizmet-cati.html">Çatı Tamiri & İzolasyon</a></li>
+            <li><a href="hizmet-prefabrik.html">Prefabrik Villa</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-title">Hızlı Bağlantılar</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Ana Sayfa</a></li>
+            <li><a href="hakkimizda.html">Hakkımızda</a></li>
+            <li><a href="projeler.html">Projelerimiz</a></li>
+            <li><a href="blog.html">Blog & Rehber</a></li>
+            <li><a href="ucretsiz-kesif.html">Ücretsiz Keşif</a></li>
+            <li><a href="iletisim.html">İletişim</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-title">İletişim</h4>
+          <ul class="footer-links">
+            <li><a href="tel:+905458320190">0545 832 01 90</a></li>
+            <li><a href="https://wa.me/905458320190">WhatsApp Hattı</a></li>
+            <li><span>Muratpaşa / Antalya</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Can Yapı Antalya. Tüm Hakları Saklıdır.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/analytics.js"></script>
+  <script src="js/cms-client.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Dinamik Blog Yükleme (CMS)
+    document.addEventListener('DOMContentLoaded', async function() {
+      if (window.CmsClient) {
+        try {
+          const blogPosts = await window.CmsClient.getBlogPosts();
+          if (blogPosts && blogPosts.length > 0) {
+            const container = document.getElementById('blogCardsContainer');
+            if (container) {
+              container.innerHTML = blogPosts.map(b => `
+                <article class="blog-card">
+                  <div class="blog-thumb">
+                    <img src="${b.coverImage || 'images/real/proje-luks-mutfak.jpg'}" alt="${b.title}" loading="lazy" onerror="this.src='images/real/proje-luks-mutfak.jpg'">
+                    <span class="blog-category-badge">${b.category || 'Rehber'}</span>
+                  </div>
+                  <div class="blog-body">
+                    <div class="blog-meta">
+                      <span>📅 ${b.date || 'Ekim 2026'}</span>
+                      <span>⏱️ ${b.readTime || '3 dk okuma'}</span>
+                    </div>
+                    <h2 class="blog-title">${b.title}</h2>
+                    <p class="blog-excerpt">${b.excerpt || ''}</p>
+                    <a href="blog-detay.html?slug=${b.slug}" class="blog-link">
+                      <span>Devamını Oku</span>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                    </a>
+                  </div>
+                </article>
+              `).join('');
+            }
+          }
+        } catch (e) {
+          console.warn('Dinamik blog yükleme hatası:', e);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

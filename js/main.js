@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initForms();
   initCounters();
   initGalleryLightbox();
+  initDynamicCmsContent();
 });
 
 /* ==========================================================================
@@ -685,4 +686,87 @@ function initGalleryLightbox() {
       }
     });
   });
+}
+
+/* ==========================================================================
+   DYNAMIC CMS CONTENT SYNC (Projects, Blog Nav, Site Texts)
+   ========================================================================== */
+async function initDynamicCmsContent() {
+  // Blog bağlantısını menülere dinamik olarak ekle (yoksa)
+  const navMenus = document.querySelectorAll('.nav-menu, .mobile-nav-list');
+  navMenus.forEach(menu => {
+    if (!menu.querySelector('a[href="blog.html"]')) {
+      const projLink = menu.querySelector('a[href="projeler.html"]');
+      const blogLink = document.createElement('a');
+      blogLink.href = 'blog.html';
+      blogLink.className = menu.classList.contains('mobile-nav-list') ? 'mobile-nav-link' : 'nav-link';
+      blogLink.textContent = menu.classList.contains('mobile-nav-list') ? 'Blog & Rehber' : 'Blog';
+      
+      const currentPath = window.location.pathname;
+      if (currentPath.includes('blog.html') || currentPath.includes('blog-detay.html')) {
+        blogLink.classList.add('active');
+      }
+
+      if (projLink && projLink.nextSibling) {
+        menu.insertBefore(blogLink, projLink.nextSibling);
+      } else {
+        menu.appendChild(blogLink);
+      }
+    }
+  });
+
+  if (!window.CmsClient) return;
+
+  // Projeler Sayfasında Dinamik Listeleme
+  const projectsGrid = document.querySelector('.projects-grid');
+  if (projectsGrid && window.location.pathname.includes('projeler.html')) {
+    try {
+      const projects = await window.CmsClient.getProjects();
+      if (projects && projects.length > 0) {
+        projectsGrid.innerHTML = projects.map(p => {
+          const specsHtml = (p.specs || []).map(s => `
+            <div class="spec-row">
+              <span class="spec-label">${s.label}</span>
+              <span class="spec-val ${s.isPassed ? 'badge-passed' : ''}">${s.val}</span>
+            </div>
+          `).join('');
+
+          return `
+            <div class="project-card">
+              <div class="project-thumb">
+                <img src="${p.image || 'images/real/proje-luks-mutfak.jpg'}" alt="${p.title}" loading="lazy" onerror="this.src='images/real/proje-luks-mutfak.jpg'">
+              </div>
+              <div class="project-spec-table">
+                <div class="spec-header">
+                  <h4>${p.title}</h4>
+                  <span class="spec-location">${p.location || 'Antalya'}</span>
+                </div>
+                ${specsHtml}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    } catch (err) {
+      console.warn('Dinamik proje listeleme:', err);
+    }
+  }
+
+  // Genel Site Metinleri (Hero vb.) Senkronizasyonu
+  try {
+    const settings = await window.CmsClient.getSettings();
+    if (settings) {
+      if (settings.phone) {
+        document.querySelectorAll('.top-phone span, .contact-phone-display').forEach(el => el.textContent = settings.phone);
+      }
+      if (settings.heroTitle) {
+        const heroTitle = document.querySelector('.hero-title-main');
+        if (heroTitle) heroTitle.innerHTML = settings.heroTitle;
+      }
+      if (settings.heroSubtitle) {
+        const heroSub = document.querySelector('.hero-desc-main');
+        if (heroSub) heroSub.textContent = settings.heroSubtitle;
+      }
+    }
+  } catch (e) {}
 }

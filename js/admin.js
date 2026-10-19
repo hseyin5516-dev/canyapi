@@ -1,5 +1,8 @@
 /**
- * Can Yapı Antalya - Form, Ölçümleme & Sosyal Medya Yönetim Paneli (Lead & Analytics Admin)
+ * Can Yapı Antalya - Kurumsal İçerik & Talep Yönetim Paneli (CMS)
+ * 
+ * Hosting üzerinde PHP API ile tam entegre çalışır.
+ * Projeler, Hizmetler, Blog, Site Metinleri ve Fotoğraf Yükleyici modüllerini yönetir.
  */
 
 const ADMIN_CREDENTIALS = {
@@ -7,10 +10,15 @@ const ADMIN_CREDENTIALS = {
   passwords: ['05458320190', '5458320190']
 };
 
-document.addEventListener('DOMContentLoaded', function() {
+let currentProjects = [];
+let currentServices = [];
+let currentBlog = [];
+let currentSettings = {};
+
+document.addEventListener('DOMContentLoaded', async function() {
   initAdminAuth();
   if (isUserAuthenticated()) {
-    initDashboard();
+    await initCmsDashboard();
   }
 });
 
@@ -34,16 +42,27 @@ function initAdminAuth() {
   }
 
   if (loginForm) {
-    loginForm.addEventListener('submit', function(e) {
+    loginForm.addEventListener('submit', async function(e) {
       e.preventDefault();
       const user = document.getElementById('adminUsername')?.value.trim().toLowerCase();
       const pass = document.getElementById('adminPassword')?.value.trim();
 
       if (user === ADMIN_CREDENTIALS.username && ADMIN_CREDENTIALS.passwords.includes(pass)) {
         sessionStorage.setItem('canyapi_admin_auth', 'true');
+        sessionStorage.setItem('canyapi_cms_token', pass);
+
+        // PHP Auth API'sine de bildirmeyi dene
+        try {
+          await fetch('api/auth.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: user, password: pass })
+          });
+        } catch (err) {}
+
         if (errorMsg) errorMsg.style.display = 'none';
         if (overlay) overlay.classList.add('hidden');
-        initDashboard();
+        await initCmsDashboard();
         window.showToast?.('Yönetim paneline başarıyla giriş yapıldı.', 'success');
       } else {
         if (errorMsg) {
@@ -55,8 +74,17 @@ function initAdminAuth() {
   }
 
   if (logoutBtn) {
-    logoutBtn.addEventListener('click', function() {
+    logoutBtn.addEventListener('click', async function() {
       sessionStorage.removeItem('canyapi_admin_auth');
+      sessionStorage.removeItem('canyapi_cms_token');
+      try {
+        await fetch('api/auth.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'logout' })
+        });
+      } catch (err) {}
+
       if (overlay) {
         overlay.classList.remove('hidden');
         const passInput = document.getElementById('adminPassword');
@@ -68,63 +96,613 @@ function initAdminAuth() {
 }
 
 /* ==========================================================================
-   2. DASHBOARD BAŞLATMA & VERİ YÜKLEME
+   2. DASHBOARD BAŞLATMA & SEKME YÖNETİMİ
    ========================================================================== */
-function initDashboard() {
+async function initCmsDashboard() {
+  setupTabs();
+  checkApiConnection();
   loadMetrics();
-  loadLeads();
-  loadSocialSettings();
+  await loadAllData();
+  setupEventListeners();
+}
+
+function setupTabs() {
+  const tabs = document.querySelectorAll('.nav-tab-btn');
+  tabs.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const tabId = this.getAttribute('data-tab');
+      switchTab(tabId);
+    });
+  });
+
+  // Son aktif sekmeyi hatırla
+  const lastTab = localStorage.getItem('canyapi_active_tab') || 'tab-dashboard';
+  switchTab(lastTab);
+}
+
+window.switchTab = function(tabId) {
+  const targetBtn = document.querySelector(`.nav-tab-btn[data-tab="${tabId}"]`);
+  const targetPanel = document.getElementById(tabId);
+  if (!targetPanel) return;
+
+  document.querySelectorAll('.nav-tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-content-panel').forEach(p => p.classList.remove('active'));
+
+  if (targetBtn) targetBtn.classList.add('active');
+  targetPanel.classList.add('active');
+  localStorage.setItem('canyapi_active_tab', tabId);
+};
+
+async function checkApiConnection() {
+  const badge = document.getElementById('apiStatusBadge');
+  if (!badge) return;
+
+  const isServer = await window.CmsClient.detectServerApi();
+  if (isServer) {
+    badge.className = 'badge-status active';
+    badge.innerHTML = '🟢 Sunucu API Bağlı (Hosting)';
+  } else {
+    badge.className = 'badge-status inactive';
+    badge.innerHTML = '🟡 Yerel / Önizleme Modu (Hostingde Otomatik Bağlanır)';
+  }
+}
+
+async function loadAllData() {
+  try {
+    currentSettings = await window.CmsClient.getSettings();
+    currentProjects = await window.CmsClient.getProjects();
+    currentServices = await window.CmsClient.getServices();
+    currentBlog = await window.CmsClient.getBlogPosts();
+
+    // Sayaçları ve arayüzü güncelle
+    updateCounts();
+    renderProjectsTable();
+    renderServicesTable();
+    renderBlogTable();
+    populateSiteTexts();
+    loadSocialSettings();
+    loadLeads();
+    loadMediaGallery();
+  } catch (err) {
+    console.error('Veriler yüklenirken hata:', err);
+  }
+}
+
+function updateCounts() {
+  const pCount = document.getElementById('countProjects');
+  const sCount = document.getElementById('countServices');
+  const bCount = document.getElementById('countBlog');
+  if (pCount) pCount.innerText = currentProjects.length;
+  if (sCount) sCount.innerText = currentServices.length;
+  if (bCount) bCount.innerText = currentBlog.length;
+}
+
+/* ==========================================================================
+   3. PROJELER YÖNETİMİ (CRUD)
+   ========================================================================== */
+function renderProjectsTable() {
+  const tbody = document.getElementById('projectsTableBody');
+  if (!tbody) return;
+
+  if (currentProjects.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted" style="padding: 30px;">Henüz kayıtlı proje yok. "+ Yeni Proje Ekle" butonuna tıklayarak ekleyebilirsiniz.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = currentProjects.map((p, idx) => {
+    const spec1 = p.specs && p.specs[0] ? p.specs[0].val : (p.description ? p.description.slice(0, 30) + '...' : '-');
+    return `
+      <tr>
+        <td>
+          <img src="${p.image || 'images/real/proje-luks-mutfak.jpg'}" alt="${p.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);" onerror="this.src='images/logo.png'">
+        </td>
+        <td>
+          <strong style="color: #FFF; font-size: 0.95rem;">${p.title}</strong>
+        </td>
+        <td><span class="badge-service">${p.category || 'Tadilat'}</span></td>
+        <td><span class="text-muted">${p.location || 'Antalya'}</span></td>
+        <td><small style="color: #A78BFA;">${spec1}</small></td>
+        <td style="text-align: right; white-space: nowrap;">
+          <button onclick="editProject('${p.id}')" class="btn btn-sm btn-outline" style="padding: 4px 10px; font-size: 0.78rem;">Düzenle</button>
+          <button onclick="deleteProject('${p.id}')" class="btn btn-sm" style="padding: 4px 10px; font-size: 0.78rem; background: #FF3333; color: white;">Sil</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+window.openProjectModal = function(id = null) {
+  const modal = document.getElementById('projectModal');
+  const title = document.getElementById('projectModalTitle');
+  const form = document.getElementById('projectForm');
+  if (!modal || !form) return;
+
+  form.reset();
+  document.getElementById('projId').value = '';
+
+  if (id) {
+    const p = currentProjects.find(item => item.id === id);
+    if (p) {
+      title.innerText = 'Projeyi Düzenle';
+      document.getElementById('projId').value = p.id;
+      document.getElementById('projTitle').value = p.title || '';
+      document.getElementById('projCategory').value = p.category || 'Tadilat';
+      document.getElementById('projLocation').value = p.location || '';
+      document.getElementById('projImage').value = p.image || '';
+      document.getElementById('projDesc').value = p.description || '';
+      document.getElementById('projSpec1').value = p.specs && p.specs[0] ? p.specs[0].val : '';
+      document.getElementById('projSpec2').value = p.specs && p.specs[1] ? p.specs[1].val : '';
+    }
+  } else {
+    title.innerText = 'Yeni Proje Ekle';
+    document.getElementById('projLocation').value = 'Muratpaşa / Antalya';
+  }
+
+  modal.classList.remove('hidden');
+};
+
+window.closeProjectModal = function() {
+  const modal = document.getElementById('projectModal');
+  if (modal) modal.classList.add('hidden');
+};
+
+window.editProject = function(id) {
+  window.openProjectModal(id);
+};
+
+window.deleteProject = async function(id) {
+  if (confirm('Bu projeyi silmek istediğinize emin misiniz?')) {
+    await window.CmsClient.deleteProject(id);
+    currentProjects = await window.CmsClient.getProjects();
+    renderProjectsTable();
+    updateCounts();
+    window.showToast?.('Proje başarıyla silindi.', 'info');
+  }
+};
+
+/* ==========================================================================
+   4. HİZMETLER YÖNETİMİ (CRUD)
+   ========================================================================== */
+function renderServicesTable() {
+  const tbody = document.getElementById('servicesTableBody');
+  if (!tbody) return;
+
+  if (currentServices.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted" style="padding: 30px;">Kayıtlı hizmet bulunamadı.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = currentServices.map(s => `
+    <tr>
+      <td>
+        <img src="${s.image || 'images/services/tadilat/tadilat-1.jpg'}" alt="${s.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);" onerror="this.src='images/logo.png'">
+      </td>
+      <td>
+        <strong style="color: #FFF; font-size: 0.95rem;">${s.title}</strong>
+      </td>
+      <td><small class="text-muted">${(s.shortDesc || '').slice(0, 65)}...</small></td>
+      <td><small style="color: #00E676;">${Array.isArray(s.features) ? s.features.slice(0, 2).join(', ') : ''}</small></td>
+      <td style="text-align: right; white-space: nowrap;">
+        <button onclick="editService('${s.id}')" class="btn btn-sm btn-outline" style="padding: 4px 10px; font-size: 0.78rem;">Düzenle</button>
+        <button onclick="deleteService('${s.id}')" class="btn btn-sm" style="padding: 4px 10px; font-size: 0.78rem; background: #FF3333; color: white;">Sil</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+window.openServiceModal = function(id = null) {
+  const modal = document.getElementById('serviceModal');
+  const title = document.getElementById('serviceModalTitle');
+  const form = document.getElementById('serviceForm');
+  if (!modal || !form) return;
+
+  form.reset();
+  document.getElementById('servId').value = '';
+
+  if (id) {
+    const s = currentServices.find(item => item.id === id);
+    if (s) {
+      title.innerText = 'Hizmeti Düzenle';
+      document.getElementById('servId').value = s.id;
+      document.getElementById('servTitle').value = s.title || '';
+      document.getElementById('servImage').value = s.image || '';
+      document.getElementById('servShortDesc').value = s.shortDesc || '';
+      document.getElementById('servFullDesc').value = s.fullDesc || '';
+      document.getElementById('servFeatures').value = Array.isArray(s.features) ? s.features.join(', ') : '';
+    }
+  } else {
+    title.innerText = 'Yeni Hizmet Ekle';
+  }
+
+  modal.classList.remove('hidden');
+};
+
+window.closeServiceModal = function() {
+  const modal = document.getElementById('serviceModal');
+  if (modal) modal.classList.add('hidden');
+};
+
+window.editService = function(id) {
+  window.openServiceModal(id);
+};
+
+window.deleteService = async function(id) {
+  if (confirm('Bu hizmeti silmek istediğinize emin misiniz?')) {
+    await window.CmsClient.deleteService(id);
+    currentServices = await window.CmsClient.getServices();
+    renderServicesTable();
+    updateCounts();
+    window.showToast?.('Hizmet silindi.', 'info');
+  }
+};
+
+/* ==========================================================================
+   5. BLOG & MAKALELER YÖNETİMİ (CRUD)
+   ========================================================================== */
+function renderBlogTable() {
+  const tbody = document.getElementById('blogTableBody');
+  if (!tbody) return;
+
+  if (currentBlog.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted" style="padding: 30px;">Henüz blog yazısı eklenmemiş. "+ Yeni Blog Yazısı Ekle" butonuna tıklayarak ilk makalenizi oluşturabilirsiniz.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = currentBlog.map(b => {
+    const isPub = (b.status || 'published') === 'published';
+    return `
+      <tr>
+        <td>
+          <img src="${b.coverImage || 'images/real/proje-luks-mutfak.jpg'}" alt="${b.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);" onerror="this.src='images/logo.png'">
+        </td>
+        <td>
+          <strong style="color: #FFF; font-size: 0.95rem;">${b.title}</strong>
+        </td>
+        <td><span class="badge-service">${b.category || 'Rehber'}</span></td>
+        <td><small class="text-muted">${b.date || '-'}</small></td>
+        <td>
+          <span class="badge-status ${isPub ? 'active' : 'inactive'}">
+            ${isPub ? '✓ Yayında' : 'Taslak'}
+          </span>
+        </td>
+        <td style="text-align: right; white-space: nowrap;">
+          <a href="blog-detay.html?slug=${b.slug}" target="_blank" class="btn btn-sm btn-outline" style="padding: 4px 10px; font-size: 0.78rem;">Önizle</a>
+          <button onclick="editBlog('${b.id}')" class="btn btn-sm btn-outline" style="padding: 4px 10px; font-size: 0.78rem;">Düzenle</button>
+          <button onclick="deleteBlog('${b.id}')" class="btn btn-sm" style="padding: 4px 10px; font-size: 0.78rem; background: #FF3333; color: white;">Sil</button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+window.openBlogModal = function(id = null) {
+  const modal = document.getElementById('blogModal');
+  const title = document.getElementById('blogModalTitle');
+  const form = document.getElementById('blogForm');
+  if (!modal || !form) return;
+
+  form.reset();
+  document.getElementById('blogId').value = '';
+
+  if (id) {
+    const b = currentBlog.find(item => item.id === id);
+    if (b) {
+      title.innerText = 'Blog Yazısını Düzenle';
+      document.getElementById('blogId').value = b.id;
+      document.getElementById('blogTitle').value = b.title || '';
+      document.getElementById('blogCategory').value = b.category || 'Tadilat Rehberi';
+      document.getElementById('blogStatus').value = b.status || 'published';
+      document.getElementById('blogCoverImage').value = b.coverImage || '';
+      document.getElementById('blogExcerpt').value = b.excerpt || '';
+      document.getElementById('blogContent').value = b.content || '';
+    }
+  } else {
+    title.innerText = 'Yeni Blog Yazısı Ekle';
+    document.getElementById('blogCategory').value = 'Tadilat Rehberi';
+  }
+
+  modal.classList.remove('hidden');
+};
+
+window.closeBlogModal = function() {
+  const modal = document.getElementById('blogModal');
+  if (modal) modal.classList.add('hidden');
+};
+
+window.editBlog = function(id) {
+  window.openBlogModal(id);
+};
+
+window.deleteBlog = async function(id) {
+  if (confirm('Bu blog yazısını silmek istediğinize emin misiniz?')) {
+    await window.CmsClient.deleteBlogPost(id);
+    currentBlog = await window.CmsClient.getBlogPosts();
+    renderBlogTable();
+    updateCounts();
+    window.showToast?.('Blog yazısı silindi.', 'info');
+  }
+};
+
+/* ==========================================================================
+   6. SİTE GENEL METİNLERİ
+   ========================================================================== */
+function populateSiteTexts() {
+  if (!currentSettings) return;
+
+  const setVal = (id, val) => {
+    const el = document.getElementById(id);
+    if (el && val !== undefined) el.value = val;
+  };
+
+  setVal('settingPhone', currentSettings.phone);
+  setVal('settingWhatsapp', currentSettings.whatsapp);
+  setVal('settingEmail', currentSettings.email);
+  setVal('settingAddress', currentSettings.address);
+  setVal('settingWorkingHours', currentSettings.workingHours);
+  setVal('settingHeroTitle', currentSettings.heroTitle);
+  setVal('settingHeroSubtitle', currentSettings.heroSubtitle);
+  setVal('settingAboutTitle', currentSettings.aboutTitle);
+  setVal('settingAboutExcerpt', currentSettings.aboutExcerpt);
+}
+
+/* ==========================================================================
+   7. FOTOĞRAF / MEDYA YÜKLEYİCİ
+   ========================================================================== */
+async function loadMediaGallery() {
+  const container = document.getElementById('mediaGalleryContainer');
+  const countEl = document.getElementById('countMedia');
+  if (!container) return;
+
+  const mediaList = await window.CmsClient.getMediaList();
+  if (countEl) countEl.innerText = mediaList.length;
+
+  if (mediaList.length === 0) {
+    container.innerHTML = '<div class="text-muted" style="grid-column: 1/-1; padding: 20px; font-size: 0.88rem;">Henüz sunucuya yüklenmiş görsel bulunmuyor. Yukarıdaki alandan fotoğraf yükleyebilirsiniz.</div>';
+    return;
+  }
+
+  container.innerHTML = mediaList.map(item => `
+    <div class="media-item">
+      <img src="${item.url}" alt="${item.name}" loading="lazy">
+      <div class="media-item-overlay">
+        <button onclick="copyMediaUrl('${item.url}')" class="btn btn-sm btn-primary" style="padding: 4px 6px; font-size: 0.72rem;">Kopyala</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.copyMediaUrl = function(url) {
+  navigator.clipboard.writeText(url).then(() => {
+    window.showToast?.('Görsel bağlantısı panoya kopyalandı!', 'success');
+  });
+};
+
+/* ==========================================================================
+   8. FORM OLAY DİNLEYİCİLERİ & YÜKLEMELER
+   ========================================================================== */
+function setupEventListeners() {
+  // 1. Proje Formu
+  const projForm = document.getElementById('projectForm');
+  if (projForm) {
+    projForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const id = document.getElementById('projId').value;
+      const projectData = {
+        id: id || undefined,
+        title: document.getElementById('projTitle').value.trim(),
+        category: document.getElementById('projCategory').value,
+        location: document.getElementById('projLocation').value.trim(),
+        image: document.getElementById('projImage').value.trim(),
+        description: document.getElementById('projDesc').value.trim(),
+        specs: [
+          { label: 'Özellik', val: document.getElementById('projSpec1').value.trim() || 'Kusursuz İşçilik', isPassed: true },
+          { label: 'Durum', val: document.getElementById('projSpec2').value.trim() || 'Tamamlandı', isPassed: false }
+        ]
+      };
+
+      await window.CmsClient.saveProject(projectData);
+      currentProjects = await window.CmsClient.getProjects();
+      renderProjectsTable();
+      updateCounts();
+      closeProjectModal();
+      window.showToast?.('Proje başarıyla kaydedildi ve sitede yayınlandı!', 'success');
+    });
+  }
+
+  // Proje Görseli Yükleme
+  const projFileInput = document.getElementById('projImageFile');
+  if (projFileInput) {
+    projFileInput.addEventListener('change', async function() {
+      if (this.files && this.files[0]) {
+        window.showToast?.('Fotoğraf yükleniyor...', 'info');
+        const res = await window.CmsClient.uploadPhoto(this.files[0]);
+        if (res.success && res.url) {
+          document.getElementById('projImage').value = res.url;
+          window.showToast?.('Fotoğraf yüklendi!', 'success');
+        }
+      }
+    });
+  }
+
+  // 2. Hizmet Formu
+  const servForm = document.getElementById('serviceForm');
+  if (servForm) {
+    servForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const id = document.getElementById('servId').value;
+      const featStr = document.getElementById('servFeatures').value.trim();
+      const features = featStr ? featStr.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+      const serviceData = {
+        id: id || undefined,
+        title: document.getElementById('servTitle').value.trim(),
+        image: document.getElementById('servImage').value.trim(),
+        shortDesc: document.getElementById('servShortDesc').value.trim(),
+        fullDesc: document.getElementById('servFullDesc').value.trim(),
+        features: features
+      };
+
+      await window.CmsClient.saveService(serviceData);
+      currentServices = await window.CmsClient.getServices();
+      renderServicesTable();
+      updateCounts();
+      closeServiceModal();
+      window.showToast?.('Hizmet kaydedildi!', 'success');
+    });
+  }
+
+  const servFileInput = document.getElementById('servImageFile');
+  if (servFileInput) {
+    servFileInput.addEventListener('change', async function() {
+      if (this.files && this.files[0]) {
+        window.showToast?.('Fotoğraf yükleniyor...', 'info');
+        const res = await window.CmsClient.uploadPhoto(this.files[0]);
+        if (res.success && res.url) {
+          document.getElementById('servImage').value = res.url;
+          window.showToast?.('Fotoğraf yüklendi!', 'success');
+        }
+      }
+    });
+  }
+
+  // 3. Blog Formu
+  const blogForm = document.getElementById('blogForm');
+  if (blogForm) {
+    blogForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const id = document.getElementById('blogId').value;
+      const blogData = {
+        id: id || undefined,
+        title: document.getElementById('blogTitle').value.trim(),
+        category: document.getElementById('blogCategory').value.trim(),
+        status: document.getElementById('blogStatus').value,
+        coverImage: document.getElementById('blogCoverImage').value.trim(),
+        excerpt: document.getElementById('blogExcerpt').value.trim(),
+        content: document.getElementById('blogContent').value.trim()
+      };
+
+      await window.CmsClient.saveBlogPost(blogData);
+      currentBlog = await window.CmsClient.getBlogPosts();
+      renderBlogTable();
+      updateCounts();
+      closeBlogModal();
+      window.showToast?.('Blog yazısı başarıyla kaydedildi!', 'success');
+    });
+  }
+
+  const blogFileInput = document.getElementById('blogCoverFile');
+  if (blogFileInput) {
+    blogFileInput.addEventListener('change', async function() {
+      if (this.files && this.files[0]) {
+        window.showToast?.('Fotoğraf yükleniyor...', 'info');
+        const res = await window.CmsClient.uploadPhoto(this.files[0]);
+        if (res.success && res.url) {
+          document.getElementById('blogCoverImage').value = res.url;
+          window.showToast?.('Fotoğraf yüklendi!', 'success');
+        }
+      }
+    });
+  }
+
+  // 4. Site Genel Metinleri Kaydet
+  const saveTextsBtn = document.getElementById('saveSiteTextsBtn');
+  if (saveTextsBtn) {
+    saveTextsBtn.addEventListener('click', async function(e) {
+      e.preventDefault();
+      const updatedSettings = Object.assign({}, currentSettings, {
+        phone: document.getElementById('settingPhone')?.value.trim() || currentSettings.phone,
+        phoneRaw: (document.getElementById('settingPhone')?.value || '').replace(/\D/g, ''),
+        whatsapp: document.getElementById('settingWhatsapp')?.value.trim() || currentSettings.whatsapp,
+        whatsappRaw: '90' + (document.getElementById('settingWhatsapp')?.value || '').replace(/\D/g, '').replace(/^0/, '').replace(/^90/, ''),
+        email: document.getElementById('settingEmail')?.value.trim() || currentSettings.email,
+        address: document.getElementById('settingAddress')?.value.trim() || currentSettings.address,
+        workingHours: document.getElementById('settingWorkingHours')?.value.trim() || currentSettings.workingHours,
+        heroTitle: document.getElementById('settingHeroTitle')?.value.trim() || currentSettings.heroTitle,
+        heroSubtitle: document.getElementById('settingHeroSubtitle')?.value.trim() || currentSettings.heroSubtitle,
+        aboutTitle: document.getElementById('settingAboutTitle')?.value.trim() || currentSettings.aboutTitle,
+        aboutExcerpt: document.getElementById('settingAboutExcerpt')?.value.trim() || currentSettings.aboutExcerpt
+      });
+
+      await window.CmsClient.saveSettings(updatedSettings);
+      currentSettings = updatedSettings;
+      window.showToast?.('Sitedeki bütün metinler ve iletişim bilgileri güncellendi!', 'success');
+    });
+  }
+
+  // 5. Medya Sürükle Bırak Dropzone
+  const dropzone = document.getElementById('mediaDropzone');
+  const mediaFileInput = document.getElementById('mediaFileInput');
+
+  if (dropzone && mediaFileInput) {
+    dropzone.addEventListener('click', () => mediaFileInput.click());
+
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('dragover');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('dragover');
+    });
+
+    dropzone.addEventListener('drop', async (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+        handleMediaFiles(e.dataTransfer.files);
+      }
+    });
+
+    mediaFileInput.addEventListener('change', function() {
+      if (this.files && this.files.length > 0) {
+        handleMediaFiles(this.files);
+      }
+    });
+  }
+
+  async function handleMediaFiles(fileList) {
+    window.showToast?.(`${fileList.length} fotoğraf yükleniyor...`, 'info');
+    for (let i = 0; i < fileList.length; i++) {
+      await window.CmsClient.uploadPhoto(fileList[i]);
+    }
+    await loadMediaGallery();
+    window.showToast?.('Tüm fotoğraflar başarıyla yüklendi!', 'success');
+  }
+
+  // 6. CSV Export & Sayaç Sıfırlama
   initAdminActions();
 }
 
+/* ==========================================================================
+   9. METRİKLER & SOSYAL MEDYA & TALEPLER
+   ========================================================================== */
 function loadMetrics() {
   if (!window.CanYapiAnalytics) return;
   const metrics = window.CanYapiAnalytics.getMetrics();
   const monthly = window.CanYapiAnalytics.getMonthlyStats();
 
-  // Aylık Ziyaretçi Sayısı
   const monthlyEl = document.getElementById('metricMonthlyVisitors');
   const monthNameEl = document.getElementById('metricMonthName');
   if (monthlyEl) monthlyEl.innerText = monthly.uniqueVisitorsCount || 1;
   if (monthNameEl) monthNameEl.innerText = `${monthly.monthLabel} (${monthly.uniqueVisitorsCount} Tekil Ziyaretçi / ${monthly.pageViewsCount} Sayfa Görüntüleme)`;
 
-  // Diğer Etkileşim Sayaçları
-  document.getElementById('metricWhatsapp').innerText = metrics.whatsapp_clicks || 0;
-  document.getElementById('metricPhone').innerText = metrics.phone_calls || 0;
-  document.getElementById('metricForms').innerText = metrics.form_submissions || 0;
-  document.getElementById('metricDiscovery').innerText = metrics.discovery_requests || 0;
+  const setInner = (id, val) => {
+    const el = document.getElementById(id);
+    if (el) el.innerText = val || 0;
+  };
 
-  // Olay Geçmişi Listesi
-  const historyList = document.getElementById('historyList');
-  if (historyList && metrics.history) {
-    historyList.innerHTML = metrics.history.map(item => `
-      <tr>
-        <td><strong>${item.event}</strong></td>
-        <td>${JSON.stringify(item.params || {})}</td>
-        <td>${item.timestamp}</td>
-      </tr>
-    `).join('') || '<tr><td colspan="3" class="text-center text-muted">Henüz kayıtlı olay yok.</td></tr>';
-  }
+  setInner('metricWhatsapp', metrics.whatsapp_clicks);
+  setInner('metricPhone', metrics.phone_calls);
+  setInner('metricForms', metrics.form_submissions);
 }
 
-/* ==========================================================================
-   3. SOSYAL MEDYA HESAPLARI YÖNETİMİ
-   ========================================================================== */
 function loadSocialSettings() {
   const form = document.getElementById('socialLinksForm');
   if (!form) return;
 
-  let social = {};
-  try {
-    const saved = localStorage.getItem('canyapi_social_links');
-    if (saved) {
-      social = JSON.parse(saved);
-    }
-  } catch (e) {
-    console.warn('Sosyal link yükleme hatası:', e);
-  }
-
+  const social = currentSettings.social || {};
   const platforms = ['instagram', 'facebook', 'tiktok', 'x'];
+
   platforms.forEach(p => {
     const input = document.getElementById(`input${p.charAt(0).toUpperCase() + p.slice(1)}`);
     const badge = document.getElementById(`badge${p.charAt(0).toUpperCase() + p.slice(1)}`);
@@ -138,7 +716,7 @@ function loadSocialSettings() {
     }
   });
 
-  form.addEventListener('submit', function(e) {
+  form.addEventListener('submit', async function(e) {
     e.preventDefault();
     const updatedSocial = {
       instagram: document.getElementById('inputInstagram')?.value.trim() || '',
@@ -147,20 +725,20 @@ function loadSocialSettings() {
       x: document.getElementById('inputX')?.value.trim() || ''
     };
 
+    currentSettings.social = updatedSocial;
+    await window.CmsClient.saveSettings(currentSettings);
     localStorage.setItem('canyapi_social_links', JSON.stringify(updatedSocial));
 
-    // Badge durumlarını güncelle
     platforms.forEach(p => {
       const badge = document.getElementById(`badge${p.charAt(0).toUpperCase() + p.slice(1)}`);
       updateBadgeStatus(badge, updatedSocial[p]);
     });
 
-    // Varsa sitedeki açık footer alanını da anında güncelle
     if (typeof window.initSocialLinks === 'function') {
       window.initSocialLinks();
     }
 
-    window.showToast?.('Sosyal medya bağlantıları başarıyla güncellendi ve sitede yayınlandı!', 'success');
+    window.showToast?.('Sosyal medya bağlantıları kaydedildi!', 'success');
   });
 }
 
@@ -175,9 +753,6 @@ function updateBadgeStatus(badge, value) {
   }
 }
 
-/* ==========================================================================
-   4. GELEN TEKLİF & KEŞİF TALEPLERİ
-   ========================================================================== */
 function loadLeads() {
   const leadsContainer = document.getElementById('leadsTableBody');
   if (!leadsContainer) return;
@@ -187,7 +762,7 @@ function loadLeads() {
   if (leads.length === 0) {
     leadsContainer.innerHTML = `
       <tr>
-        <td colspan="8" style="text-align: center; padding: 40px; color: var(--text-muted);">
+        <td colspan="8" style="text-align: center; padding: 40px; color: #94A3B8;">
           Henüz gelen bir teklif veya keşif talebi bulunmuyor. Web sitesinden form gönderildiğinde burada listelenecektir.
         </td>
       </tr>
@@ -201,13 +776,13 @@ function loadLeads() {
       <td>${lead.date}</td>
       <td>
         <div style="font-weight: 600; color: #FFF;">${lead.name}</div>
-        <div style="font-size: 0.8rem; color: var(--text-muted);"><a href="tel:${lead.phone}" style="color: var(--primary-orange);">${lead.phone}</a></div>
+        <div style="font-size: 0.8rem; color: #94A3B8;"><a href="tel:${lead.phone}" style="color: var(--primary-orange);">${lead.phone}</a></div>
       </td>
       <td><span class="badge-service">${lead.service}</span></td>
       <td>${lead.location}</td>
       <td>${lead.isDiscovery ? '<span style="color:#00E676; font-weight:700;">✓ Keşif İstendi</span>' : 'Teklif'}</td>
       <td>
-        <select onchange="updateLeadStatus(${index}, this.value)" style="background: var(--bg-dark); color: #FFF; border: 1px solid var(--border-subtle); padding: 5px 8px; border-radius: 4px;">
+        <select onchange="updateLeadStatus(${index}, this.value)" style="background: #0B0D11; color: #FFF; border: 1px solid var(--admin-border); padding: 5px 8px; border-radius: 4px;">
           <option value="Yeni" ${lead.status === 'Yeni' ? 'selected' : ''}>Yeni</option>
           <option value="Arandı" ${lead.status === 'Arandı' ? 'selected' : ''}>Arandı</option>
           <option value="Keşif Planlandı" ${lead.status === 'Keşif Planlandı' ? 'selected' : ''}>Keşif Planlandı</option>
@@ -262,9 +837,6 @@ window.viewLeadDetail = function(index) {
   );
 };
 
-/* ==========================================================================
-   5. CSV İNDİRME VE SAYAÇ SIFIRLAMA
-   ========================================================================== */
 function initAdminActions() {
   const exportBtn = document.getElementById('exportCsvBtn');
   if (exportBtn && !exportBtn.dataset.bound) {
