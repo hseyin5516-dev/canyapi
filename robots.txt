@@ -1,0 +1,51 @@
+# ==============================================================================
+# Can Yapı Antalya - Robots.txt Dosyası
+# Alan Adı: https://canyapiantalya.com.tr
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Allow: /images/
+Allow: /uploads/
+Allow: /css/
+Allow: /js/
+Disallow: /admin.html
+Disallow: /api/
+Disallow: /data/
+Disallow: /*.json$
+
+# ==============================================================================
+# LLM & AI Arama Motorları Taraması (ChatGPT, Perplexity, Claude, Gemini, Apple)
+# Kamuya açık rehber, blog, hizmet ve portföy içeriklerinin AI tarafından taranmasına izin verilir
+# ==============================================================================
+User-agent: GPTBot
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+Disallow: /data/
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+Disallow: /data/
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /admin.html
+Disallow: /api/
+Disallow: /data/
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ==============================================================================
+# XML Site Haritası & LLM Metin Dosyası
+# ==============================================================================
+Sitemap: https://canyapiantalya.com.tr/sitemap.xml
