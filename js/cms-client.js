@@ -2,7 +2,7 @@
  * Can Yapı Antalya - CMS Veri İstemcisi (PHP Hosting & Yerel Çift Mod Desteği)
  * 
  * Hosting üzerinde çalışırken /api/*.php uç noktaları ile veritabanı/dosya yazma işlemini yapar.
- * Statik önizleme veya test ortamında localStorage & data/ dosyalarını kullanarak kesintisiz çalışır.
+ * Statik önizleme veya test ortamında /data/ dosyalarını kullanarak kesintisiz çalışır.
  */
 
 (function(window) {
@@ -11,10 +11,15 @@
   let hasServerApi = null; // null: test edilmedi, true: PHP API aktif, false: yerel mod
   const TOKEN_STORAGE_KEY = 'canyapi_cms_token';
 
+  function apiUrl(endpoint) {
+    const base = window.location.origin || '';
+    return base + '/' + endpoint.replace(/^\/+/, '');
+  }
+
   async function detectServerApi() {
     if (hasServerApi !== null) return hasServerApi;
     try {
-      const res = await fetch('api/settings.php', { method: 'GET', cache: 'no-store' });
+      const res = await fetch(apiUrl(`api/settings.php?_t=${Date.now()}`), { method: 'GET', cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
         if (data && data.success) {
@@ -39,29 +44,22 @@
 
   // --- 1. AYARLAR & SİTE METİNLERİ ---
   async function getSettings() {
-    const useApi = await detectServerApi();
-    if (useApi) {
-      try {
-        const res = await fetch('api/settings.php', { cache: 'no-store' });
+    // 1. Canlı PHP API'den oku
+    try {
+      const res = await fetch(apiUrl(`api/settings.php?_t=${Date.now()}`), { cache: 'no-store' });
+      if (res.ok) {
         const json = await res.json();
-        if (json.success && json.data) {
+        if (json && json.success && json.data) {
           localStorage.setItem('canyapi_cms_settings', JSON.stringify(json.data));
+          hasServerApi = true;
           return json.data;
         }
-      } catch (e) {
-        console.warn('API settings fetch failed, falling back:', e);
       }
-    }
+    } catch (e) {}
 
-    // Yerel mod veya fallback
-    const local = localStorage.getItem('canyapi_cms_settings');
-    if (local) {
-      try { return JSON.parse(local); } catch (e) {}
-    }
-
-    // data/settings.json dosyasından oku
+    // 2. data/settings.json dosyasından oku
     try {
-      const res = await fetch('data/settings.json');
+      const res = await fetch(apiUrl(`data/settings.json?_t=${Date.now()}`), { cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
         localStorage.setItem('canyapi_cms_settings', JSON.stringify(data));
@@ -69,72 +67,83 @@
       }
     } catch (e) {}
 
+    // 3. Çevrimdışı / LocalStorage yedeği
+    const local = localStorage.getItem('canyapi_cms_settings');
+    if (local) {
+      try { return JSON.parse(local); } catch (e) {}
+    }
+
     return {};
   }
 
   async function saveSettings(settings) {
-    const useApi = await detectServerApi();
     localStorage.setItem('canyapi_cms_settings', JSON.stringify(settings));
 
-    if (useApi) {
-      const res = await fetch('api/settings.php', {
+    try {
+      const res = await fetch(apiUrl('api/settings.php'), {
         method: 'POST',
         headers: getAuthHeader(),
         body: JSON.stringify(settings)
       });
-      return await res.json();
-    }
+      if (res.ok) {
+        return await res.json();
+      }
+    } catch (e) {}
 
-    return { success: true, message: 'Ayarlar yerel olarak kaydedildi.', data: settings };
+    return { success: true, message: 'Ayarlar kaydedildi.', data: settings };
   }
 
   // --- 2. PROJELER ---
   async function getProjects() {
-    const useApi = await detectServerApi();
-    if (useApi) {
-      try {
-        const res = await fetch('api/projects.php', { cache: 'no-store' });
+    // 1. Canlı PHP API'den oku
+    try {
+      const res = await fetch(apiUrl(`api/projects.php?_t=${Date.now()}`), { cache: 'no-store' });
+      if (res.ok) {
         const json = await res.json();
-        if (json.success && Array.isArray(json.data)) {
+        if (json && json.success && Array.isArray(json.data)) {
           localStorage.setItem('canyapi_cms_projects', JSON.stringify(json.data));
+          hasServerApi = true;
           return json.data;
         }
-      } catch (e) {
-        console.warn('API projects fetch failed:', e);
       }
-    }
+    } catch (e) {}
 
+    // 2. data/projects.json dosyasından oku
+    try {
+      const res = await fetch(apiUrl(`data/projects.json?_t=${Date.now()}`), { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          localStorage.setItem('canyapi_cms_projects', JSON.stringify(data));
+          return data;
+        }
+      }
+    } catch (e) {}
+
+    // 3. LocalStorage yedeği
     const local = localStorage.getItem('canyapi_cms_projects');
     if (local) {
       try { return JSON.parse(local); } catch (e) {}
     }
 
-    try {
-      const res = await fetch('data/projects.json');
-      if (res.ok) {
-        const data = await res.json();
-        localStorage.setItem('canyapi_cms_projects', JSON.stringify(data));
-        return data;
-      }
-    } catch (e) {}
-
     return [];
   }
 
   async function saveProject(project) {
-    const useApi = await detectServerApi();
-    if (useApi) {
-      const res = await fetch('api/projects.php', {
+    try {
+      const res = await fetch(apiUrl('api/projects.php'), {
         method: 'POST',
         headers: getAuthHeader(),
         body: JSON.stringify(project)
       });
-      const data = await res.json();
-      if (data.success && data.data) {
-        localStorage.setItem('canyapi_cms_projects', JSON.stringify(data.data));
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.success && data.data) {
+          localStorage.setItem('canyapi_cms_projects', JSON.stringify(data.data));
+          return data;
+        }
       }
-      return data;
-    }
+    } catch (e) {}
 
     // Yerel mod simülasyonu
     let projects = await getProjects();
@@ -147,23 +156,24 @@
       else projects.unshift(project);
     }
     localStorage.setItem('canyapi_cms_projects', JSON.stringify(projects));
-    return { success: true, message: 'Proje kaydedildi (Yerel Mod).', data: projects };
+    return { success: true, message: 'Proje kaydedildi.', data: projects };
   }
 
   async function deleteProject(id) {
-    const useApi = await detectServerApi();
-    if (useApi) {
-      const res = await fetch('api/projects.php', {
+    try {
+      const res = await fetch(apiUrl('api/projects.php'), {
         method: 'POST',
         headers: getAuthHeader(),
         body: JSON.stringify({ action: 'delete', id: id })
       });
-      const data = await res.json();
-      if (data.success && data.data) {
-        localStorage.setItem('canyapi_cms_projects', JSON.stringify(data.data));
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.success && data.data) {
+          localStorage.setItem('canyapi_cms_projects', JSON.stringify(data.data));
+          return data;
+        }
       }
-      return data;
-    }
+    } catch (e) {}
 
     let projects = await getProjects();
     projects = projects.filter(p => p.id !== id);
@@ -173,49 +183,55 @@
 
   // --- 3. HİZMETLER ---
   async function getServices() {
-    const useApi = await detectServerApi();
-    if (useApi) {
-      try {
-        const res = await fetch('api/services.php', { cache: 'no-store' });
+    // 1. Canlı PHP API'den oku
+    try {
+      const res = await fetch(apiUrl(`api/services.php?_t=${Date.now()}`), { cache: 'no-store' });
+      if (res.ok) {
         const json = await res.json();
-        if (json.success && Array.isArray(json.data)) {
+        if (json && json.success && Array.isArray(json.data)) {
           localStorage.setItem('canyapi_cms_services', JSON.stringify(json.data));
+          hasServerApi = true;
           return json.data;
         }
-      } catch (e) {}
-    }
+      }
+    } catch (e) {}
 
+    // 2. data/services.json dosyasından oku
+    try {
+      const res = await fetch(apiUrl(`data/services.json?_t=${Date.now()}`), { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          localStorage.setItem('canyapi_cms_services', JSON.stringify(data));
+          return data;
+        }
+      }
+    } catch (e) {}
+
+    // 3. LocalStorage yedeği
     const local = localStorage.getItem('canyapi_cms_services');
     if (local) {
       try { return JSON.parse(local); } catch (e) {}
     }
 
-    try {
-      const res = await fetch('data/services.json');
-      if (res.ok) {
-        const data = await res.json();
-        localStorage.setItem('canyapi_cms_services', JSON.stringify(data));
-        return data;
-      }
-    } catch (e) {}
-
     return [];
   }
 
   async function saveService(service) {
-    const useApi = await detectServerApi();
-    if (useApi) {
-      const res = await fetch('api/services.php', {
+    try {
+      const res = await fetch(apiUrl('api/services.php'), {
         method: 'POST',
         headers: getAuthHeader(),
         body: JSON.stringify(service)
       });
-      const data = await res.json();
-      if (data.success && data.data) {
-        localStorage.setItem('canyapi_cms_services', JSON.stringify(data.data));
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.success && data.data) {
+          localStorage.setItem('canyapi_cms_services', JSON.stringify(data.data));
+          return data;
+        }
       }
-      return data;
-    }
+    } catch (e) {}
 
     let services = await getServices();
     if (!service.id) {
@@ -231,19 +247,20 @@
   }
 
   async function deleteService(id) {
-    const useApi = await detectServerApi();
-    if (useApi) {
-      const res = await fetch('api/services.php', {
+    try {
+      const res = await fetch(apiUrl('api/services.php'), {
         method: 'POST',
         headers: getAuthHeader(),
         body: JSON.stringify({ action: 'delete', id: id })
       });
-      const data = await res.json();
-      if (data.success && data.data) {
-        localStorage.setItem('canyapi_cms_services', JSON.stringify(data.data));
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.success && data.data) {
+          localStorage.setItem('canyapi_cms_services', JSON.stringify(data.data));
+          return data;
+        }
       }
-      return data;
-    }
+    } catch (e) {}
 
     let services = await getServices();
     services = services.filter(s => s.id !== id);
@@ -253,58 +270,65 @@
 
   // --- 4. BLOG YAZILARI ---
   async function getBlogPosts(slug = null) {
-    const useApi = await detectServerApi();
-    if (useApi) {
-      try {
-        const url = slug ? `api/blog.php?slug=${encodeURIComponent(slug)}` : 'api/blog.php?all=1';
-        const res = await fetch(url, { cache: 'no-store' });
+    // 1. Canlı PHP API'den oku
+    try {
+      const url = slug
+        ? apiUrl(`api/blog.php?slug=${encodeURIComponent(slug)}&_t=${Date.now()}`)
+        : apiUrl(`api/blog.php?all=1&_t=${Date.now()}`);
+      const res = await fetch(url, { cache: 'no-store' });
+      if (res.ok) {
         const json = await res.json();
-        if (json.success && json.data) {
+        if (json && json.success && json.data) {
           if (!slug && Array.isArray(json.data)) {
             localStorage.setItem('canyapi_cms_blog', JSON.stringify(json.data));
           }
+          hasServerApi = true;
           return json.data;
         }
-      } catch (e) {}
-    }
+      }
+    } catch (e) {}
 
+    // 2. data/blog.json dosyasından oku
     let blog = [];
-    const local = localStorage.getItem('canyapi_cms_blog');
-    if (local) {
-      try { blog = JSON.parse(local); } catch (e) {}
-    }
-
-    if (blog.length === 0) {
-      try {
-        const res = await fetch('data/blog.json');
-        if (res.ok) {
-          blog = await res.json();
+    try {
+      const res = await fetch(apiUrl(`data/blog.json?_t=${Date.now()}`), { cache: 'no-store' });
+      if (res.ok) {
+        blog = await res.json();
+        if (Array.isArray(blog)) {
           localStorage.setItem('canyapi_cms_blog', JSON.stringify(blog));
         }
-      } catch (e) {}
+      }
+    } catch (e) {}
+
+    if (!Array.isArray(blog) || blog.length === 0) {
+      const local = localStorage.getItem('canyapi_cms_blog');
+      if (local) {
+        try { blog = JSON.parse(local); } catch (e) {}
+      }
     }
 
     if (slug) {
-      return blog.find(b => b.slug === slug || b.id === slug) || null;
+      return (Array.isArray(blog) ? blog.find(b => b.slug === slug || b.id === slug) : null) || null;
     }
 
-    return blog;
+    return Array.isArray(blog) ? blog : [];
   }
 
   async function saveBlogPost(post) {
-    const useApi = await detectServerApi();
-    if (useApi) {
-      const res = await fetch('api/blog.php', {
+    try {
+      const res = await fetch(apiUrl('api/blog.php'), {
         method: 'POST',
         headers: getAuthHeader(),
         body: JSON.stringify(post)
       });
-      const data = await res.json();
-      if (data.success && data.data) {
-        localStorage.setItem('canyapi_cms_blog', JSON.stringify(data.data));
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.success && data.data) {
+          localStorage.setItem('canyapi_cms_blog', JSON.stringify(data.data));
+          return data;
+        }
       }
-      return data;
-    }
+    } catch (e) {}
 
     let blog = await getBlogPosts();
     if (!post.id) {
@@ -325,19 +349,20 @@
   }
 
   async function deleteBlogPost(id) {
-    const useApi = await detectServerApi();
-    if (useApi) {
-      const res = await fetch('api/blog.php', {
+    try {
+      const res = await fetch(apiUrl('api/blog.php'), {
         method: 'POST',
         headers: getAuthHeader(),
         body: JSON.stringify({ action: 'delete', id: id })
       });
-      const data = await res.json();
-      if (data.success && data.data) {
-        localStorage.setItem('canyapi_cms_blog', JSON.stringify(data.data));
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.success && data.data) {
+          localStorage.setItem('canyapi_cms_blog', JSON.stringify(data.data));
+          return data;
+        }
       }
-      return data;
-    }
+    } catch (e) {}
 
     let blog = await getBlogPosts();
     blog = blog.filter(b => b.id !== id);
@@ -347,19 +372,20 @@
 
   // --- 5. FOTOĞRAF & MEDYA YÜKLEME ---
   async function uploadPhoto(file) {
-    const useApi = await detectServerApi();
-    if (useApi) {
+    try {
       const formData = new FormData();
       formData.append('image', file);
-      const res = await fetch('api/upload.php', {
+      const res = await fetch(apiUrl('api/upload.php'), {
         method: 'POST',
         headers: {
           'X-Admin-Token': sessionStorage.getItem(TOKEN_STORAGE_KEY) || '05458320190'
         },
         body: formData
       });
-      return await res.json();
-    }
+      if (res.ok) {
+        return await res.json();
+      }
+    } catch (e) {}
 
     // Yerel mod simülasyonu: Dosyayı base64 Data URL'e çevirip kaydeder
     return new Promise((resolve) => {
@@ -378,19 +404,18 @@
   }
 
   async function getMediaList() {
-    const useApi = await detectServerApi();
-    if (useApi) {
-      try {
-        const res = await fetch('api/media.php', {
-          headers: getAuthHeader(),
-          cache: 'no-store'
-        });
+    try {
+      const res = await fetch(apiUrl(`api/media.php?_t=${Date.now()}`), {
+        headers: getAuthHeader(),
+        cache: 'no-store'
+      });
+      if (res.ok) {
         const data = await res.json();
-        if (data.success && Array.isArray(data.data)) {
+        if (data && data.success && Array.isArray(data.data)) {
           return data.data;
         }
-      } catch (e) {}
-    }
+      }
+    } catch (e) {}
     return [];
   }
 

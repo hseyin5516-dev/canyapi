@@ -8,8 +8,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// JSON Yanıt Başlığı
+// JSON Yanıt Başlığı ve Önbellek Engelleme
 header('Content-Type: application/json; charset=utf-8');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Pragma: no-cache');
+header('Expires: 0');
 
 // Yönetici Giriş Bilgileri
 define('ADMIN_USER', 'canyapi');
@@ -66,18 +69,32 @@ function readJsonFile($filename, $default = []) {
 }
 
 /**
- * Güvenli JSON dosya yazma (Atomik yazma)
+ * Güvenli JSON dosya yazma (Atomik & Doğrudan Güvenli Yazma)
  */
 function writeJsonFile($filename, $data) {
     if (!is_dir(DATA_DIR)) {
-        mkdir(DATA_DIR, 0755, true);
+        @mkdir(DATA_DIR, 0755, true);
     }
     $filePath = DATA_DIR . '/' . $filename;
-    $tempPath = $filePath . '.tmp';
     $json = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+    if ($json === false) {
+        return false;
+    }
 
-    if (file_put_contents($tempPath, $json, LOCK_EX) !== false) {
-        return rename($tempPath, $filePath);
+    // Doğrudan kilitli yazma
+    $bytes = @file_put_contents($filePath, $json, LOCK_EX);
+    if ($bytes !== false) {
+        @chmod($filePath, 0666);
+        return true;
+    }
+
+    // Geçici dosya üzerinden yedek deneme
+    $tempPath = $filePath . '.tmp';
+    if (@file_put_contents($tempPath, $json, LOCK_EX) !== false) {
+        if (@rename($tempPath, $filePath)) {
+            @chmod($filePath, 0666);
+            return true;
+        }
     }
     return false;
 }

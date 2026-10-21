@@ -717,13 +717,17 @@ async function initDynamicCmsContent() {
 
   if (!window.CmsClient) return;
 
-  // 1. Projeler Sayfasında Çoklu Görsel Slider & Dinamik Listeleme
+  // 1. Projeler Sayfasında VE Ana Sayfada Çoklu Görsel Slider & Dinamik Listeleme
   const projectsGrid = document.querySelector('.projects-grid');
-  if (projectsGrid && window.location.pathname.includes('projeler.html')) {
+  if (projectsGrid) {
     try {
       const projects = await window.CmsClient.getProjects();
       if (projects && projects.length > 0) {
-        projectsGrid.innerHTML = projects.map((p, pIdx) => {
+        const isProjelerPage = window.location.pathname.includes('projeler');
+        // Ana sayfada en güncel 3 projeyi, projeler sayfasında tümünü listele
+        const displayProjects = isProjelerPage ? projects : projects.slice(0, 3);
+
+        projectsGrid.innerHTML = displayProjects.map((p, pIdx) => {
           const specsHtml = (p.specs || []).map(s => `
             <div class="spec-row">
               <span class="spec-label">${s.label}</span>
@@ -731,14 +735,14 @@ async function initDynamicCmsContent() {
             </div>
           `).join('');
 
-          const imagesList = (Array.isArray(p.images) && p.images.length > 0) ? p.images : [p.image || 'images/real/proje-luks-mutfak.jpg'];
+          const imagesList = (Array.isArray(p.images) && p.images.length > 0) ? p.images : [p.image || 'images/real/proje-luks-mutfak.webp'];
           const hasMultiple = imagesList.length > 1;
 
           let thumbHtml = '';
           if (hasMultiple) {
             const slidesHtml = imagesList.map((imgUrl, idx) => `
               <div class="project-slider-slide gallery-item" data-index="${idx}">
-                <img src="${imgUrl}" alt="${p.title} - Görsel ${idx+1}" loading="lazy" onerror="this.src='images/real/proje-luks-mutfak.jpg'">
+                <img src="${imgUrl}" alt="${p.title} - Görsel ${idx+1}" loading="lazy" decoding="async" onerror="this.src='images/real/proje-luks-mutfak.webp'">
               </div>
             `).join('');
 
@@ -762,7 +766,7 @@ async function initDynamicCmsContent() {
           } else {
             thumbHtml = `
               <div class="project-thumb gallery-item">
-                <img src="${imagesList[0]}" alt="${p.title}" loading="lazy" onerror="this.src='images/real/proje-luks-mutfak.jpg'">
+                <img src="${imagesList[0]}" alt="${p.title}" loading="lazy" decoding="async" onerror="this.src='images/real/proje-luks-mutfak.webp'">
               </div>
             `;
           }
@@ -785,12 +789,12 @@ async function initDynamicCmsContent() {
         initGalleryLightbox();
       }
     } catch (err) {
-      console.warn('Dinamik proje listeleme:', err);
+      console.warn('Dinamik proje listeleme hatası:', err);
     }
   }
 
   // 2. Hizmet Sayfalarında Alt Grid Galeri Senkronizasyonu
-  const serviceGalleryGrid = document.querySelector('.service-gallery-section .gallery-grid');
+  const serviceGalleryGrid = document.querySelector('.service-gallery-section .gallery-grid, .service-gallery-grid');
   if (serviceGalleryGrid) {
     try {
       const services = await window.CmsClient.getServices();
@@ -798,13 +802,14 @@ async function initDynamicCmsContent() {
 
       const matchedService = services.find(s => {
         if (!s.slug) return false;
-        return currentPath.includes(s.slug.toLowerCase());
+        const cleanSlug = s.slug.replace('.html', '').toLowerCase();
+        return currentPath.includes(cleanSlug);
       });
 
       if (matchedService && Array.isArray(matchedService.gallery) && matchedService.gallery.length > 0) {
         serviceGalleryGrid.innerHTML = matchedService.gallery.map((imgUrl, i) => `
           <div class="gallery-item">
-            <img src="${imgUrl}" alt="${matchedService.title} Uygulaması ${i+1}" loading="lazy" onerror="this.src='images/logo.png'">
+            <img src="${imgUrl}" alt="${matchedService.title} Uygulaması ${i+1}" loading="lazy" decoding="async" onerror="this.src='images/logo.webp'">
             <div class="gallery-overlay">
               <span class="gallery-badge">Antalya Projesi</span>
               <h4 class="gallery-caption">${matchedService.title} Uygulaması #${i+1}</h4>
@@ -822,23 +827,51 @@ async function initDynamicCmsContent() {
     }
   }
 
-  // 3. Genel Site Metinleri (Hero vb.) Senkronizasyonu
+  // 3. Genel Site Metinleri (Hero, Telefon, Sosyal Medya vb.) Senkronizasyonu
   try {
     const settings = await window.CmsClient.getSettings();
     if (settings) {
       if (settings.phone) {
-        document.querySelectorAll('.top-phone span, .contact-phone-display').forEach(el => el.textContent = settings.phone);
+        document.querySelectorAll('.top-phone span, .contact-phone-display, .top-bar-item strong').forEach(el => el.textContent = settings.phone);
+        const cleanTel = settings.phone.replace(/[^0-9+]/g, '');
+        document.querySelectorAll('a[href^="tel:"]').forEach(el => el.href = 'tel:' + cleanTel);
+      }
+      if (settings.whatsapp) {
+        const cleanWa = settings.whatsapp.replace(/[^0-9]/g, '');
+        document.querySelectorAll('a[href*="wa.me"]').forEach(el => {
+          el.href = `https://wa.me/${cleanWa}?text=Merhaba,%20Can%20Yapı%20Antalya%20için%20ücretsiz%20keşif%20ve%20fiyat%20teklifi%20almak%20istiyorum.`;
+        });
       }
       if (settings.heroTitle) {
-        const heroTitle = document.querySelector('.hero-title-main');
+        const heroTitle = document.querySelector('.hero-title-main, .poster-gold-title');
         if (heroTitle) heroTitle.innerHTML = settings.heroTitle;
       }
       if (settings.heroSubtitle) {
-        const heroSub = document.querySelector('.hero-desc-main');
+        const heroSub = document.querySelector('.hero-desc-main, .hero-poster-desc');
         if (heroSub) heroSub.textContent = settings.heroSubtitle;
       }
+      // Sosyal Medya İkonları
+      const socialLinks = [
+        { key: 'instagram', prefix: 'https://instagram.com/' },
+        { key: 'facebook', prefix: 'https://facebook.com/' },
+        { key: 'tiktok', prefix: 'https://tiktok.com/@' },
+        { key: 'twitter', prefix: 'https://x.com/' }
+      ];
+      socialLinks.forEach(item => {
+        const val = settings[item.key] || (settings.social && settings.social[item.key]);
+        document.querySelectorAll(`.footer-social a[href*="${item.key}"], .social-links a[href*="${item.key}"]`).forEach(linkEl => {
+          if (val && val.trim()) {
+            linkEl.style.display = 'inline-flex';
+            linkEl.href = val.startsWith('http') ? val : (item.prefix + val.replace('@', ''));
+          } else {
+            linkEl.style.display = 'none';
+          }
+        });
+      });
     }
-  } catch (e) {}
+  } catch (e) {
+    console.warn('Settings sync error:', e);
+  }
 }
 
 /* ==========================================================================
