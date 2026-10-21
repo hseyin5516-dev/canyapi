@@ -87,14 +87,15 @@ function initHeader() {
 }
 
 function initMobileNav() {
-  const hamburgerBtn = document.querySelector('.hamburger-btn');
-  const closeBtn = document.querySelector('.mobile-close-btn');
+  const hamburgerBtns = document.querySelectorAll('.hamburger-btn, .mobile-toggle, .js-mobile-toggle');
+  const closeBtns = document.querySelectorAll('.mobile-close-btn, .js-mobile-close');
   const overlay = document.querySelector('.mobile-nav-overlay');
   const drawer = document.querySelector('.mobile-nav-drawer');
   const servicesToggle = document.querySelector('.js-mobile-services-toggle');
   const submenu = document.querySelector('.mobile-submenu');
 
-  function openMenu() {
+  function openMenu(e) {
+    if (e && e.preventDefault) e.preventDefault();
     if (drawer && overlay) {
       drawer.classList.add('open');
       overlay.classList.add('open');
@@ -102,7 +103,8 @@ function initMobileNav() {
     }
   }
 
-  function closeMenu() {
+  function closeMenu(e) {
+    if (e && e.preventDefault) e.preventDefault();
     if (drawer && overlay) {
       drawer.classList.remove('open');
       overlay.classList.remove('open');
@@ -110,9 +112,13 @@ function initMobileNav() {
     }
   }
 
-  if (hamburgerBtn) hamburgerBtn.addEventListener('click', openMenu);
-  if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+  hamburgerBtns.forEach(btn => btn.addEventListener('click', openMenu));
+  closeBtns.forEach(btn => btn.addEventListener('click', closeMenu));
   if (overlay) overlay.addEventListener('click', closeMenu);
+
+  document.querySelectorAll('.mobile-nav-link:not(.js-mobile-services-toggle)').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
 
   if (servicesToggle && submenu) {
     servicesToggle.addEventListener('click', function(e) {
@@ -843,11 +849,11 @@ async function initDynamicCmsContent() {
         });
       }
       if (settings.heroTitle) {
-        const heroTitle = document.querySelector('.hero-title-main, .poster-gold-title');
+        const heroTitle = document.querySelector('.hero-title-main');
         if (heroTitle) heroTitle.innerHTML = settings.heroTitle;
       }
       if (settings.heroSubtitle) {
-        const heroSub = document.querySelector('.hero-desc-main, .hero-poster-desc');
+        const heroSub = document.querySelector('.hero-desc-main');
         if (heroSub) heroSub.textContent = settings.heroSubtitle;
       }
       // Sosyal Medya İkonları

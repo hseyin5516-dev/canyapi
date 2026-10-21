@@ -1292,39 +1292,104 @@ h1.hero-poster-badge {
   .slanted-card-tag {
     display: none;
   }
+  .hero-banner-top-content {
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+  .hero-poster-badge,
+  h1.hero-poster-badge {
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    width: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
   .poster-pill-top {
-    font-size: 0.88rem;
+    font-size: clamp(0.72rem, 2.8vw, 0.88rem);
     padding: 4px 18px;
     margin-bottom: -6px;
+    letter-spacing: 0.12em;
+    text-align: center;
   }
   .poster-plate-gold {
-    padding: 12px 24px 10px;
+    padding: 10px 18px 8px;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  .poster-plate-gold h1 {
-    font-size: 1.55rem;
+  .poster-plate-gold h1,
+  .poster-plate-gold .poster-gold-title {
+    font-size: clamp(1.15rem, 5.2vw, 1.55rem);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    text-align: center;
   }
   .poster-pill-sub {
-    font-size: 0.95rem;
+    font-size: clamp(0.75rem, 3.2vw, 0.95rem);
     padding: 4px 18px;
     margin-top: -6px;
+    letter-spacing: 0.08em;
+    text-align: center;
+    white-space: nowrap;
   }
   .hero-poster-desc {
     font-size: 0.84rem;
     line-height: 1.45;
-    margin: 10px 0 12px;
+    margin: 12px auto 14px;
+    text-align: center;
+    max-width: 92%;
   }
   .hero-poster-actions {
     gap: 8px;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
   }
   .btn-poster-quote, .btn-poster-wa {
     font-size: 0.80rem;
-    padding: 8px 14px;
+    padding: 9px 14px;
   }
   .hero-gold-icons-row {
     justify-content: flex-start;
     gap: 12px;
     padding-left: 8px;
     padding-right: 8px;
+  }
+}
+
+@media (max-width: 380px) {
+  .poster-plate-gold {
+    padding: 8px 12px 6px;
+  }
+  .poster-plate-gold h1,
+  .poster-plate-gold .poster-gold-title {
+    font-size: 1.05rem;
+    letter-spacing: 0.02em;
+  }
+  .poster-pill-top {
+    font-size: 0.70rem;
+    padding: 3px 12px;
+  }
+  .poster-pill-sub {
+    font-size: 0.72rem;
+    padding: 3px 12px;
+  }
+  .btn-poster-quote, .btn-poster-wa {
+    font-size: 0.76rem;
+    padding: 8px 10px;
+    width: 100%;
+    justify-content: center;
   }
 }
 
