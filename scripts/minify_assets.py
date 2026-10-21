@@ -13,15 +13,13 @@ def minify_css(css_text):
     return css_text
 
 def minify_js(js_text):
-    # Simple, safe JS minifier (preserves strings, removes multiline and singleline comments outside strings)
-    # Remove single line comments that are on their own line or trailing
     lines = []
     for line in js_text.splitlines():
         stripped = line.strip()
         if stripped.startswith('//'):
             continue
         # Remove trailing comments if not inside string
-        if '//' in line and not ('http://' in line or 'https://' in line or "'" in line or '"' in line):
+        if '//' in line and not ('http://' in line or 'https://' in line or "'" in line or '"' in line or '`' in line):
             line = line.split('//')[0]
         lines.append(line)
     text = '\n'.join(lines)
@@ -42,14 +40,18 @@ if __name__ == '__main__':
     min_css = minify_css(raw_css)
     with open(css_out, 'w', encoding='utf-8') as f:
         f.write(min_css)
-    print(f"CSS: {len(raw_css)} -> {len(min_css)} bytes ({os.path.getsize(css_out)} bytes)")
+    print(f"CSS: {len(raw_css)} -> {len(min_css)} bytes")
 
-    # JS
-    js_in = os.path.join(base_dir, 'js', 'main.js')
-    js_out = os.path.join(base_dir, 'js', 'main.min.js')
-    with open(js_in, 'r', encoding='utf-8') as f:
-        raw_js = f.read()
-    min_js = minify_js(raw_js)
-    with open(js_out, 'w', encoding='utf-8') as f:
-        f.write(min_js)
-    print(f"JS: {len(raw_js)} -> {len(min_js)} bytes ({os.path.getsize(js_out)} bytes)")
+    # JS Files
+    js_files = ['main.js', 'cms-client.js', 'analytics.js', 'admin.js']
+    for js_name in js_files:
+        js_in = os.path.join(base_dir, 'js', js_name)
+        min_name = js_name.replace('.js', '.min.js')
+        js_out = os.path.join(base_dir, 'js', min_name)
+        if os.path.exists(js_in):
+            with open(js_in, 'r', encoding='utf-8') as f:
+                raw_js = f.read()
+            min_js = minify_js(raw_js)
+            with open(js_out, 'w', encoding='utf-8') as f:
+                f.write(min_js)
+            print(f"JS ({js_name}): {len(raw_js)} -> {len(min_js)} bytes")
