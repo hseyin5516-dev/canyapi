@@ -741,7 +741,20 @@ async function initDynamicCmsContent() {
             </div>
           `).join('');
 
-          const imagesList = (Array.isArray(p.images) && p.images.length > 0) ? p.images : [p.image || 'images/real/proje-luks-mutfak.webp'];
+          let imagesList = [];
+          if (p.image) {
+            imagesList.push(p.image);
+          }
+          if (Array.isArray(p.images)) {
+            p.images.forEach(img => {
+              if (img && !imagesList.includes(img)) {
+                imagesList.push(img);
+              }
+            });
+          }
+          if (imagesList.length === 0) {
+            imagesList = ['images/real/proje-luks-mutfak.webp'];
+          }
           const hasMultiple = imagesList.length > 1;
 
           let thumbHtml = '';

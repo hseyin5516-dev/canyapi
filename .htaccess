@@ -61,9 +61,9 @@ AddDefaultCharset UTF-8
     ExpiresByType text/html "access plus 1 hour"
 
     # CSS ve JavaScript (Minified dosyalar için 1 ay)
-    ExpiresByType text/css "access plus 1 month"
-    ExpiresByType application/javascript "access plus 1 month"
-    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType text/css "access plus 1 day"
+    ExpiresByType application/javascript "access plus 1 day"
+    ExpiresByType text/javascript "access plus 1 day"
 
     # Görseller (1 yıl)
     ExpiresByType image/jpeg "access plus 1 year"
