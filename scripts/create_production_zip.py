@@ -11,12 +11,12 @@ EXCLUDE_DIRS = [".git", ".vercel", "scripts", "farklı resimler", "resimler", "v
 def should_include_file(root, filename):
     rel_root = os.path.relpath(root, BASE_DIR)
     
-    # Check if inside an excluded directory
+    # Excluded directories
     for exc in EXCLUDE_DIRS:
         if rel_root == exc or rel_root.startswith(exc + os.sep) or rel_root.startswith(exc + "/"):
             return False
 
-    # Check root files
+    # Root files
     if rel_root == ".":
         if filename.startswith(".") and filename != ".htaccess":
             return False
@@ -27,9 +27,17 @@ def should_include_file(root, filename):
                 return True
         return False
 
-    # Check directory
+    # Subdirectories
     top_dir = rel_root.split(os.sep)[0].split("/")[0]
     if top_dir in INCLUDE_DIRS:
+        # In images directory: exclude heavy old JPG/PNG that now have a WebP version
+        if top_dir == "images":
+            ext = os.path.splitext(filename)[1].lower()
+            if ext in ('.jpg', '.jpeg', '.png') and 'favicon' not in filename.lower():
+                # Check if a .webp counterpart exists
+                webp_counterpart = os.path.splitext(os.path.join(root, filename))[0] + '.webp'
+                if os.path.exists(webp_counterpart):
+                    return False  # Omit redundant old heavy JPG/PNG
         return True
 
     return False
@@ -52,7 +60,7 @@ def make_zip():
     size_mb = os.path.getsize(zip_path) / (1024 * 1024)
     print(f"ZIP Başarıyla Oluşturuldu: {ZIP_NAME}")
     print(f"Toplam Dosya Sayısı: {total_files}")
-    print(f"Paket Boyutu: {size_mb:.2f} MB")
+    print(f"Yeni Paket Boyutu: {size_mb:.2f} MB")
 
 if __name__ == "__main__":
     make_zip()
