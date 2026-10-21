@@ -802,7 +802,11 @@
               <span>Kapak Seç</span>
               <input type="file" id="projImageFile" accept="image/*" style="display: none;" aria-label="Fotoğraf veya dosya seçin">
             </label>
+            <button type="button" id="btnOpenCropper" class="btn btn-sm btn-outline" style="white-space: nowrap; font-size: 0.8rem; display: flex; align-items: center; gap: 4px;" title="Görseli Yakınlaştır & Çerçevele">
+              <span>✂️ Çerçevele</span>
+            </button>
           </div>
+          <small class="text-muted" style="display: block; margin-top: 4px;">💡 Dikey fotoğraflarda istediğiniz alanı (tavan, tezgah vb.) Instagram gibi kaydırıp odaklayabilirsiniz.</small>
         </div>
 
         <!-- Çoklu Fotoğraf / Kaydırmalı Slider Galerisi -->
@@ -842,6 +846,61 @@
           <button type="submit" class="btn btn-primary">Kaydet & Yayınla</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: INSTAGRAM TARZI İNTERAKTİF FOTOĞRAF ÇERÇEVELEME (CROP & PAN)
+       ========================================================================= -->
+  <div id="imageCropperModal" class="cms-modal-overlay hidden" style="z-index: 100005;">
+    <div class="cms-modal-card" style="max-width: 680px; width: 95%;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h3 style="margin: 0; font-size: 1.25rem; color: #FFF; display: flex; align-items: center; gap: 8px;">
+          <span>📷</span> Fotoğrafı Çerçevele & Odakla
+        </h3>
+        <button type="button" onclick="closeImageCropperModal()" style="background: none; border: none; color: #94A3B8; font-size: 1.5rem; cursor: pointer;">✕</button>
+      </div>
+
+      <p class="text-muted" style="font-size: 0.85rem; margin-bottom: 14px;">
+        Fotoğrafı <strong>fareyle veya parmağınızla sürükleyerek</strong> istediğiniz alanı yatay kart çerçevesine oturtun. Alttaki çubukla veya fare tekerleğiyle <strong>yakınlaştırıp uzaklaştırabilirsiniz</strong>.
+      </p>
+
+      <!-- 16:9 İnteraktif Çerçeve Alanı -->
+      <div id="cropperViewport" class="cropper-viewport-wrap" style="position: relative; width: 100%; aspect-ratio: 16/9; max-height: 360px; background: #000; border-radius: 8px; overflow: hidden; border: 2px solid var(--primary-orange, #FF5500); cursor: grab; user-select: none; touch-action: none;">
+        <img id="cropperSourceImg" src="" alt="Kırpılacak Görsel" style="position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; pointer-events: none; max-width: none;">
+        <!-- Kılavuz Çizgileri (Rule of Thirds Grid) -->
+        <div style="position: absolute; inset: 0; pointer-events: none; border: 1px dashed rgba(255,255,255,0.25); display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr;">
+          <div style="border-right: 1px dashed rgba(255,255,255,0.15); border-bottom: 1px dashed rgba(255,255,255,0.15);"></div>
+          <div style="border-right: 1px dashed rgba(255,255,255,0.15); border-bottom: 1px dashed rgba(255,255,255,0.15);"></div>
+          <div style="border-bottom: 1px dashed rgba(255,255,255,0.15);"></div>
+          <div style="border-right: 1px dashed rgba(255,255,255,0.15); border-bottom: 1px dashed rgba(255,255,255,0.15);"></div>
+          <div style="border-right: 1px dashed rgba(255,255,255,0.15); border-bottom: 1px dashed rgba(255,255,255,0.15);"></div>
+          <div style="border-bottom: 1px dashed rgba(255,255,255,0.15);"></div>
+          <div style="border-right: 1px dashed rgba(255,255,255,0.15);"></div>
+          <div style="border-right: 1px dashed rgba(255,255,255,0.15);"></div>
+          <div></div>
+        </div>
+      </div>
+
+      <!-- Yakınlaştırma Kontrolleri -->
+      <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 18px 0; background: #0B0E13; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--admin-border);">
+        <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
+          <span style="font-size: 0.82rem; color: #94A3B8; white-space: nowrap;">🔍 Yakınlaştır:</span>
+          <button type="button" id="cropperZoomOut" class="btn btn-sm btn-outline" style="padding: 4px 10px;">−</button>
+          <input type="range" id="cropperZoomSlider" min="1" max="3" step="0.02" value="1" style="flex: 1; accent-color: var(--primary-orange, #FF5500); cursor: pointer;">
+          <button type="button" id="cropperZoomIn" class="btn btn-sm btn-outline" style="padding: 4px 10px;">+</button>
+        </div>
+        <button type="button" id="cropperResetBtn" class="btn btn-sm btn-outline" style="white-space: nowrap; font-size: 0.78rem;">
+          ↺ Sıfırla
+        </button>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button type="button" onclick="closeImageCropperModal()" class="btn btn-outline">İptal</button>
+        <button type="button" id="cropperApplyBtn" class="btn btn-primary" style="display: flex; align-items: center; gap: 6px;">
+          <span>✓ Çerçeveyi Kaydet & Uygula</span>
+        </button>
+      </div>
     </div>
   </div>
 

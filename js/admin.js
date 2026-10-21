@@ -645,12 +645,12 @@ function setupEventListeners() {
     });
   }
 
-  // Proje Tekil Görsel Yükleme
+  // Proje Tekil Görsel Yükleme & Otomatik Çerçeveleyici Açma
   const projFileInput = document.getElementById('projImageFile');
   if (projFileInput) {
     projFileInput.addEventListener('change', async function() {
       if (this.files && this.files[0]) {
-        window.showToast?.('Kapak fotoğrafı yükleniyor...', 'info');
+        window.showToast?.('Fotoğraf yükleniyor...', 'info');
         const res = await window.CmsClient.uploadPhoto(this.files[0]);
         if (res.success && res.url) {
           document.getElementById('projImage').value = res.url;
@@ -658,9 +658,25 @@ function setupEventListeners() {
             currentModalProjectImages.unshift(res.url);
             renderModalProjectImages();
           }
-          window.showToast?.('Kapak fotoğrafı yüklendi!', 'success');
+          window.showToast?.('Fotoğraf yüklendi! Şimdi çerçeveyi ayarlayabilirsiniz.', 'success');
+          setTimeout(() => {
+            openImageCropperModal(res.url);
+          }, 350);
         }
       }
+    });
+  }
+
+  // Çerçeveleyiciyi Manuel Açma Butonu
+  const btnOpenCropper = document.getElementById('btnOpenCropper');
+  if (btnOpenCropper) {
+    btnOpenCropper.addEventListener('click', function() {
+      const currentUrl = document.getElementById('projImage')?.value.trim();
+      if (!currentUrl) {
+        window.showToast?.('Lütfen önce bir fotoğraf seçin veya geçerli bir URL girin.', 'error');
+        return;
+      }
+      openImageCropperModal(currentUrl);
     });
   }
 
@@ -1060,6 +1076,327 @@ function initAdminActions() {
         window.CanYapiAnalytics.resetMetrics();
         loadMetrics();
         alert("Sayaçlar sıfırlandı.");
+      }
+    });
+  }
+}
+
+
+/* ==========================================================================
+   INSTAGRAM TARZI İNTERAKTİF ÇERÇEVELEME & ODAKLAMA MOTORU (Pan & Zoom Cropper)
+   ========================================================================== */
+let cropperState = {
+  img: null,
+  viewport: null,
+  slider: null,
+  modal: null,
+  scale: 1,
+  minScale: 1,
+  maxScale: 3.5,
+  x: 0,
+  y: 0,
+  isDragging: false,
+  startX: 0,
+  startY: 0,
+  startImgX: 0,
+  startImgY: 0,
+  naturalW: 0,
+  naturalH: 0,
+  originalUrl: '',
+  pinchDistance: 0,
+  onComplete: null
+};
+
+window.openImageCropperModal = function(imageUrl, onComplete) {
+  const modal = document.getElementById('imageCropperModal');
+  const img = document.getElementById('cropperSourceImg');
+  const viewport = document.getElementById('cropperViewport');
+  const slider = document.getElementById('cropperZoomSlider');
+
+  if (!modal || !img || !viewport) return;
+
+  cropperState.modal = modal;
+  cropperState.img = img;
+  cropperState.viewport = viewport;
+  cropperState.slider = slider;
+  cropperState.originalUrl = imageUrl;
+  cropperState.onComplete = onComplete;
+
+  modal.classList.remove('hidden');
+
+  img.onload = function() {
+    cropperState.naturalW = img.naturalWidth || 800;
+    cropperState.naturalH = img.naturalHeight || 600;
+
+    const vw = viewport.clientWidth || 560;
+    const vh = viewport.clientHeight || 315;
+
+    // 16:9 çerçeveyi tamamen kaplayacak minimum ölçek (cover)
+    const scaleX = vw / cropperState.naturalW;
+    const scaleY = vh / cropperState.naturalH;
+    cropperState.minScale = Math.max(scaleX, scaleY);
+    cropperState.scale = cropperState.minScale;
+    cropperState.maxScale = cropperState.minScale * 3.5;
+
+    if (slider) {
+      slider.min = cropperState.minScale.toFixed(4);
+      slider.max = cropperState.maxScale.toFixed(4);
+      slider.step = ((cropperState.maxScale - cropperState.minScale) / 100).toFixed(4);
+      slider.value = cropperState.scale.toFixed(4);
+    }
+
+    // Ortala
+    cropperState.x = (vw - cropperState.naturalW * cropperState.scale) / 2;
+    cropperState.y = (vh - cropperState.naturalH * cropperState.scale) / 2;
+
+    applyCropperTransform();
+    initCropperEventsOnce();
+  };
+
+  img.onerror = function() {
+    window.showToast?.('Görsel yüklenemedi. Lütfen geçerli bir görsel seçiniz.', 'error');
+    closeImageCropperModal();
+  };
+
+  img.src = imageUrl;
+};
+
+window.closeImageCropperModal = function() {
+  const modal = document.getElementById('imageCropperModal');
+  if (modal) modal.classList.add('hidden');
+};
+
+function clampCropperBounds() {
+  if (!cropperState.viewport || !cropperState.naturalW) return;
+  const vw = cropperState.viewport.clientWidth;
+  const vh = cropperState.viewport.clientHeight;
+  const renderedW = cropperState.naturalW * cropperState.scale;
+  const renderedH = cropperState.naturalH * cropperState.scale;
+
+  const minX = vw - renderedW;
+  const maxX = 0;
+  const minY = vh - renderedH;
+  const maxY = 0;
+
+  cropperState.x = Math.min(maxX, Math.max(minX, cropperState.x));
+  cropperState.y = Math.min(maxY, Math.max(minY, cropperState.y));
+}
+
+function applyCropperTransform() {
+  clampCropperBounds();
+  if (cropperState.img) {
+    cropperState.img.style.transform = `translate(${cropperState.x}px, ${cropperState.y}px) scale(${cropperState.scale})`;
+  }
+}
+
+let cropperEventsInitialized = false;
+function initCropperEventsOnce() {
+  if (cropperEventsInitialized) return;
+  cropperEventsInitialized = true;
+
+  const viewport = document.getElementById('cropperViewport');
+  const slider = document.getElementById('cropperZoomSlider');
+  const zoomIn = document.getElementById('cropperZoomIn');
+  const zoomOut = document.getElementById('cropperZoomOut');
+  const resetBtn = document.getElementById('cropperResetBtn');
+  const applyBtn = document.getElementById('cropperApplyBtn');
+
+  if (!viewport) return;
+
+  // Fareyle Sürükleme (Mouse Drag)
+  viewport.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+    cropperState.isDragging = true;
+    cropperState.startX = e.clientX;
+    cropperState.startY = e.clientY;
+    cropperState.startImgX = cropperState.x;
+    cropperState.startImgY = cropperState.y;
+    viewport.style.cursor = 'grabbing';
+  });
+
+  window.addEventListener('mousemove', function(e) {
+    if (!cropperState.isDragging) return;
+    const dx = e.clientX - cropperState.startX;
+    const dy = e.clientY - cropperState.startY;
+    cropperState.x = cropperState.startImgX + dx;
+    cropperState.y = cropperState.startImgY + dy;
+    applyCropperTransform();
+  });
+
+  window.addEventListener('mouseup', function() {
+    if (cropperState.isDragging) {
+      cropperState.isDragging = false;
+      viewport.style.cursor = 'grab';
+    }
+  });
+
+  // Dokunmatik Sürükleme & Pinch-to-zoom (Touch Drag)
+  viewport.addEventListener('touchstart', function(e) {
+    if (e.touches.length === 1) {
+      cropperState.isDragging = true;
+      cropperState.startX = e.touches[0].clientX;
+      cropperState.startY = e.touches[0].clientY;
+      cropperState.startImgX = cropperState.x;
+      cropperState.startImgY = cropperState.y;
+    } else if (e.touches.length === 2) {
+      cropperState.isDragging = false;
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      cropperState.pinchDistance = Math.hypot(dx, dy);
+    }
+  }, { passive: true });
+
+  viewport.addEventListener('touchmove', function(e) {
+    if (e.touches.length === 1 && cropperState.isDragging) {
+      const dx = e.touches[0].clientX - cropperState.startX;
+      const dy = e.touches[0].clientY - cropperState.startY;
+      cropperState.x = cropperState.startImgX + dx;
+      cropperState.y = cropperState.startImgY + dy;
+      applyCropperTransform();
+    } else if (e.touches.length === 2) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const dist = Math.hypot(dx, dy);
+      if (cropperState.pinchDistance > 0) {
+        const factor = dist / cropperState.pinchDistance;
+        setCropperZoom(cropperState.scale * factor);
+      }
+      cropperState.pinchDistance = dist;
+    }
+  }, { passive: true });
+
+  viewport.addEventListener('touchend', function() {
+    cropperState.isDragging = false;
+    cropperState.pinchDistance = 0;
+  });
+
+  // Fare Tekerleği ile Zoom (Wheel Zoom)
+  viewport.addEventListener('wheel', function(e) {
+    e.preventDefault();
+    const factor = e.deltaY < 0 ? 1.08 : 0.92;
+    setCropperZoom(cropperState.scale * factor);
+  }, { passive: false });
+
+  // Zoom Fonksiyonu (Merkeze göre yakınlaştırır)
+  function setCropperZoom(newScale) {
+    newScale = Math.min(cropperState.maxScale, Math.max(cropperState.minScale, newScale));
+    const vw = viewport.clientWidth;
+    const vh = viewport.clientHeight;
+
+    const centerViewportX = vw / 2;
+    const centerViewportY = vh / 2;
+
+    const imgCenterX = (centerViewportX - cropperState.x) / cropperState.scale;
+    const imgCenterY = (centerViewportY - cropperState.y) / cropperState.scale;
+
+    cropperState.scale = newScale;
+    cropperState.x = centerViewportX - imgCenterX * cropperState.scale;
+    cropperState.y = centerViewportY - imgCenterY * cropperState.scale;
+
+    if (slider) slider.value = cropperState.scale.toFixed(4);
+    applyCropperTransform();
+  }
+
+  // Zoom Slider
+  if (slider) {
+    slider.addEventListener('input', function() {
+      setCropperZoom(parseFloat(this.value));
+    });
+  }
+
+  if (zoomIn) {
+    zoomIn.addEventListener('click', () => setCropperZoom(cropperState.scale * 1.15));
+  }
+  if (zoomOut) {
+    zoomOut.addEventListener('click', () => setCropperZoom(cropperState.scale * 0.85));
+  }
+
+  // Sıfırla
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      cropperState.scale = cropperState.minScale;
+      const vw = viewport.clientWidth;
+      const vh = viewport.clientHeight;
+      cropperState.x = (vw - cropperState.naturalW * cropperState.scale) / 2;
+      cropperState.y = (vh - cropperState.naturalH * cropperState.scale) / 2;
+      if (slider) slider.value = cropperState.scale.toFixed(4);
+      applyCropperTransform();
+    });
+  }
+
+  // Çerçeveyi Uygula & Kaydet
+  if (applyBtn) {
+    applyBtn.addEventListener('click', async function() {
+      applyBtn.disabled = true;
+      applyBtn.innerHTML = '<span>⏳ Kaydediliyor...</span>';
+
+      try {
+        const vw = viewport.clientWidth;
+        const vh = viewport.clientHeight;
+        const renderedW = cropperState.naturalW * cropperState.scale;
+        const scaleRatio = cropperState.naturalW / renderedW;
+
+        // Orijinal fotoğraftaki kırpılacak koordinatlar
+        const srcX = Math.max(0, -cropperState.x * scaleRatio);
+        const srcY = Math.max(0, -cropperState.y * scaleRatio);
+        const srcW = Math.min(cropperState.naturalW - srcX, vw * scaleRatio);
+        const srcH = Math.min(cropperState.naturalH - srcY, vh * scaleRatio);
+
+        // 16:9 standart net tuval (1280x720)
+        const canvas = document.createElement('canvas');
+        canvas.width = 1280;
+        canvas.height = 720;
+        const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+
+        ctx.drawImage(cropperState.img, srcX, srcY, srcW, srcH, 0, 0, 1280, 720);
+
+        // WebP formatında dışa aktar
+        canvas.toBlob(async function(blob) {
+          if (!blob) {
+            window.showToast?.('Kırpma işlemi başarısız oldu.', 'error');
+            applyBtn.disabled = false;
+            applyBtn.innerHTML = '<span>✓ Çerçeveyi Kaydet & Uygula</span>';
+            return;
+          }
+
+          const file = new File([blob], 'cropped_thumb.webp', { type: 'image/webp' });
+          const res = await window.CmsClient.uploadPhoto(file);
+
+          if (res && res.success && res.url) {
+            const croppedUrl = res.url;
+            const originalUrl = cropperState.originalUrl;
+
+            // Formdaki ana görseli kırpılmış 16:9 vitrin görseline ayarla
+            const projInput = document.getElementById('projImage');
+            if (projInput) projInput.value = croppedUrl;
+
+            // Orijinal tam boy görseli de galeride sakla (Büyütülünce tam boy görünsün)
+            if (originalUrl && !currentModalProjectImages.includes(originalUrl)) {
+              currentModalProjectImages.unshift(originalUrl);
+              renderModalProjectImages();
+            }
+
+            if (typeof cropperState.onComplete === 'function') {
+              cropperState.onComplete(croppedUrl, originalUrl);
+            }
+
+            window.showToast?.('Önizleme çerçevesi başarıyla kaydedildi!', 'success');
+            closeImageCropperModal();
+          } else {
+            window.showToast?.('Sunucuya kaydedilemedi.', 'error');
+          }
+
+          applyBtn.disabled = false;
+          applyBtn.innerHTML = '<span>✓ Çerçeveyi Kaydet & Uygula</span>';
+        }, 'image/webp', 0.88);
+
+      } catch (err) {
+        console.error('Cropper error:', err);
+        window.showToast?.('Hata: ' + err.message, 'error');
+        applyBtn.disabled = false;
+        applyBtn.innerHTML = '<span>✓ Çerçeveyi Kaydet & Uygula</span>';
       }
     });
   }
