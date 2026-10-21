@@ -906,16 +906,6 @@ body.light-theme .hero-image-card {
   );
 }
 
-[data-theme="light"] .hero-banner-overlay,
-body.light-theme .hero-banner-overlay {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.94) 0%,
-    rgba(255, 255, 255, 0.84) 36%,
-    rgba(255, 255, 255, 0.40) 62%,
-    rgba(255, 255, 255, 0.08) 100%
-  );
-}
 
 .hero-banner-top-content {
   position: relative;
