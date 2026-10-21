@@ -254,13 +254,19 @@ function renderModalProjectImages() {
     return;
   }
 
-  container.innerHTML = currentModalProjectImages.map((imgUrl, i) => `
-    <div style="position: relative; width: 64px; height: 64px; border-radius: 6px; overflow: hidden; border: 1px solid var(--admin-border); background: #000;">
-      <img src="${imgUrl}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='images/logo.png'">
-      <button type="button" onclick="removeModalProjectImage(${i})" style="position: absolute; top: 2px; right: 2px; background: rgba(255,0,0,0.85); color: white; border: none; width: 18px; height: 18px; border-radius: 50%; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1;" title="Fotoğrafı Kaldır">✕</button>
-      <span style="position: absolute; bottom: 2px; left: 2px; background: rgba(0,0,0,0.7); color: #FFF; font-size: 9px; padding: 1px 3px; border-radius: 2px;">${i+1}</span>
-    </div>
-  `).join('');
+  const currentCover = document.getElementById('projImage')?.value.trim();
+  container.innerHTML = currentModalProjectImages.map((imgUrl, i) => {
+    const isCover = currentCover === imgUrl;
+    return `
+      <div onclick="selectAndCropProjectImage('${imgUrl}')" style="cursor: pointer; position: relative; width: 68px; height: 68px; border-radius: 6px; overflow: hidden; border: 2px solid ${isCover ? 'var(--primary-orange, #FF5500)' : 'var(--admin-border)'}; background: #000;" title="Kapak Olarak Seç ve Çerçevele">
+        <img src="${normalizeImageUrl(imgUrl)}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='images/logo.webp'">
+        <button type="button" onclick="event.stopPropagation(); removeModalProjectImage(${i})" style="position: absolute; top: 2px; right: 2px; background: rgba(255,0,0,0.85); color: white; border: none; width: 18px; height: 18px; border-radius: 50%; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1;" title="Fotoğrafı Kaldır">✕</button>
+        <span style="position: absolute; bottom: 2px; left: 2px; background: rgba(0,0,0,0.75); color: #FFF; font-size: 9px; padding: 1px 4px; border-radius: 2px; display: flex; align-items: center; gap: 2px;">
+          ${i+1} ✂️
+        </span>
+      </div>
+    `;
+  }).join('');
 }
 
 window.removeModalProjectImage = function(index) {
@@ -1076,6 +1082,47 @@ function initAdminActions() {
 /* ==========================================================================
    INSTAGRAM TARZI İNTERAKTİF ÇERÇEVELEME & ODAKLAMA MOTORU (Pan & Zoom Cropper)
    ========================================================================== */
+
+function normalizeImageUrl(url) {
+  if (!url) return '';
+  url = url.trim();
+  if (url.startsWith('http://') || url.startsWith('https://') || url.startsWith('blob:') || url.startsWith('data:')) {
+    return url;
+  }
+  return '/' + url.replace(/^\/+/, '');
+}
+window.normalizeImageUrl = normalizeImageUrl;
+
+window.selectAndCropProjectImage = function(imgUrl) {
+  const projInput = document.getElementById('projImage');
+  if (projInput) projInput.value = imgUrl;
+  renderModalProjectImages();
+  window.openImageCropperModal(imgUrl);
+};
+
+window.handleOpenCropperClick = function() {
+  let currentUrl = document.getElementById('projImage')?.value.trim();
+  if (!currentUrl && Array.isArray(currentModalProjectImages) && currentModalProjectImages.length > 0) {
+    currentUrl = currentModalProjectImages[0];
+    const projInput = document.getElementById('projImage');
+    if (projInput) projInput.value = currentUrl;
+  }
+  if (!currentUrl) {
+    const fileInput = document.getElementById('projImageFile');
+    if (fileInput) fileInput.click();
+    return;
+  }
+  window.openImageCropperModal(currentUrl);
+};
+
+window.handleCropperDirectFile = function(input) {
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+    const localBlobUrl = URL.createObjectURL(file);
+    window.openImageCropperModal(localBlobUrl, null, file);
+  }
+};
+
 let cropperState = {
   img: null,
   viewport: null,
@@ -1105,7 +1152,10 @@ window.openImageCropperModal = function(imageUrl, onComplete, pendingFileObj) {
   const viewport = document.getElementById('cropperViewport');
   const slider = document.getElementById('cropperZoomSlider');
 
-  if (!modal || !img || !viewport) return;
+  if (!modal || !img || !viewport) {
+    console.error('Cropper elements missing');
+    return;
+  }
 
   cropperState.modal = modal;
   cropperState.img = img;
@@ -1117,7 +1167,22 @@ window.openImageCropperModal = function(imageUrl, onComplete, pendingFileObj) {
 
   modal.classList.remove('hidden');
 
-  img.onload = function() {
+  // Galeri fotoğraflarından hızlı seçim şeridi
+  const cropperThumbStrip = document.getElementById('cropperGalleryThumbnails');
+  if (cropperThumbStrip) {
+    if (Array.isArray(currentModalProjectImages) && currentModalProjectImages.length > 0) {
+      cropperThumbStrip.innerHTML = '<span style="font-size:0.75rem;color:#94A3B8;white-space:nowrap;margin-right:4px;">Proje Fotoğrafları:</span>' + currentModalProjectImages.map((u, idx) => `
+        <div onclick="window.openImageCropperModal('${u}')" style="cursor:pointer;width:44px;height:44px;border-radius:4px;overflow:hidden;border:2px solid ${u === imageUrl ? 'var(--primary-orange, #FF5500)' : 'rgba(255,255,255,0.2)'};flex-shrink:0;" title="Fotoğraf ${idx+1}">
+          <img src="${normalizeImageUrl(u)}" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+      `).join('');
+      cropperThumbStrip.style.display = 'flex';
+    } else {
+      cropperThumbStrip.style.display = 'none';
+    }
+  }
+
+  function setupMetrics() {
     cropperState.naturalW = img.naturalWidth || 800;
     cropperState.naturalH = img.naturalHeight || 600;
 
@@ -1142,19 +1207,23 @@ window.openImageCropperModal = function(imageUrl, onComplete, pendingFileObj) {
 
     applyCropperTransform();
     initCropperEventsOnce();
-  };
+  }
+
+  img.onload = setupMetrics;
 
   img.onerror = function() {
-    window.showToast?.('Görsel yüklenemedi. Lütfen geçerli bir görsel seçiniz.', 'error');
-    closeImageCropperModal();
+    console.warn('Görsel yüklenemedi:', imageUrl);
+    window.showToast?.('Fotoğraf yüklenemedi. Lütfen "Başka Fotoğraf Seç" butonundan görsel seçin.', 'error');
   };
 
-  if (!imageUrl.startsWith('blob:') && !imageUrl.startsWith('data:')) {
-    img.crossOrigin = 'anonymous';
-  } else {
-    img.removeAttribute('crossOrigin');
+  img.removeAttribute('crossOrigin');
+
+  const resolved = normalizeImageUrl(imageUrl);
+  img.src = resolved;
+
+  if (img.complete && img.naturalWidth > 0) {
+    setupMetrics();
   }
-  img.src = imageUrl;
 };
 
 window.closeImageCropperModal = function() {
@@ -1403,6 +1472,8 @@ function initCropperEventsOnce() {
                 renderModalProjectImages();
               }
             }
+
+            renderModalProjectImages();
 
             if (typeof cropperState.onComplete === 'function') {
               cropperState.onComplete(croppedUrl, cropperState.originalUrl);
