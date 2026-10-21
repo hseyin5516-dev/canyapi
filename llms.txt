@@ -12,18 +12,18 @@
 - **Keşif Hizmeti:** Antalya genelinde adreste ücretsiz yerinde keşif ve 3D projelendirme imkanı.
 
 ## Ana Hizmetlerimiz
-- [Komple Ev & Villa Tadilatı](https://canyapiantalya.com.tr/hizmet-tadilat.html): A'dan Z'ye tek muhatapla anahtar teslim iç mimari, tesisat, zemin ve mobilya yenileme.
-- [Mutfak Tadilatı & Tasarım](https://canyapiantalya.com.tr/hizmet-mutfak.html): Kişiye özel akrilik ve lake dolap imalatı, kuvars ve porselen tezgah, ada mutfak sistemleri.
-- [Banyo & Islak Zemin Yenileme](https://canyapiantalya.com.tr/hizmet-banyo.html): Çift katmanlı garantili su yalıtımı, walk-in temperli cam duşakabin, gömme rezervuar ve neme dayanıklı lake dolaplar.
-- [Seramik, Granit & Fayans](https://canyapiantalya.com.tr/hizmet-seramik-fayans.html): 60x120 ve büyük boy porselen seramik döşeme, lazer nivo ile milimetrik terazi garantisi.
-- [Boya, Badana & Alçıpan](https://canyapiantalya.com.tr/hizmet-boya.html): Tozsuz vakumlu zımpara, silikonlu silinebilir boya, İtalyan dekoratif efekt boya ve gizli ışıklı asma tavan.
-- [Dış Cephe Mantolama & Isı Yalıtımı](https://canyapiantalya.com.tr/hizmet-mantolama.html): Karbonlu EPS ve taşyünü sistemleriyle %50'ye varan enerji tasarrufu ve 5 yıl işçilik garantisi.
-- [Çatı Onarımı & Su İzolasyonu](https://canyapiantalya.com.tr/hizmet-cati.html): Kiremit aktarma, şalümo alevli polyester keçeli membran su yalıtımı ve eksiz çinko yağmur olukları.
-- [Hafif Çelik Villa & Prefabrik Yapı](https://canyapiantalya.com.tr/hizmet-prefabrik.html): Depreme dayanıklı 1. derece statik onaylı, A+ yalıtımlı, 35 günde anahtar teslim müstakil villalar.
+- [Komple Ev & Villa Tadilatı](https://canyapiantalya.com.tr/hizmet-tadilat): A'dan Z'ye tek muhatapla anahtar teslim iç mimari, tesisat, zemin ve mobilya yenileme.
+- [Mutfak Tadilatı & Tasarım](https://canyapiantalya.com.tr/hizmet-mutfak): Kişiye özel akrilik ve lake dolap imalatı, kuvars ve porselen tezgah, ada mutfak sistemleri.
+- [Banyo & Islak Zemin Yenileme](https://canyapiantalya.com.tr/hizmet-banyo): Çift katmanlı garantili su yalıtımı, walk-in temperli cam duşakabin, gömme rezervuar ve neme dayanıklı lake dolaplar.
+- [Seramik, Granit & Fayans](https://canyapiantalya.com.tr/hizmet-seramik-fayans): 60x120 ve büyük boy porselen seramik döşeme, lazer nivo ile milimetrik terazi garantisi.
+- [Boya, Badana & Alçıpan](https://canyapiantalya.com.tr/hizmet-boya): Tozsuz vakumlu zımpara, silikonlu silinebilir boya, İtalyan dekoratif efekt boya ve gizli ışıklı asma tavan.
+- [Dış Cephe Mantolama & Isı Yalıtımı](https://canyapiantalya.com.tr/hizmet-mantolama): Karbonlu EPS ve taşyünü sistemleriyle %50'ye varan enerji tasarrufu ve 5 yıl işçilik garantisi.
+- [Çatı Onarımı & Su İzolasyonu](https://canyapiantalya.com.tr/hizmet-cati): Kiremit aktarma, şalümo alevli polyester keçeli membran su yalıtımı ve eksiz çinko yağmur olukları.
+- [Hafif Çelik Villa & Prefabrik Yapı](https://canyapiantalya.com.tr/hizmet-prefabrik): Depreme dayanıklı 1. derece statik onaylı, A+ yalıtımlı, 35 günde anahtar teslim müstakil villalar.
 
 ## Önemli Sayfalar
-- [Hakkımızda](https://canyapiantalya.com.tr/hakkimizda.html): 15 yıllık tecrübemiz, vizyonumuz ve hizmet anlayışımız.
-- [Projelerimiz](https://canyapiantalya.com.tr/projeler.html): Antalya'da tamamlanan gerçek referans projelerimiz ve teknik özellikleri.
-- [Tadilat & Yapı Blogu](https://canyapiantalya.com.tr/blog.html): Antalya iklimine uygun tadilat ipuçları ve rehberler.
-- [Ücretsiz Keşif Başvurusu](https://canyapiantalya.com.tr/ucretsiz-kesif.html): Yerinde inceleme ve net fiyat teklifi talebi.
-- [İletişim & Harita](https://canyapiantalya.com.tr/iletisim.html): Konum, telefon ve doğrudan mesajlaşma.
+- [Hakkımızda](https://canyapiantalya.com.tr/hakkimizda): 15 yıllık tecrübemiz, vizyonumuz ve hizmet anlayışımız.
+- [Projelerimiz](https://canyapiantalya.com.tr/projeler): Antalya'da tamamlanan gerçek referans projelerimiz ve teknik özellikleri.
+- [Tadilat & Yapı Blogu](https://canyapiantalya.com.tr/blog): Antalya iklimine uygun tadilat ipuçları ve rehberler.
+- [Ücretsiz Keşif Başvurusu](https://canyapiantalya.com.tr/ucretsiz-kesif): Yerinde inceleme ve net fiyat teklifi talebi.
+- [İletişim & Harita](https://canyapiantalya.com.tr/iletisim): Konum, telefon ve doğrudan mesajlaşma.

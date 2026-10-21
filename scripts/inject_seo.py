@@ -58,7 +58,7 @@ COMMON_BUSINESS_SCHEMA = {
 PAGES = {
     "index.html": {
         "title": "Antalya Tadilat & Anahtar Teslim Ev Yenileme | Can Yapı (15+ Yıl)",
-        "desc": "Antalya'da anahtar teslim ev tadilatı, modern mutfak & lüks banyo yenileme, çatı izolasyonu ve prefabrik villa yapımı. 15+ yıllık tecrübeyle ücretsiz keşif alın!",
+        "desc": "Antalya'da anahtar teslim ev tadilatı, modern mutfak ve banyo yenileme, çatı izolasyonu ve prefabrik konut. 15+ yıllık tecrübeyle ücretsiz keşif alın!",
         "canon": f"{DOM}/",
         "image": DEFAULT_IMG,
         "type": "website",
@@ -125,7 +125,7 @@ PAGES = {
     "hakkimizda.html": {
         "title": "Hakkımızda | Can Yapı Antalya - 15+ Yıllık Tecrübe & Hizmet Anlayışı",
         "desc": "Can Yapı Antalya; 15 yılı aşkın tecrübesiyle Antalya genelinde anahtar teslim komple ev tadilatı, banyo & mutfak ve hafif çelik prefabrik yapılar inşa eder.",
-        "canon": f"{DOM}/hakkimizda.html",
+        "canon": f"{DOM}/hakkimizda",
         "image": DEFAULT_IMG,
         "type": "website",
         "keywords": "can yapı antalya hakkında, antalya tadilat firmaları, antalya inşaat taahhüt, muratpaşa tadilat ustası",
@@ -133,19 +133,19 @@ PAGES = {
             {
                 "@context": "https://schema.org",
                 "@type": "AboutPage",
-                "@id": f"{DOM}/hakkimizda.html#webpage",
-                "url": f"{DOM}/hakkimizda.html",
+                "@id": f"{DOM}/hakkimizda#webpage",
+                "url": f"{DOM}/hakkimizda",
                 "name": "Hakkımızda | Can Yapı Antalya",
                 "isPartOf": {"@id": f"{DOM}/#website"},
-                "breadcrumb": {"@id": f"{DOM}/hakkimizda.html#breadcrumb"}
+                "breadcrumb": {"@id": f"{DOM}/hakkimizda#breadcrumb"}
             },
             {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
-                "@id": f"{DOM}/hakkimizda.html#breadcrumb",
+                "@id": f"{DOM}/hakkimizda#breadcrumb",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Hakkımızda", "item": f"{DOM}/hakkimizda.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Hakkımızda", "item": f"{DOM}/hakkimizda"}
                 ]
             }
         ]
@@ -153,7 +153,7 @@ PAGES = {
     "hizmetler.html": {
         "title": "Antalya Tadilat & İnşaat Hizmetleri | Can Yapı Antalya",
         "desc": "Antalya anahtar teslim ev tadilatı, banyo & mutfak yenileme, seramik döşeme, boya badana, mantolama, çatı izolasyonu ve prefabrik konut hizmetlerimiz.",
-        "canon": f"{DOM}/hizmetler.html",
+        "canon": f"{DOM}/hizmetler",
         "image": DEFAULT_IMG,
         "type": "website",
         "keywords": "antalya tadilat hizmetleri, antalya anahtar teslim inşaat, ev yenileme antalya, banyo mutfak tadilatı",
@@ -161,18 +161,18 @@ PAGES = {
             {
                 "@context": "https://schema.org",
                 "@type": "CollectionPage",
-                "@id": f"{DOM}/hizmetler.html#webpage",
-                "url": f"{DOM}/hizmetler.html",
+                "@id": f"{DOM}/hizmetler#webpage",
+                "url": f"{DOM}/hizmetler",
                 "name": "Antalya Tadilat & İnşaat Hizmetleri | Can Yapı",
-                "breadcrumb": {"@id": f"{DOM}/hizmetler.html#breadcrumb"}
+                "breadcrumb": {"@id": f"{DOM}/hizmetler#breadcrumb"}
             },
             {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
-                "@id": f"{DOM}/hizmetler.html#breadcrumb",
+                "@id": f"{DOM}/hizmetler#breadcrumb",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Hizmetlerimiz", "item": f"{DOM}/hizmetler.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Hizmetlerimiz", "item": f"{DOM}/hizmetler"}
                 ]
             }
         ]
@@ -180,7 +180,7 @@ PAGES = {
     "hizmet-tadilat.html": {
         "title": "Antalya Komple Ev Tadilatı | Anahtar Teslim Daire & Villa Yenileme",
         "desc": "Antalya'da komple ev, daire ve villa tadilatı. İç mimari projelendirme, kırım, sıhhi ve elektrik tesisatı, zemin ve tavan anahtar teslim çözümler. Ücretsiz keşif!",
-        "canon": f"{DOM}/hizmet-tadilat.html",
+        "canon": f"{DOM}/hizmet-tadilat",
         "image": f"{DOM}/images/real/proje-tadilat-oncesi-sonrasi.jpg",
         "type": "website",
         "keywords": "antalya komple ev tadilatı, antalya daire tadilatı, antalya villa yenileme, anahtar teslim tadilat antalya",
@@ -193,15 +193,15 @@ PAGES = {
                 "provider": {"@id": f"{DOM}/#organization"},
                 "areaServed": {"@type": "AdministrativeArea", "name": "Antalya"},
                 "description": "Antalya ve ilçelerinde A'dan Z'ye anahtar teslim ev, daire ve villa tadilatı hizmeti. Tek sözleşme, tek muhatap, garantili teslimat.",
-                "url": f"{DOM}/hizmet-tadilat.html"
+                "url": f"{DOM}/hizmet-tadilat"
             },
             {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler.html"},
-                    {"@type": "ListItem", "position": 3, "name": "Komple Ev Tadilatı", "item": f"{DOM}/hizmet-tadilat.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler"},
+                    {"@type": "ListItem", "position": 3, "name": "Komple Ev Tadilatı", "item": f"{DOM}/hizmet-tadilat"}
                 ]
             }
         ]
@@ -209,7 +209,7 @@ PAGES = {
     "hizmet-mutfak.html": {
         "title": "Antalya Mutfak Tadilatı & Özel Dolap Tasarımı | Can Yapı",
         "desc": "Antalya'da özel ölçü lake ve akrilik mutfak dolabı imalatı, kuvars/porselen tezgah, ada mutfak ve anahtar teslim mutfak tadilatı. Ücretsiz 3D keşif alın!",
-        "canon": f"{DOM}/hizmet-mutfak.html",
+        "canon": f"{DOM}/hizmet-mutfak",
         "image": f"{DOM}/images/real/proje-luks-mutfak.jpg",
         "type": "website",
         "keywords": "antalya mutfak tadilatı, antalya mutfak dolabı imalatı, antalya ada mutfak, lüks mutfak tasarımı antalya",
@@ -222,15 +222,15 @@ PAGES = {
                 "provider": {"@id": f"{DOM}/#organization"},
                 "areaServed": {"@type": "AdministrativeArea", "name": "Antalya"},
                 "description": "Özel tasarım lake/akrilik mutfak dolapları, kuvars tezgahlar ve komple mutfak tesisat yenileme.",
-                "url": f"{DOM}/hizmet-mutfak.html"
+                "url": f"{DOM}/hizmet-mutfak"
             },
             {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler.html"},
-                    {"@type": "ListItem", "position": 3, "name": "Mutfak Tadilatı", "item": f"{DOM}/hizmet-mutfak.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler"},
+                    {"@type": "ListItem", "position": 3, "name": "Mutfak Tadilatı", "item": f"{DOM}/hizmet-mutfak"}
                 ]
             }
         ]
@@ -238,7 +238,7 @@ PAGES = {
     "hizmet-banyo.html": {
         "title": "Antalya Banyo Tadilatı & Islak Zemin Yenileme | Can Yapı",
         "desc": "Antalya banyo tadilatı: Çift katmanlı su yalıtımı, modern duşakabin, gömme rezervuar, porselen seramik döşeme ve neme dayanıklı lake banyo dolapları.",
-        "canon": f"{DOM}/hizmet-banyo.html",
+        "canon": f"{DOM}/hizmet-banyo",
         "image": f"{DOM}/images/real/proje-banyo-yenileme.jpg",
         "type": "website",
         "keywords": "antalya banyo tadilatı, banyo yenileme antalya, su izolasyonu banyo, duşakabin ve banyo dolabı antalya",
@@ -251,15 +251,15 @@ PAGES = {
                 "provider": {"@id": f"{DOM}/#organization"},
                 "areaServed": {"@type": "AdministrativeArea", "name": "Antalya"},
                 "description": "Garantili su yalıtımı, modern banyo dolapları, duşakabin ve porselen seramik uygulamaları.",
-                "url": f"{DOM}/hizmet-banyo.html"
+                "url": f"{DOM}/hizmet-banyo"
             },
             {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler.html"},
-                    {"@type": "ListItem", "position": 3, "name": "Banyo Tadilatı", "item": f"{DOM}/hizmet-banyo.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler"},
+                    {"@type": "ListItem", "position": 3, "name": "Banyo Tadilatı", "item": f"{DOM}/hizmet-banyo"}
                 ]
             }
         ]
@@ -267,7 +267,7 @@ PAGES = {
     "hizmet-seramik-fayans.html": {
         "title": "Antalya Seramik, Granit & Fayans Döşeme Ustası | Can Yapı",
         "desc": "Antalya'da 60x120 porselen seramik, granit ve dekoratif fayans döşeme. Lazer nivo ile sıfır kod farkı, epoksi derz dolgu ve garantili zemin kaplama işçiliği.",
-        "canon": f"{DOM}/hizmet-seramik-fayans.html",
+        "canon": f"{DOM}/hizmet-seramik-fayans",
         "image": f"{DOM}/images/real/proje-seramik-doseme.jpg",
         "type": "website",
         "keywords": "antalya seramik ustası, antalya fayans ustası, 60x120 granit döşeme antalya, zemin seramik kaplama",
@@ -280,15 +280,15 @@ PAGES = {
                 "provider": {"@id": f"{DOM}/#organization"},
                 "areaServed": {"@type": "AdministrativeArea", "name": "Antalya"},
                 "description": "Lazer terazili profesyonel seramik ve granit döşeme, epoksi derz uygulamaları.",
-                "url": f"{DOM}/hizmet-seramik-fayans.html"
+                "url": f"{DOM}/hizmet-seramik-fayans"
             },
             {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler.html"},
-                    {"@type": "ListItem", "position": 3, "name": "Seramik & Fayans", "item": f"{DOM}/hizmet-seramik-fayans.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler"},
+                    {"@type": "ListItem", "position": 3, "name": "Seramik & Fayans", "item": f"{DOM}/hizmet-seramik-fayans"}
                 ]
             }
         ]
@@ -296,7 +296,7 @@ PAGES = {
     "hizmet-boya.html": {
         "title": "Antalya Boya Badana & Alçıpan Asma Tavan | Can Yapı",
         "desc": "Antalya boya badana ustası, tozsuz zımpara ile silinebilir silikonlu boya, İtalyan dekoratif efekt boya ve LED gizli ışıklı asma tavan alçıpan uygulamaları.",
-        "canon": f"{DOM}/hizmet-boya.html",
+        "canon": f"{DOM}/hizmet-boya",
         "image": f"{DOM}/images/real/proje-boya-badana.jpg",
         "type": "website",
         "keywords": "antalya boya badana ustası, antalya alçıpan asma tavan, dekoratif italyan boya antalya, daire boyama",
@@ -309,15 +309,15 @@ PAGES = {
                 "provider": {"@id": f"{DOM}/#organization"},
                 "areaServed": {"@type": "AdministrativeArea", "name": "Antalya"},
                 "description": "Tozsuz zımparalı silinebilir boya badana, gizli ışıklı asma tavan ve İtalyan efekt boya uygulamaları.",
-                "url": f"{DOM}/hizmet-boya.html"
+                "url": f"{DOM}/hizmet-boya"
             },
             {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler.html"},
-                    {"@type": "ListItem", "position": 3, "name": "Boya & Alçı", "item": f"{DOM}/hizmet-boya.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler"},
+                    {"@type": "ListItem", "position": 3, "name": "Boya & Alçı", "item": f"{DOM}/hizmet-boya"}
                 ]
             }
         ]
@@ -325,7 +325,7 @@ PAGES = {
     "hizmet-mantolama.html": {
         "title": "Antalya Dış Cephe Mantolama & Isı Yalıtımı | Can Yapı",
         "desc": "Antalya bina ve villa dış cephe mantolama. Taşyünü ve karbonlu EPS ile %50 enerji tasarrufu, sıcağa ve neme karşı 5 yıl işçilik garantili izolasyon.",
-        "canon": f"{DOM}/hizmet-mantolama.html",
+        "canon": f"{DOM}/hizmet-mantolama",
         "image": f"{DOM}/images/real/proje-mantolama-yalitim.jpg",
         "type": "website",
         "keywords": "antalya mantolama, antalya dış cephe ısı yalıtımı, taşyünü mantolama antalya, bina cephe kaplama",
@@ -338,15 +338,15 @@ PAGES = {
                 "provider": {"@id": f"{DOM}/#organization"},
                 "areaServed": {"@type": "AdministrativeArea", "name": "Antalya"},
                 "description": "Antalya iklimine özel karbonlu EPS ve taşyünü dış cephe mantolama ile %50 enerji tasarrufu.",
-                "url": f"{DOM}/hizmet-mantolama.html"
+                "url": f"{DOM}/hizmet-mantolama"
             },
             {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler.html"},
-                    {"@type": "ListItem", "position": 3, "name": "Dış Cephe Mantolama", "item": f"{DOM}/hizmet-mantolama.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler"},
+                    {"@type": "ListItem", "position": 3, "name": "Dış Cephe Mantolama", "item": f"{DOM}/hizmet-mantolama"}
                 ]
             }
         ]
@@ -354,7 +354,7 @@ PAGES = {
     "hizmet-cati.html": {
         "title": "Antalya Çatı Tamiri, Aktarma & Su İzolasyonu | Can Yapı",
         "desc": "Antalya çatı tamiri, kiremit aktarma, şalümo alevli polyester membran su yalıtımı, eksiz çinko oluk ve rüzgara dayanıklı çatı onarımı. Garantili işçilik!",
-        "canon": f"{DOM}/hizmet-cati.html",
+        "canon": f"{DOM}/hizmet-cati",
         "image": f"{DOM}/images/real/proje-cati-tamiri.jpg",
         "type": "website",
         "keywords": "antalya çatı tamiri, antalya çatı aktarma, antalya çatı su izolasyonu, membran kaplama antalya",
@@ -367,15 +367,15 @@ PAGES = {
                 "provider": {"@id": f"{DOM}/#organization"},
                 "areaServed": {"@type": "AdministrativeArea", "name": "Antalya"},
                 "description": "Kiremit aktarma, şalümo alevli polyester membran su yalıtımı ve eksiz yağmur olukları onarımı.",
-                "url": f"{DOM}/hizmet-cati.html"
+                "url": f"{DOM}/hizmet-cati"
             },
             {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler.html"},
-                    {"@type": "ListItem", "position": 3, "name": "Çatı Onarımı", "item": f"{DOM}/hizmet-cati.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler"},
+                    {"@type": "ListItem", "position": 3, "name": "Çatı Onarımı", "item": f"{DOM}/hizmet-cati"}
                 ]
             }
         ]
@@ -383,7 +383,7 @@ PAGES = {
     "hizmet-prefabrik.html": {
         "title": "Antalya Prefabrik Ev & Çelik Yapı İmalatı | Can Yapı",
         "desc": "Antalya'da depreme dayanıklı hafif çelik villa ve prefabrik ev imalatı. A+ yalıtımlı, modern mimari ve 35 günde anahtar teslim kurulum. Hemen arayın!",
-        "canon": f"{DOM}/hizmet-prefabrik.html",
+        "canon": f"{DOM}/hizmet-prefabrik",
         "image": f"{DOM}/images/real/proje-prefabrik-celik-ev.jpg",
         "type": "website",
         "keywords": "antalya prefabrik ev, antalya hafif çelik villa, prefabrik konut antalya, anahtar teslim çelik ev",
@@ -396,15 +396,15 @@ PAGES = {
                 "provider": {"@id": f"{DOM}/#organization"},
                 "areaServed": {"@type": "AdministrativeArea", "name": "Antalya"},
                 "description": "Depreme dayanıklı 1. sınıf galvaniz çelik konstrüksiyon, yüksek yalıtımlı ve hızlı montajlı modern villalar.",
-                "url": f"{DOM}/hizmet-prefabrik.html"
+                "url": f"{DOM}/hizmet-prefabrik"
             },
             {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler.html"},
-                    {"@type": "ListItem", "position": 3, "name": "Prefabrik Yapı", "item": f"{DOM}/hizmet-prefabrik.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Hizmetler", "item": f"{DOM}/hizmetler"},
+                    {"@type": "ListItem", "position": 3, "name": "Prefabrik Yapı", "item": f"{DOM}/hizmet-prefabrik"}
                 ]
             }
         ]
@@ -412,7 +412,7 @@ PAGES = {
     "projeler.html": {
         "title": "Antalya Tadilat & Prefabrik Projeleri | Can Yapı Referansları",
         "desc": "Can Yapı Antalya'nın tamamladığı anahtar teslim villa tadilatı, modern mutfak & banyo yenileme ve prefabrik çelik ev referans projeleri galerisi.",
-        "canon": f"{DOM}/projeler.html",
+        "canon": f"{DOM}/projeler",
         "image": DEFAULT_IMG,
         "type": "website",
         "keywords": "antalya tadilat projeleri, antalya villa tadilatı referansları, mutfak tadilatı örnekleri antalya",
@@ -420,18 +420,18 @@ PAGES = {
             {
                 "@context": "https://schema.org",
                 "@type": "CollectionPage",
-                "@id": f"{DOM}/projeler.html#webpage",
-                "url": f"{DOM}/projeler.html",
+                "@id": f"{DOM}/projeler#webpage",
+                "url": f"{DOM}/projeler",
                 "name": "Tamamlanan Projelerimiz | Can Yapı Antalya",
-                "breadcrumb": {"@id": f"{DOM}/projeler.html#breadcrumb"}
+                "breadcrumb": {"@id": f"{DOM}/projeler#breadcrumb"}
             },
             {
                 "@context": "https://schema.org",
                 "@type": "BreadcrumbList",
-                "@id": f"{DOM}/projeler.html#breadcrumb",
+                "@id": f"{DOM}/projeler#breadcrumb",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Projelerimiz", "item": f"{DOM}/projeler.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Projelerimiz", "item": f"{DOM}/projeler"}
                 ]
             }
         ]
@@ -439,7 +439,7 @@ PAGES = {
     "blog.html": {
         "title": "Antalya Tadilat & Yapı Rehberi | Blog - Can Yapı Antalya",
         "desc": "Antalya iklimine uygun ev tadilatı, banyo yenileme maliyetleri, çatı su izolasyonu ve prefabrik konut hakkında güncel mimari ipuçları ve rehberler.",
-        "canon": f"{DOM}/blog.html",
+        "canon": f"{DOM}/blog",
         "image": DEFAULT_IMG,
         "type": "website",
         "keywords": "antalya tadilat blogu, ev tadilatı rehberi, banyo tadilatı maliyeti antalya, çatı izolasyonu tavsiyeleri",
@@ -447,8 +447,8 @@ PAGES = {
             {
                 "@context": "https://schema.org",
                 "@type": "Blog",
-                "@id": f"{DOM}/blog.html#blog",
-                "url": f"{DOM}/blog.html",
+                "@id": f"{DOM}/blog#blog",
+                "url": f"{DOM}/blog",
                 "name": "Can Yapı Antalya Tadilat & Mimari Rehberi",
                 "description": "Antalya ev ve villa tadilatı hakkında güncel tavsiyeler ve maliyet rehberleri.",
                 "publisher": {"@id": f"{DOM}/#organization"}
@@ -458,7 +458,7 @@ PAGES = {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Blog", "item": f"{DOM}/blog.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Blog", "item": f"{DOM}/blog"}
                 ]
             }
         ]
@@ -466,7 +466,7 @@ PAGES = {
     "blog-detay.html": {
         "title": "Tadilat Rehberi & Makaleleri | Can Yapı Antalya",
         "desc": "Antalya'da ev tadilatı, çatı izolasyonu ve mimari yenileme hakkında uzman ipuçları, maliyet hesapları ve dikkat edilmesi gerekenler rehberi.",
-        "canon": f"{DOM}/blog-detay.html",
+        "canon": f"{DOM}/blog-detay",
         "image": DEFAULT_IMG,
         "type": "article",
         "keywords": "antalya ev tadilatı ipuçları, tadilat sözleşmesi, banyo yenileme püf noktaları",
@@ -477,7 +477,7 @@ PAGES = {
                 "headline": "Can Yapı Antalya Tadilat ve Mimari Rehberi",
                 "image": DEFAULT_IMG,
                 "publisher": {"@id": f"{DOM}/#organization"},
-                "url": f"{DOM}/blog-detay.html",
+                "url": f"{DOM}/blog-detay",
                 "inLanguage": "tr-TR"
             },
             {
@@ -485,8 +485,8 @@ PAGES = {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Blog", "item": f"{DOM}/blog.html"},
-                    {"@type": "ListItem", "position": 3, "name": "Makale Detayı", "item": f"{DOM}/blog-detay.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Blog", "item": f"{DOM}/blog"},
+                    {"@type": "ListItem", "position": 3, "name": "Makale Detayı", "item": f"{DOM}/blog-detay"}
                 ]
             }
         ]
@@ -494,7 +494,7 @@ PAGES = {
     "ucretsiz-kesif.html": {
         "title": "Ücretsiz Keşif & Projelendirme Talebi | Can Yapı Antalya",
         "desc": "Antalya genelinde ev, villa ve iş yeri tadilatı için ücretsiz yerinde keşif talebi oluşturun. 24 saat içinde net fiyat ve projelendirme ile dönüş yapalım.",
-        "canon": f"{DOM}/ucretsiz-kesif.html",
+        "canon": f"{DOM}/ucretsiz-kesif",
         "image": DEFAULT_IMG,
         "type": "website",
         "keywords": "antalya ücretsiz keşif, tadilat fiyat teklifi antalya, yerinde keşif inşaat antalya",
@@ -502,7 +502,7 @@ PAGES = {
             {
                 "@context": "https://schema.org",
                 "@type": "ContactPage",
-                "url": f"{DOM}/ucretsiz-kesif.html",
+                "url": f"{DOM}/ucretsiz-kesif",
                 "name": "Ücretsiz Keşif Talebi | Can Yapı Antalya",
                 "description": "Antalya'da ücretsiz keşif ve 3D tasarım talebi.",
                 "provider": {"@id": f"{DOM}/#organization"}
@@ -512,7 +512,7 @@ PAGES = {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Ücretsiz Keşif", "item": f"{DOM}/ucretsiz-kesif.html"}
+                    {"@type": "ListItem", "position": 2, "name": "Ücretsiz Keşif", "item": f"{DOM}/ucretsiz-kesif"}
                 ]
             }
         ]
@@ -520,7 +520,7 @@ PAGES = {
     "iletisim.html": {
         "title": "İletişim & Randevu Alın | Can Yapı Antalya Muratpaşa",
         "desc": "Can Yapı Antalya iletişim bilgileri, telefon: 0545 832 01 90, WhatsApp destek hattı, adres ve harita konumu. Hemen arayın, hayalinizdeki evi inşa edelim.",
-        "canon": f"{DOM}/iletisim.html",
+        "canon": f"{DOM}/iletisim",
         "image": DEFAULT_IMG,
         "type": "website",
         "keywords": "can yapı antalya iletişim, muratpaşa tadilat firması telefon, can yapı whatsapp",
@@ -528,7 +528,7 @@ PAGES = {
             {
                 "@context": "https://schema.org",
                 "@type": "ContactPage",
-                "url": f"{DOM}/iletisim.html",
+                "url": f"{DOM}/iletisim",
                 "name": "İletişim | Can Yapı Antalya",
                 "provider": {"@id": f"{DOM}/#organization"}
             },
@@ -537,7 +537,7 @@ PAGES = {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": f"{DOM}/"},
-                    {"@type": "ListItem", "position": 2, "name": "İletişim", "item": f"{DOM}/iletisim.html"}
+                    {"@type": "ListItem", "position": 2, "name": "İletişim", "item": f"{DOM}/iletisim"}
                 ]
             }
         ]
@@ -580,7 +580,6 @@ def generate_head_tags(page_name, cfg):
     lines.append(f'  <!-- Schema.org Yapısal Veri (JSON-LD) -->')
     for sc in cfg["schemas"]:
         json_str = json.dumps(sc, ensure_ascii=False, indent=2)
-        # Indent script tag nicely
         indented = "\n".join("  " + l for l in json_str.splitlines())
         lines.append('  <script type="application/ld+json">')
         lines.append(indented)
@@ -595,7 +594,6 @@ def process_file(fname):
     with open(fname, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # Find <head> and </head>
     head_m = re.search(r'(<head[^>]*>)(.*?)(</head>)', content, re.DOTALL | re.IGNORECASE)
     if not head_m:
         print(f"Skipping {fname}: No head found")
@@ -603,8 +601,6 @@ def process_file(fname):
     
     head_start, head_body, head_end = head_m.groups()
 
-    # Preserve charset, viewport, fonts, css, icon, and custom scripts in head
-    # Remove existing title, meta desc/keywords/author/robots, canonical, og, twitter, and ld+json
     preserved_lines = []
     in_script_ld = False
     for line in head_body.splitlines():
@@ -617,7 +613,6 @@ def process_file(fname):
                 in_script_ld = False
             continue
         
-        # Check if line is title or meta we replace
         if re.match(r'<title>.*?</title>', trimmed, re.I):
             continue
         if re.match(r'<meta\s+name=["\'](description|keywords|author|robots|twitter:[^"\']+)["\']', trimmed, re.I):
@@ -631,14 +626,11 @@ def process_file(fname):
         
         preserved_lines.append(line)
     
-    # Rebuild head body
-    # Standard top: charset, viewport
     new_head_parts = []
     new_head_parts.append('  <meta charset="UTF-8">')
     new_head_parts.append('  <meta name="viewport" content="width=device-width, initial-scale=1.0">')
     new_head_parts.append(generate_head_tags(fname, cfg))
     
-    # Filter preserved lines to remove duplicate charset/viewport
     clean_preserved = []
     for l in preserved_lines:
         t = l.strip()

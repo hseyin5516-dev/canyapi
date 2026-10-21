@@ -1,0 +1,55 @@
+import re
+import os
+
+def minify_css(css_text):
+    # Remove comments
+    css_text = re.sub(r'/\*.*?\*/', '', css_text, flags=re.DOTALL)
+    # Remove space around symbols
+    css_text = re.sub(r'\s*([\{\}\:\;\,])\s*', r'\1', css_text)
+    # Remove extra semicolons
+    css_text = re.sub(r';+}', '}', css_text)
+    # Remove excess whitespace
+    css_text = re.sub(r'\s+', ' ', css_text).strip()
+    return css_text
+
+def minify_js(js_text):
+    # Simple, safe JS minifier (preserves strings, removes multiline and singleline comments outside strings)
+    # Remove single line comments that are on their own line or trailing
+    lines = []
+    for line in js_text.splitlines():
+        stripped = line.strip()
+        if stripped.startswith('//'):
+            continue
+        # Remove trailing comments if not inside string
+        if '//' in line and not ('http://' in line or 'https://' in line or "'" in line or '"' in line):
+            line = line.split('//')[0]
+        lines.append(line)
+    text = '\n'.join(lines)
+    # Remove block comments
+    text = re.sub(r'/\*.*?\*/', '', text, flags=re.DOTALL)
+    # Compact empty lines
+    text = re.sub(r'\n\s*\n', '\n', text)
+    return text.strip()
+
+if __name__ == '__main__':
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    
+    # CSS
+    css_in = os.path.join(base_dir, 'css', 'style.css')
+    css_out = os.path.join(base_dir, 'css', 'style.min.css')
+    with open(css_in, 'r', encoding='utf-8') as f:
+        raw_css = f.read()
+    min_css = minify_css(raw_css)
+    with open(css_out, 'w', encoding='utf-8') as f:
+        f.write(min_css)
+    print(f"CSS: {len(raw_css)} -> {len(min_css)} bytes ({os.path.getsize(css_out)} bytes)")
+
+    # JS
+    js_in = os.path.join(base_dir, 'js', 'main.js')
+    js_out = os.path.join(base_dir, 'js', 'main.min.js')
+    with open(js_in, 'r', encoding='utf-8') as f:
+        raw_js = f.read()
+    min_js = minify_js(raw_js)
+    with open(js_out, 'w', encoding='utf-8') as f:
+        f.write(min_js)
+    print(f"JS: {len(raw_js)} -> {len(min_js)} bytes ({os.path.getsize(js_out)} bytes)")

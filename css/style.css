@@ -924,13 +924,16 @@ body.light-theme .hero-banner-overlay {
 }
 
 /* Afişteki Orijinal 3 Katmanlı Kenetlenmiş Altın Amblem (Emblem Crest) */
-.hero-poster-badge {
+.hero-poster-badge,
+h1.hero-poster-badge {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   position: relative;
   filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.88));
-  margin-bottom: 12px;
+  margin: 0 0 12px 0;
+  padding: 0;
+  font-weight: normal;
   user-select: none;
 }
 
@@ -967,7 +970,9 @@ body.light-theme .hero-banner-overlay {
     inset 0 -1px 2px rgba(0, 0, 0, 0.4);
 }
 
-.poster-plate-gold h1 {
+.poster-plate-gold h1,
+.poster-plate-gold .poster-gold-title {
+  display: block;
   margin: 0;
   font-family: 'Montserrat', var(--font-heading);
   font-size: clamp(1.75rem, 2.9vw, 2.45rem);

@@ -4,7 +4,7 @@
   <!-- Ana Sayfa -->
   <url>
     <loc>https://canyapiantalya.com.tr/</loc>
-    <lastmod>2026-10-19</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -15,120 +15,120 @@
 
   <!-- Hakkımızda -->
   <url>
-    <loc>https://canyapiantalya.com.tr/hakkimizda.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/hakkimizda</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <!-- Hizmetler Ana Sayfası -->
   <url>
-    <loc>https://canyapiantalya.com.tr/hizmetler.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/hizmetler</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
 
   <!-- 8 Ana Hizmet Sayfaları -->
   <url>
-    <loc>https://canyapiantalya.com.tr/hizmet-mutfak.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/hizmet-mutfak</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <url>
-    <loc>https://canyapiantalya.com.tr/hizmet-banyo.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/hizmet-banyo</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <url>
-    <loc>https://canyapiantalya.com.tr/hizmet-seramik-fayans.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/hizmet-seramik-fayans</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <url>
-    <loc>https://canyapiantalya.com.tr/hizmet-boya.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/hizmet-boya</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <url>
-    <loc>https://canyapiantalya.com.tr/hizmet-mantolama.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/hizmet-mantolama</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <url>
-    <loc>https://canyapiantalya.com.tr/hizmet-cati.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/hizmet-cati</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <url>
-    <loc>https://canyapiantalya.com.tr/hizmet-prefabrik.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/hizmet-prefabrik</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <url>
-    <loc>https://canyapiantalya.com.tr/hizmet-tadilat.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/hizmet-tadilat</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <!-- Projelerimiz -->
   <url>
-    <loc>https://canyapiantalya.com.tr/projeler.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/projeler</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
 
   <!-- Blog / Rehber Sayfası -->
   <url>
-    <loc>https://canyapiantalya.com.tr/blog.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/blog</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
 
   <!-- Blog Detay Makaleleri -->
   <url>
-    <loc>https://canyapiantalya.com.tr/blog-detay.html?slug=antalyada-ev-tadilati-yaparken-nelere-dikkat-edilmeli</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/blog-detay?slug=antalyada-ev-tadilati-yaparken-nelere-dikkat-edilmeli</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
 
   <url>
-    <loc>https://canyapiantalya.com.tr/blog-detay.html?slug=antalya-cati-tamiri-ve-su-izolasyonu</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/blog-detay?slug=antalya-cati-tamiri-ve-su-izolasyonu</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
 
   <!-- Ücretsiz Keşif -->
   <url>
-    <loc>https://canyapiantalya.com.tr/ucretsiz-kesif.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/ucretsiz-kesif</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
 
   <!-- İletişim -->
   <url>
-    <loc>https://canyapiantalya.com.tr/iletisim.html</loc>
-    <lastmod>2026-10-19</lastmod>
+    <loc>https://canyapiantalya.com.tr/iletisim</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
