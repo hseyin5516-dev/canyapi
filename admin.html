@@ -796,17 +796,17 @@
         <!-- Proje Görseli (Ana Kapak) & Çoklu Fotoğraflar -->
         <div class="form-group" style="margin-bottom: 14px;">
           <label class="form-label">Ana Kapak Görseli * (Vitrin Fotoğrafı)</label>
-          <div style="display: flex; gap: 8px;">
-            <input type="text" id="projImage" class="form-control" placeholder="images/real/proje-luks-mutfak.jpg" required>
-            <label class="btn btn-sm btn-outline-orange" style="margin: 0; display: flex; align-items: center; cursor: pointer; white-space: nowrap;">
-              <span>Kapak Seç</span>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <input type="text" id="projImage" class="form-control" style="flex: 1; min-width: 220px;" placeholder="images/real/proje-luks-mutfak.jpg" required>
+            <label class="btn btn-sm btn-outline-orange" style="margin: 0; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; white-space: nowrap;">
+              <span>📁 Fotoğraf Seç</span>
               <input type="file" id="projImageFile" accept="image/*" style="display: none;" aria-label="Fotoğraf veya dosya seçin">
             </label>
-            <button type="button" id="btnOpenCropper" class="btn btn-sm btn-outline" style="white-space: nowrap; font-size: 0.8rem; display: flex; align-items: center; gap: 4px;" title="Görseli Yakınlaştır & Çerçevele">
-              <span>✂️ Çerçevele</span>
+            <button type="button" id="btnOpenCropper" class="btn btn-sm btn-primary" style="white-space: nowrap; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 4px;" title="Görseli Yakınlaştır & Çerçevele">
+              <span>✂️ Fotoğrafı Çerçevele</span>
             </button>
           </div>
-          <small class="text-muted" style="display: block; margin-top: 4px;">💡 Dikey fotoğraflarda istediğiniz alanı (tavan, tezgah vb.) Instagram gibi kaydırıp odaklayabilirsiniz.</small>
+          <small class="text-muted" style="display: block; margin-top: 4px;">💡 Telefonla dikey çekilen fotoğraflarda istediğiniz alanı (tavan, tezgah vb.) parmağınızla kaydırıp odaklayabilirsiniz.</small>
         </div>
 
         <!-- Çoklu Fotoğraf / Kaydırmalı Slider Galerisi -->
@@ -882,17 +882,26 @@
         </div>
       </div>
 
-      <!-- Yakınlaştırma Kontrolleri -->
-      <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 18px 0; background: #0B0E13; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--admin-border);">
-        <div style="display: flex; align-items: center; gap: 10px; flex: 1;">
-          <span style="font-size: 0.82rem; color: #94A3B8; white-space: nowrap;">🔍 Yakınlaştır:</span>
-          <button type="button" id="cropperZoomOut" class="btn btn-sm btn-outline" style="padding: 4px 10px;">−</button>
-          <input type="range" id="cropperZoomSlider" min="1" max="3" step="0.02" value="1" style="flex: 1; accent-color: var(--primary-orange, #FF5500); cursor: pointer;">
-          <button type="button" id="cropperZoomIn" class="btn btn-sm btn-outline" style="padding: 4px 10px;">+</button>
+      <!-- Hızlı Odaklama & Yakınlaştırma Kontrolleri -->
+      <div style="display: flex; flex-direction: column; gap: 12px; margin: 18px 0; background: #0B0E13; padding: 14px 16px; border-radius: 8px; border: 1px solid var(--admin-border);">
+        <!-- Hızlı Odaklama Butonları (Tavan / Orta / Zemin) -->
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
+          <span style="font-size: 0.82rem; color: #94A3B8; font-weight: 600;">⚡ Hızlı Odak:</span>
+          <div style="display: flex; gap: 6px;">
+            <button type="button" id="cropAlignTop" class="btn btn-sm btn-outline" style="font-size: 0.78rem; padding: 4px 10px;">🔼 Üst / Tavan</button>
+            <button type="button" id="cropAlignCenter" class="btn btn-sm btn-outline" style="font-size: 0.78rem; padding: 4px 10px;">⏺️ Merkez</button>
+            <button type="button" id="cropAlignBottom" class="btn btn-sm btn-outline" style="font-size: 0.78rem; padding: 4px 10px;">🔽 Alt / Zemin</button>
+          </div>
         </div>
-        <button type="button" id="cropperResetBtn" class="btn btn-sm btn-outline" style="white-space: nowrap; font-size: 0.78rem;">
-          ↺ Sıfırla
-        </button>
+
+        <!-- Yakınlaştırma Slider'ı -->
+        <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+          <span style="font-size: 0.82rem; color: #94A3B8; white-space: nowrap;">🔍 Yakınlaştır:</span>
+          <button type="button" id="cropperZoomOut" class="btn btn-sm btn-outline" style="padding: 2px 8px;">−</button>
+          <input type="range" id="cropperZoomSlider" min="0.5" max="3" step="0.01" value="1" style="flex: 1; accent-color: var(--primary-orange, #FF5500); cursor: pointer;">
+          <button type="button" id="cropperZoomIn" class="btn btn-sm btn-outline" style="padding: 2px 8px;">+</button>
+          <button type="button" id="cropperResetBtn" class="btn btn-sm btn-outline" style="white-space: nowrap; font-size: 0.75rem; padding: 4px 8px;">↺ Sıfırla</button>
+        </div>
       </div>
 
       <div style="display: flex; justify-content: flex-end; gap: 10px;">
