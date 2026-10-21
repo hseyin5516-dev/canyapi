@@ -192,7 +192,9 @@
   <!-- Schema.org Yapısal Veri (JSON-LD) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"></noscript>
   <link rel="stylesheet" href="css/style.min.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23FF5500'/><text x='50%' y='68%' font-size='60' font-family='sans-serif' font-weight='900' fill='white' text-anchor='middle'>CY</text></svg>">
   <link rel="preload" as="image" href="images/hero-bg-clean.webp" fetchpriority="high">
@@ -233,8 +235,8 @@
       <div class="nav-container">
         <!-- Logo -->
         <a href="/" class="logo" aria-label="Can Yapı Antalya">
-          <img src="images/logo-dark-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-dark" decoding="async">
-          <img src="images/logo-light-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-light" decoding="async">
+          <img src="images/logo-dark-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-dark" decoding="async" width="200" height="52">
+          <img src="images/logo-light-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-light" decoding="async" width="200" height="52">
         </a>
 
         <!-- Menü Linkleri -->
@@ -291,8 +293,8 @@
   <div class="mobile-nav-drawer">
     <div class="mobile-nav-header">
       <a href="/" class="logo" aria-label="Can Yapı Antalya">
-        <img src="images/logo-dark-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 42px;" decoding="async">
-        <img src="images/logo-light-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-light" style="height: 42px;" decoding="async">
+        <img src="images/logo-dark-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 42px;" decoding="async" width="200" height="52">
+        <img src="images/logo-light-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-light" style="height: 42px;" decoding="async" width="200" height="52">
       </a>
       <button class="mobile-close-btn" aria-label="Menüyü Kapat">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -344,7 +346,7 @@
     <!-- Üst Bölüm: Salon Manzarası, Anahtar Teslim Eden El, Altın Başlık Rozeti ve 8 Altın İkon -->
     <div class="hero-banner-main">
       <div class="hero-banner-backdrop">
-        <img src="images/hero-bg-clean.webp" alt="Can Yapı Antalya Anahtar Teslim Tadilat ve İnşaat" class="hero-banner-bg-img" fetchpriority="high" decoding="async">
+        <img src="images/hero-bg-clean.webp" alt="Can Yapı Antalya Anahtar Teslim Tadilat ve İnşaat" class="hero-banner-bg-img" fetchpriority="high" decoding="async" width="1600" height="900">
         <div class="hero-banner-overlay"></div>
       </div>
 
@@ -984,7 +986,7 @@
 
             <div class="form-group">
               <label class="form-label">Hizmet Türü <span class="required">*</span></label>
-              <select name="service" class="form-control" required>
+              <select name="service" class="form-control" required aria-label="Hizmet Seçimi">
                 <option value="">Lütfen Hizmet Seçin</option>
                 <option value="Mutfak Tadilatı">Mutfak Tadilatı & Özel Dolap</option>
                 <option value="Banyo Tadilatı">Banyo & Islak Zemin Yenileme</option>
@@ -1000,7 +1002,7 @@
 
             <div class="form-group">
               <label class="form-label">Antalya Konum / İlçe</label>
-              <select name="location" class="form-control">
+              <select name="location" class="form-control" aria-label="Antalya İlçe Seçimi">
                 <option value="Muratpaşa">Muratpaşa</option>
                 <option value="Konyaaltı">Konyaaltı</option>
                 <option value="Kepez">Kepez</option>
@@ -1024,7 +1026,7 @@
             <div class="form-group full-width">
               <label class="form-label">İsteğe Bağlı Fotoğraf / Proje Planı Yükleyin</label>
               <div class="file-upload-box" id="mainUploadBox">
-                <input type="file" id="mainFileInput" multiple accept="image/*,.pdf">
+                <input type="file" id="mainFileInput" multiple accept="image/*,.pdf" aria-label="Fotoğraf veya dosya seçin">
                 <div class="upload-icon">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                 </div>
@@ -1059,8 +1061,8 @@
       <div class="footer-grid">
         <div class="footer-col footer-about">
           <a href="/" class="logo" aria-label="Can Yapı Antalya" style="margin-bottom: 16px;">
-            <img src="images/logo-dark-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 58px;" decoding="async">
-            <img src="images/logo-light-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-light" style="height: 58px;" decoding="async">
+            <img src="images/logo-dark-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 58px;" decoding="async" width="200" height="52">
+            <img src="images/logo-light-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-light" style="height: 58px;" decoding="async" width="200" height="52">
           </a>
           <p>
             Can Yapı Antalya; mimari tasarım, anahtar teslim tadilat, konut & villa renovasyonu ve çelik prefabrik yapılarda Antalya genelinde güven ve kalite inşa eder.
@@ -1185,7 +1187,7 @@
 
           <div class="form-group">
             <label class="form-label">Hizmet Türü <span class="required">*</span></label>
-            <select name="service" id="modalServiceSelect" class="form-control" required>
+            <select name="service" id="modalServiceSelect" class="form-control" required aria-label="Hizmet Seçimi">
               <option value="">Hizmet Seçiniz</option>
               <option value="Mutfak Tadilatı">Mutfak Tadilatı</option>
               <option value="Banyo Tadilatı">Banyo Tadilatı & Islak Zemin</option>
@@ -1201,7 +1203,7 @@
 
           <div class="form-group">
             <label class="form-label">Konum (Antalya İlçesi)</label>
-            <select name="location" class="form-control">
+            <select name="location" class="form-control" aria-label="Antalya İlçe Seçimi">
               <option value="Muratpaşa">Muratpaşa</option>
               <option value="Konyaaltı">Konyaaltı</option>
               <option value="Kepez">Kepez</option>
@@ -1223,7 +1225,7 @@
           <div class="form-group full-width">
             <label class="form-label">Fotoğraf Yükleyin (İsteğe Bağlı)</label>
             <div class="file-upload-box" id="modalUploadBox" style="padding: 16px;">
-              <input type="file" id="modalFileInput" multiple accept="image/*,.pdf">
+              <input type="file" id="modalFileInput" multiple accept="image/*,.pdf" aria-label="Fotoğraf veya dosya seçin">
               <div class="upload-text" style="font-size: 0.82rem;">Fotoğrafları buraya sürükleyin veya tıklayarak seçin</div>
             </div>
             <div class="file-preview-list" id="modalFilePreview"></div>

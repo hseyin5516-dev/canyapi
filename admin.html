@@ -311,7 +311,7 @@
     <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
       <div style="display: flex; align-items: center; gap: 16px;">
         <a href="/" class="logo" style="text-decoration: none;">
-          <img src="images/logo-dark-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 44px;" decoding="async">
+          <img src="images/logo-dark-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 44px;" decoding="async" width="200" height="52">
         </a>
         <span id="apiStatusBadge" class="badge-status" style="background: rgba(234,88,12,0.15); color: var(--primary-orange); border: 1px solid var(--border-orange); font-size: 0.74rem;">
           ⚡ Kontrol Ediliyor...
@@ -639,7 +639,7 @@
 
         <!-- Sürükle Bırak Yükleme Alanı -->
         <div id="mediaDropzone" class="dropzone-area">
-          <input type="file" id="mediaFileInput" accept="image/*" style="display:none;" multiple>
+          <input type="file" id="mediaFileInput" accept="image/*" style="display:none;" multiple aria-label="Fotoğraf veya dosya seçin">
           <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" style="color: var(--primary-orange); margin-bottom: 10px;">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
             <polyline points="17 8 12 3 7 8"/>
@@ -777,7 +777,7 @@
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
           <div class="form-group">
             <label class="form-label">Kategori *</label>
-            <select id="projCategory" class="form-control">
+            <select id="projCategory" class="form-control" aria-label="Seçim Yapın">
               <option value="Mutfak">Mutfak</option>
               <option value="Banyo">Banyo</option>
               <option value="Tadilat">Komple Tadilat</option>
@@ -800,7 +800,7 @@
             <input type="text" id="projImage" class="form-control" placeholder="images/real/proje-luks-mutfak.jpg" required>
             <label class="btn btn-sm btn-outline-orange" style="margin: 0; display: flex; align-items: center; cursor: pointer; white-space: nowrap;">
               <span>Kapak Seç</span>
-              <input type="file" id="projImageFile" accept="image/*" style="display: none;">
+              <input type="file" id="projImageFile" accept="image/*" style="display: none;" aria-label="Fotoğraf veya dosya seçin">
             </label>
           </div>
         </div>
@@ -811,7 +811,7 @@
             <label class="form-label" style="margin: 0;">Proje Galerisi (Kaydırarak Görmek İçin Çoklu Fotoğraf)</label>
             <label class="btn btn-sm btn-outline-orange" style="margin: 0; cursor: pointer; font-size: 0.78rem;">
               <span>+ Çoklu Fotoğraf Ekle</span>
-              <input type="file" id="projMultiImageFiles" accept="image/*" multiple style="display: none;">
+              <input type="file" id="projMultiImageFiles" accept="image/*" multiple style="display: none;" aria-label="Fotoğraf veya dosya seçin">
             </label>
           </div>
           <div id="projImagesPreviewList" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; min-height: 52px; background: #0B0E13; padding: 10px; border-radius: 6px; border: 1px solid var(--admin-border);">
@@ -869,7 +869,7 @@
             <input type="text" id="servImage" class="form-control" placeholder="images/services/mutfak/mutfak-1.jpg" required>
             <label class="btn btn-sm btn-outline-orange" style="margin: 0; display: flex; align-items: center; cursor: pointer; white-space: nowrap;">
               <span>Fotoğraf Seç</span>
-              <input type="file" id="servImageFile" accept="image/*" style="display: none;">
+              <input type="file" id="servImageFile" accept="image/*" style="display: none;" aria-label="Fotoğraf veya dosya seçin">
             </label>
           </div>
         </div>
@@ -922,7 +922,7 @@
         </div>
         <label class="btn btn-primary" style="margin: 0; cursor: pointer; white-space: nowrap;">
           <span>+ Fotoğrafları Seç & Yükle</span>
-          <input type="file" id="servGalleryFileInput" accept="image/*" multiple style="display: none;">
+          <input type="file" id="servGalleryFileInput" accept="image/*" multiple style="display: none;" aria-label="Fotoğraf veya dosya seçin">
         </label>
       </div>
 
@@ -962,7 +962,7 @@
           </div>
           <div class="form-group">
             <label class="form-label">Yayın Durumu</label>
-            <select id="blogStatus" class="form-control">
+            <select id="blogStatus" class="form-control" aria-label="Seçim Yapın">
               <option value="published">Yayında (Sitede Görünür)</option>
               <option value="draft">Taslak (Gizli)</option>
             </select>
@@ -975,7 +975,7 @@
             <input type="text" id="blogCoverImage" class="form-control" placeholder="images/real/proje-luks-mutfak.jpg" required>
             <label class="btn btn-sm btn-outline-orange" style="margin: 0; display: flex; align-items: center; cursor: pointer; white-space: nowrap;">
               <span>Fotoğraf Seç</span>
-              <input type="file" id="blogCoverFile" accept="image/*" style="display: none;">
+              <input type="file" id="blogCoverFile" accept="image/*" style="display: none;" aria-label="Fotoğraf veya dosya seçin">
             </label>
           </div>
         </div>
