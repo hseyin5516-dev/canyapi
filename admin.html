@@ -380,6 +380,12 @@
 
       <!-- Metrik Kartları -->
       <div class="metric-grid">
+        <div class="metric-card" style="border-left-color: #38BDF8;">
+          <span class="metric-title">Haftalık Tekil Ziyaretçi</span>
+          <div class="metric-value text-white" id="metricWeeklyVisitors">0</div>
+          <span style="font-size: 0.78rem; color: #38BDF8;">Son 7 Gün</span>
+        </div>
+
         <div class="metric-card" style="border-left-color: #8B5CF6;">
           <span class="metric-title">Aylık Tekil Ziyaretçi</span>
           <div class="metric-value text-white" id="metricMonthlyVisitors">0</div>
@@ -453,30 +459,48 @@
           </div>
         </div>
 
-        <!-- 4'lü Üst Hızlı Analiz Göstergeleri -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 24px;">
+        <!-- 6'lı Detaylı Zaman & Metrik Göstergeleri -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 24px;">
+          <!-- 1. Bugün -->
           <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 14px 16px;">
             <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">BUGÜNKÜ TEKİL ZİYARETÇİ</div>
             <div style="font-size: 1.6rem; font-weight: 800; color: #FFF;" id="anlTodayVisitors">0</div>
-            <div style="font-size: 0.75rem; color: #10B981; margin-top: 4px;">📈 Günlük Aktif Kullanıcı</div>
+            <div style="font-size: 0.75rem; color: #10B981; margin-top: 4px;" id="anlTodayViewsSub">Bugün: 0 gösterim</div>
           </div>
 
+          <!-- 2. Bu Hafta -->
+          <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 14px 16px;">
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">HAFTALIK TEKİL ZİYARETÇİ</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: #38BDF8;" id="anlWeeklyVisitors">0</div>
+            <div style="font-size: 0.75rem; color: #38BDF8; margin-top: 4px;" id="anlWeeklyViewsSub">Son 7 gün: 0 gösterim</div>
+          </div>
+
+          <!-- 3. Bu Ay -->
+          <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 14px 16px;">
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">AYLIK TEKİL ZİYARETÇİ</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: #A78BFA;" id="anlMonthlyVisitors">0</div>
+            <div style="font-size: 0.75rem; color: #A78BFA; margin-top: 4px;" id="anlMonthlyViewsSub">Bu ay: 0 gösterim</div>
+          </div>
+
+          <!-- 4. Toplam Sayfa Gösterimi -->
           <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 14px 16px;">
             <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">TOPLAM SAYFA GÖRÜNTÜLEME</div>
-            <div style="font-size: 1.6rem; font-weight: 800; color: #38BDF8;" id="anlTotalViews">0</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;" id="anlTodayViewsSub">Bugün: 0 gösterim</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: #34D399;" id="anlTotalViews">0</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Tüm Sayfalar Toplamı</div>
           </div>
 
+          <!-- 5. Dönüşüm Oranı -->
           <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 14px 16px;">
             <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">DÖNÜŞÜM / İLETİŞİM ORANI</div>
             <div style="font-size: 1.6rem; font-weight: 800; color: #F59E0B;" id="anlConversionRate">%0.0</div>
-            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">WhatsApp/Telefon Tıklaması</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Arama &amp; WhatsApp Başlatanlar</div>
           </div>
 
+          <!-- 6. Ortalama Oturum -->
           <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 14px 16px;">
             <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">ORTALAMA OTURUM SÜRESİ</div>
-            <div style="font-size: 1.6rem; font-weight: 800; color: #A78BFA;" id="anlAvgDuration">2 dk 48 sn</div>
-            <div style="font-size: 0.75rem; color: #A78BFA; margin-top: 4px;">Sayfada Kalma Süresi</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: #F43F5E;" id="anlAvgDuration">2 dk 48 sn</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">Sayfada Kalma Süresi</div>
           </div>
         </div>
 

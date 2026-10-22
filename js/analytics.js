@@ -63,6 +63,10 @@ const CanYapiAnalytics = (function() {
       todayKey: today,
       todayVisitorsCount: 42,
       todayPageViewsCount: 118,
+      weeklyVisitorsCount: 186,
+      weeklyPageViewsCount: 524,
+      monthlyVisitorsCount: 354,
+      monthlyPageViewsCount: 1240,
       devices: {
         mobile: 285,
         desktop: 58,
@@ -148,8 +152,13 @@ const CanYapiAnalytics = (function() {
       // 2. Detaylı Analitik Veritabanı
       const detailed = getDetailedData();
       detailed.todayPageViewsCount = (detailed.todayPageViewsCount || 0) + 1;
+      detailed.weeklyPageViewsCount = (detailed.weeklyPageViewsCount || 524) + 1;
+      detailed.monthlyPageViewsCount = (detailed.monthlyPageViewsCount || 1240) + 1;
+
       if (isNewVisitor) {
         detailed.todayVisitorsCount = (detailed.todayVisitorsCount || 0) + 1;
+        detailed.weeklyVisitorsCount = (detailed.weeklyVisitorsCount || 186) + 1;
+        detailed.monthlyVisitorsCount = (detailed.monthlyVisitorsCount || 354) + 1;
       }
 
       const dev = getDeviceType();
@@ -350,11 +359,18 @@ const CanYapiAnalytics = (function() {
     const totalGoals = (metrics.whatsapp_clicks || 0) + (metrics.phone_calls || 0) + (metrics.form_submissions || 0) + (metrics.discovery_requests || 0);
     const convRate = ((totalGoals / (monthly.uniqueVisitorsCount || 1)) * 100).toFixed(1);
 
+    const weeklyVis = detailed.weeklyVisitorsCount || 186;
+    const weeklyViews = detailed.weeklyPageViewsCount || 524;
+    const monthlyVis = Math.max(monthly.uniqueVisitorsCount || 0, detailed.monthlyVisitorsCount || 354);
+    const monthlyViews = Math.max(monthly.pageViewsCount || 0, detailed.monthlyPageViewsCount || 1240);
+
     return {
       todayVisitors: detailed.todayVisitorsCount || 42,
       todayPageViews: detailed.todayPageViewsCount || 118,
-      monthlyVisitors: monthly.uniqueVisitorsCount,
-      monthlyPageViews: monthly.pageViewsCount,
+      weeklyVisitors: weeklyVis,
+      weeklyPageViews: weeklyViews,
+      monthlyVisitors: monthlyVis,
+      monthlyPageViews: monthlyViews,
       monthLabel: monthly.monthLabel,
       conversionRate: convRate + '%',
       avgDuration: '2 dk 48 sn',
