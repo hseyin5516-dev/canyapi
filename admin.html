@@ -434,6 +434,108 @@
           </div>
         </div>
       </div>
+
+      <!-- =========================================================================
+           DETAYLI ZİYARETÇİ VE TRAFİK ANALİZİ (GELİŞMİŞ GÖSTERGE PANELİ)
+           ========================================================================= -->
+      <div class="admin-card" style="margin-top: 24px;">
+        <div class="admin-card-header" style="flex-wrap: wrap; gap: 12px;">
+          <div>
+            <div class="section-tag" style="margin-bottom: 4px;">Gerçek Zamanlı İstatistikler</div>
+            <h2 style="font-size: 1.35rem; margin: 0; color: #FFF;">📊 Detaylı Ziyaretçi &amp; Trafik Analizi</h2>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <span style="font-size: 0.8rem; color: #10B981; display: inline-flex; align-items: center; gap: 6px;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #10B981; display: inline-block;"></span>
+              Canlı Takip Aktif
+            </span>
+            <button onclick="loadMetrics()" class="btn btn-sm btn-outline" style="font-size: 0.78rem;">🔄 Yenile</button>
+          </div>
+        </div>
+
+        <!-- 4'lü Üst Hızlı Analiz Göstergeleri -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin-bottom: 24px;">
+          <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 14px 16px;">
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">BUGÜNKÜ TEKİL ZİYARETÇİ</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: #FFF;" id="anlTodayVisitors">0</div>
+            <div style="font-size: 0.75rem; color: #10B981; margin-top: 4px;">📈 Günlük Aktif Kullanıcı</div>
+          </div>
+
+          <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 14px 16px;">
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">TOPLAM SAYFA GÖRÜNTÜLEME</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: #38BDF8;" id="anlTotalViews">0</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;" id="anlTodayViewsSub">Bugün: 0 gösterim</div>
+          </div>
+
+          <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 14px 16px;">
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">DÖNÜŞÜM / İLETİŞİM ORANI</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: #F59E0B;" id="anlConversionRate">%0.0</div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">WhatsApp/Telefon Tıklaması</div>
+          </div>
+
+          <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 14px 16px;">
+            <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">ORTALAMA OTURUM SÜRESİ</div>
+            <div style="font-size: 1.6rem; font-weight: 800; color: #A78BFA;" id="anlAvgDuration">2 dk 48 sn</div>
+            <div style="font-size: 0.75rem; color: #A78BFA; margin-top: 4px;">Sayfada Kalma Süresi</div>
+          </div>
+        </div>
+
+        <!-- İki Kolonlu Detaylı Dağılım Bölümü -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 24px;">
+          <!-- Cihaz & Trafik Kaynakları -->
+          <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 18px 20px;">
+            <h4 style="font-size: 1rem; color: #FFF; margin: 0 0 16px; display: flex; align-items: center; justify-content: space-between;">
+              <span>📱 Ziyaretçi Cihaz Dağılımı</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">Mobil Ağırlıklı Trafik</span>
+            </h4>
+            
+            <div id="anlDeviceBars" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 22px;">
+              <!-- JS doldurur -->
+            </div>
+
+            <h4 style="font-size: 1rem; color: #FFF; margin: 20px 0 14px; padding-top: 16px; border-top: 1px solid var(--admin-border);">
+              🌐 Trafik Kaynakları (Geliş Kanalları)
+            </h4>
+            <div id="anlTrafficSources" style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- JS doldurur -->
+            </div>
+          </div>
+
+          <!-- En Çok Ziyaret Edilen Sayfalar -->
+          <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 18px 20px;">
+            <h4 style="font-size: 1rem; color: #FFF; margin: 0 0 16px; display: flex; align-items: center; justify-content: space-between;">
+              <span>🔥 En Çok Ziyaret Edilen Sayfalar</span>
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">Popüler İçerikler</span>
+            </h4>
+
+            <div class="table-responsive" style="margin: 0;">
+              <table style="width: 100%; border-collapse: collapse; font-size: 0.85rem;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--admin-border);">
+                    <th style="padding: 8px 6px; text-align: left; color: var(--text-muted); font-size: 0.75rem;">SAYFA / HİZMET</th>
+                    <th style="padding: 8px 6px; text-align: center; color: var(--text-muted); font-size: 0.75rem;">GÖRÜNTÜLEME</th>
+                    <th style="padding: 8px 6px; text-align: right; color: var(--text-muted); font-size: 0.75rem;">PAY</th>
+                  </tr>
+                </thead>
+                <tbody id="anlTopPagesBody">
+                  <!-- JS doldurur -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Canlı Ziyaretçi & Aksiyon Akışı (Live Activity Feed) -->
+        <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 18px 20px;">
+          <h4 style="font-size: 1rem; color: #FFF; margin: 0 0 14px; display: flex; align-items: center; justify-content: space-between;">
+            <span>⚡ Son Ziyaretçi Etkileşim Akışı</span>
+            <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: normal;">Gerçek Zamanlı Aksiyonlar</span>
+          </h4>
+          <div id="anlRecentActivityFeed" style="display: flex; flex-direction: column; gap: 8px;">
+            <!-- JS doldurur -->
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- =========================================================================
@@ -601,22 +703,61 @@
 
               <div class="form-group" style="margin-bottom: 14px;">
                 <label class="form-label">Ana Sayfa Büyük Başlık (Hero Title)</label>
-                <input type="text" id="settingHeroTitle" class="form-control" value="Antalya'da Hayalinizdeki Yaşam Alanlarını İnşa Ediyoruz">
+                <input type="text" id="settingHeroTitle" class="form-control" value="Antalya’da Usta Eliyle Tadilat ve Prefabrik">
               </div>
 
               <div class="form-group" style="margin-bottom: 14px;">
-                <label class="form-label">Ana Sayfa Açıklama Cümlesi (Hero Subtitle)</label>
-                <textarea id="settingHeroSubtitle" class="form-control" rows="3">15+ yıllık tecrübemizle anahtar teslim villa tadilatı, modern mutfak & banyo yenileme, çatı tamiri ve hafif çelik prefabrik yapılar.</textarea>
-              </div>
-
-              <div class="form-group" style="margin-bottom: 14px;">
-                <label class="form-label">Hakkımızda Başlığı</label>
-                <input type="text" id="settingAboutTitle" class="form-control" value="15+ Yıllık Tecrübeyle Yaşam Alanlarınıza Değer Katıyoruz">
+                <label class="form-label">Ana Sayfa Açıklama Cümlesi (Hero Subtitle / Banner Alt Metni)</label>
+                <textarea id="settingHeroSubtitle" class="form-control" rows="3">Ev tadilatı, çatı ve yalıtım işleri, seramik uygulamaları ve prefabrik yapılarda kendi ekibimizle hizmet veriyoruz. İşinizi doğrudan ustasıyla konuşun, ücretsiz keşif ve teklif için bize ulaşın.</textarea>
               </div>
 
               <div class="form-group">
-                <label class="form-label">Hakkımızda Özet Metni</label>
-                <textarea id="settingAboutExcerpt" class="form-control" rows="3">Can Yapı Antalya olarak, 15 yılı aşkın tecrübemizle evlerinizi, villalarınızı ve yaşam alanlarınızı ihtiyaçlarınıza uygun, estetik ve kullanışlı mekânlara dönüştürmek için çalışıyoruz.</textarea>
+                <label class="form-label">Deneyim Yılı Rozeti (Tüm Sayfalar)</label>
+                <input type="text" id="settingExperienceYears" class="form-control" value="15+ Yıl">
+              </div>
+            </div>
+
+            <!-- Hakkımızda & Kurumsal Metinler -->
+            <div style="background: #0B0E13; padding: 20px; border-radius: 8px; border: 1px solid var(--admin-border); grid-column: 1 / -1;">
+              <h4 style="color: var(--primary-orange); margin-bottom: 16px; font-size: 1rem;">🏢 Hakkımızda Sayfası & Kurumsal Metinler</h4>
+              
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px;">
+                <div>
+                  <div class="form-group" style="margin-bottom: 14px;">
+                    <label class="form-label">Hakkımızda Üst Başlık (Hero Title)</label>
+                    <input type="text" id="settingAboutTitle" class="form-control" value="15+ Yıllık Tecrübeyle Yaşam Alanlarınıza Değer Katıyoruz">
+                  </div>
+
+                  <div class="form-group" style="margin-bottom: 14px;">
+                    <label class="form-label">Hakkımızda Üst Özet / Tanıtım Cümlesi</label>
+                    <textarea id="settingAboutExcerpt" class="form-control" rows="4">Can Yapı Antalya olarak, 15 yılı aşkın tecrübemizle evlerinizi, villalarınızı ve yaşam alanlarınızı ihtiyaçlarınıza uygun, estetik ve kullanışlı mekânlara dönüştürmek için çalışıyoruz.</textarea>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="form-group" style="margin-bottom: 14px;">
+                    <label class="form-label">Hikaye & Şirket Bölümü Başlığı</label>
+                    <input type="text" id="settingAboutStoryTitle" class="form-control" value="Antalya ve Çevresinde Güvenilir Çözüm Ortağınız">
+                  </div>
+
+                  <div class="form-group" style="margin-bottom: 14px;">
+                    <label class="form-label">Hikaye & Şirket Açıklama Paragrafları</label>
+                    <textarea id="settingAboutStory" class="form-control" rows="4">Can Yapı Antalya olarak, 15 yılı aşkın tecrübemizle evlerinizi, villalarınızı ve yaşam alanlarınızı ihtiyaçlarınıza uygun, estetik ve kullanışlı mekânlara dönüştürmek için çalışıyoruz.
+
+Antalya ve çevresinde komple ev tadilatı, modern mutfak ve banyo yenileme, seramik ve fayans uygulamaları, boya ve alçı işleri, dış cephe mantolama ve yalıtım, çatı onarımı ve hafif çelik prefabrik yapı imalatı alanlarında kendi usta kadromuzla hizmet veriyoruz.</textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; margin-top: 10px;">
+                <div class="form-group">
+                  <label class="form-label">Hizmet Anlayışımız Başlığı</label>
+                  <input type="text" id="settingAboutPhilosophyTitle" class="form-control" value="Hizmet Anlayışımız">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Hizmet Anlayışımız & İlkeler Metni</label>
+                  <textarea id="settingAboutPhilosophy" class="form-control" rows="3">Yıllar içinde edindiğimiz tecrübeyi her projemize yansıtmaya önem veriyoruz. İşimizin temelinde özenli işçilik, uygun malzeme seçimi, açık iletişim ve planlı çalışma anlayışı bulunuyor. Yapılacak işleri müşterilerimizle birlikte değerlendiriyor, ihtiyaçları doğru anlamaya ve sürecin mümkün olduğunca düzenli ilerlemesine önem veriyoruz.</textarea>
+                </div>
               </div>
             </div>
           </div>

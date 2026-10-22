@@ -14,18 +14,22 @@ def minify_css(css_text):
 
 def minify_js(js_text):
     lines = []
+    in_block_comment = False
     for line in js_text.splitlines():
         stripped = line.strip()
+        if in_block_comment:
+            if '*/' in line:
+                in_block_comment = False
+            continue
+        if stripped.startswith('/*') and not ('`' in line or "'" in line or '"' in line):
+            if '*/' not in line:
+                in_block_comment = True
+            continue
         if stripped.startswith('//'):
             continue
-        # Remove trailing comments if not inside string
-        if '//' in line and not ('http://' in line or 'https://' in line or "'" in line or '"' in line or '`' in line):
-            line = line.split('//')[0]
         lines.append(line)
     text = '\n'.join(lines)
-    # Remove block comments
-    text = re.sub(r'/\*.*?\*/', '', text, flags=re.DOTALL)
-    # Compact empty lines
+    # Compact excessive empty lines
     text = re.sub(r'\n\s*\n', '\n', text)
     return text.strip()
 

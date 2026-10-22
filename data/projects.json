@@ -13,9 +13,21 @@
     ],
     "description": "Lara bölgesinde lüks rezidans dairesi için özel lake mutfak dolapları, kuvars tezgah ve modern ada mutfak konsepti uygulaması.",
     "specs": [
-      { "label": "Tezgah & Dolap", "val": "✓ Kuvars & Akrilik Lake", "isPassed": true },
-      { "label": "Uygulama Durumu", "val": "Tamamlandı", "isPassed": false },
-      { "label": "Teslim Süresi", "val": "18 Gün", "isPassed": false }
+      {
+        "label": "Tezgah & Dolap",
+        "val": "✓ Kuvars & Akrilik Lake",
+        "isPassed": true
+      },
+      {
+        "label": "Uygulama Durumu",
+        "val": "Tamamlandı",
+        "isPassed": false
+      },
+      {
+        "label": "Teslim Süresi",
+        "val": "18 Gün",
+        "isPassed": false
+      }
     ],
     "featured": true,
     "order": 1
@@ -34,9 +46,21 @@
     ],
     "description": "Konyaaltı lüks konut projesinde çift lavabolu ahşap tezgah, temperli cam walk-in duşakabin ve su yalıtımlı seramik banyo uygulaması.",
     "specs": [
-      { "label": "Sızdırmazlık Testi", "val": "✓ Sıfır Kaçak Onayı", "isPassed": true },
-      { "label": "İnce İşçilik", "val": "Özel Porselen & LED", "isPassed": false },
-      { "label": "Teslim Durumu", "val": "Eksiksiz Teslim", "isPassed": false }
+      {
+        "label": "Sızdırmazlık Testi",
+        "val": "✓ Sıfır Kaçak Onayı",
+        "isPassed": true
+      },
+      {
+        "label": "İnce İşçilik",
+        "val": "Özel Porselen & LED",
+        "isPassed": false
+      },
+      {
+        "label": "Teslim Durumu",
+        "val": "Eksiksiz Teslim",
+        "isPassed": false
+      }
     ],
     "featured": true,
     "order": 2
@@ -54,9 +78,21 @@
     ],
     "description": "Döşemealtı bölgesinde depreme dayanıklı hafif çelik karkas sistemiyle inşa edilen, modern yalıtımlı müstakil villa projesi.",
     "specs": [
-      { "label": "Statik Proje Onayı", "val": "✓ Depreme Dayanıklı", "isPassed": true },
-      { "label": "Yalıtım Standartı", "val": "A+ Isı & Ses İzolasyonu", "isPassed": false },
-      { "label": "Teslim Türü", "val": "Anahtar Teslim", "isPassed": false }
+      {
+        "label": "Statik Proje Onayı",
+        "val": "✓ Depreme Dayanıklı",
+        "isPassed": true
+      },
+      {
+        "label": "Yalıtım Standartı",
+        "val": "A+ Isı & Ses İzolasyonu",
+        "isPassed": false
+      },
+      {
+        "label": "Teslim Türü",
+        "val": "Anahtar Teslim",
+        "isPassed": false
+      }
     ],
     "featured": true,
     "order": 3
@@ -74,9 +110,21 @@
     ],
     "description": "60x120 lazer kesim granit seramik döşeme, lazer nivo ile milimetrik terazi ayarı ve eksiksiz derz dolgu uygulaması.",
     "specs": [
-      { "label": "Zemin & Duvar", "val": "✓ 60x120 Lazer Kesim Granit", "isPassed": true },
-      { "label": "Terazi & Derz", "val": "Milimetrik Seviye Onayı", "isPassed": false },
-      { "label": "Teslim Durumu", "val": "Eksiksiz Teslim", "isPassed": false }
+      {
+        "label": "Zemin & Duvar",
+        "val": "✓ 60x120 Lazer Kesim Granit",
+        "isPassed": true
+      },
+      {
+        "label": "Terazi & Derz",
+        "val": "Milimetrik Seviye Onayı",
+        "isPassed": false
+      },
+      {
+        "label": "Teslim Durumu",
+        "val": "Eksiksiz Teslim",
+        "isPassed": false
+      }
     ],
     "featured": true,
     "order": 4
@@ -94,9 +142,21 @@
     ],
     "description": "Antalya iklimine uygun karbonlu EPS dış cephe ısı yalıtımı, dekoratif sıva ve silikonlu dış cephe boyası uygulaması.",
     "specs": [
-      { "label": "Enerji Verimliliği", "val": "✓ %45 Isı Tasarrufu", "isPassed": true },
-      { "label": "Malzeme Kalitesi", "val": "Karbonlu EPS & Silikonlu Boya", "isPassed": false },
-      { "label": "Garanti Süresi", "val": "5 Yıl İşçilik Garantisi", "isPassed": false }
+      {
+        "label": "Enerji Verimliliği",
+        "val": "✓ %45 Isı Tasarrufu",
+        "isPassed": true
+      },
+      {
+        "label": "Malzeme Kalitesi",
+        "val": "Karbonlu EPS & Silikonlu Boya",
+        "isPassed": false
+      },
+      {
+        "label": "Garanti Süresi",
+        "val": "5 Yıl İşçilik Garantisi",
+        "isPassed": false
+      }
     ],
     "featured": true,
     "order": 5
@@ -114,9 +174,21 @@
     ],
     "description": "Özel tasarım akustik ahşap panel kaplama, gizli LED ışık bantlı asma tavan ve mermer desenli TV ünitesi tasarımı.",
     "specs": [
-      { "label": "Özel Üretim Mobilya", "val": "✓ Akustik Ahşap Panel & LED", "isPassed": true },
-      { "label": "Boya & Alçıpan", "val": "Gizli Işık Bantlı Asma Tavan", "isPassed": false },
-      { "label": "Teslim Türü", "val": "Anahtar Teslim", "isPassed": false }
+      {
+        "label": "Özel Üretim Mobilya",
+        "val": "✓ Akustik Ahşap Panel & LED",
+        "isPassed": true
+      },
+      {
+        "label": "Boya & Alçıpan",
+        "val": "Gizli Işık Bantlı Asma Tavan",
+        "isPassed": false
+      },
+      {
+        "label": "Teslim Türü",
+        "val": "Anahtar Teslim",
+        "isPassed": false
+      }
     ],
     "featured": true,
     "order": 6
@@ -134,9 +206,21 @@
     ],
     "description": "120m² 3+1 hafif çelik konstrüksiyon villa. İleri kaba ve ince işçilik anahtar teslim olarak tamamlanmıştır.",
     "specs": [
-      { "label": "Deprem Güvenliği", "val": "✓ 1. Derece Deprem Standardı", "isPassed": true },
-      { "label": "İnşaat Süresi", "val": "35 İş Gününde Teslim", "isPassed": false },
-      { "label": "Dış Cephe", "val": "Betopan & Ahşap Görünüm", "isPassed": false }
+      {
+        "label": "Deprem Güvenliği",
+        "val": "✓ 1. Derece Deprem Standardı",
+        "isPassed": true
+      },
+      {
+        "label": "İnşaat Süresi",
+        "val": "35 İş Gününde Teslim",
+        "isPassed": false
+      },
+      {
+        "label": "Dış Cephe",
+        "val": "Betopan & Ahşap Görünüm",
+        "isPassed": false
+      }
     ],
     "featured": true,
     "order": 7
@@ -154,9 +238,21 @@
     ],
     "description": "Mevcut çatının kiremitlerinin aktarılması, çift kat şalümo alevli su yalıtım membranı ve yağmur oluklarının sıfırlanması.",
     "specs": [
-      { "label": "Su Yalıtımı", "val": "✓ 10 Yıl Sızdırmazlık", "isPassed": true },
-      { "label": "Oluk ve Baca", "val": "Eksiz Çinko Oluk Sistemi", "isPassed": false },
-      { "label": "Uygulama Süresi", "val": "6 Günde Tamamlandı", "isPassed": false }
+      {
+        "label": "Su Yalıtımı",
+        "val": "✓ 10 Yıl Sızdırmazlık",
+        "isPassed": true
+      },
+      {
+        "label": "Oluk ve Baca",
+        "val": "Eksiz Çinko Oluk Sistemi",
+        "isPassed": false
+      },
+      {
+        "label": "Uygulama Süresi",
+        "val": "6 Günde Tamamlandı",
+        "isPassed": false
+      }
     ],
     "featured": true,
     "order": 8

@@ -32,7 +32,7 @@ function jsonResponse($data, $statusCode = 200) {
 }
 
 /**
- * Yönetici oturum kontrolü
+ * Yönetici oturum kontrolü (Genişletilmiş ve cPanel/Apache Uyumlu)
  */
 function checkAuth() {
     // 1. Session kontrolü
@@ -40,18 +40,38 @@ function checkAuth() {
         return true;
     }
 
-    // 2. HTTP Header token kontrolü (opsiyonel API erişimi için)
-    $authHeader = $_SERVER['HTTP_X_ADMIN_TOKEN'] ?? $_SERVER['HTTP_AUTHORIZATION'] ?? '';
-    if (!empty($authHeader)) {
-        $token = str_replace('Bearer ', '', $authHeader);
+    // 2. HTTP Header token kontrolü
+    $headers = function_exists('getallheaders') ? getallheaders() : [];
+    $rawToken = $headers['X-Admin-Token'] 
+        ?? $headers['x-admin-token'] 
+        ?? $headers['Authorization'] 
+        ?? $headers['authorization']
+        ?? $_SERVER['HTTP_X_ADMIN_TOKEN'] 
+        ?? $_SERVER['HTTP_AUTHORIZATION'] 
+        ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] 
+        ?? $_GET['token'] 
+        ?? $_POST['token'] 
+        ?? '';
+
+    // JSON body token kontrolü
+    if (empty($rawToken)) {
+        $bodyInput = @json_decode(file_get_contents('php://input'), true);
+        if (is_array($bodyInput)) {
+            $rawToken = $bodyInput['_token'] ?? $bodyInput['token'] ?? '';
+        }
+    }
+
+    if (!empty($rawToken)) {
+        $token = trim(str_replace('Bearer ', '', $rawToken));
         if (in_array($token, ADMIN_PASSWORDS, true) || $token === md5('canyapi_05458320190')) {
+            $_SESSION['canyapi_admin_logged'] = true;
             return true;
         }
     }
 
     jsonResponse([
         'success' => false,
-        'message' => 'Yetkisiz erişim. Lütfen admin paneline giriş yapınız.'
+        'message' => 'Yetkisiz erişim. Lütfen admin paneline tekrar giriş yapınız.'
     ], 401);
 }
 

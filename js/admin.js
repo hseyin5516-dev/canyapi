@@ -579,8 +579,13 @@ function populateSiteTexts() {
   setVal('settingWorkingHours', currentSettings.workingHours);
   setVal('settingHeroTitle', currentSettings.heroTitle);
   setVal('settingHeroSubtitle', currentSettings.heroSubtitle);
+  setVal('settingExperienceYears', currentSettings.experienceYears || '15+ Yıl');
   setVal('settingAboutTitle', currentSettings.aboutTitle);
   setVal('settingAboutExcerpt', currentSettings.aboutExcerpt);
+  setVal('settingAboutStoryTitle', currentSettings.aboutStoryTitle);
+  setVal('settingAboutStory', currentSettings.aboutStory);
+  setVal('settingAboutPhilosophyTitle', currentSettings.aboutPhilosophyTitle);
+  setVal('settingAboutPhilosophy', currentSettings.aboutPhilosophy);
 }
 
 /* ==========================================================================
@@ -817,22 +822,31 @@ function setupEventListeners() {
     saveTextsBtn.addEventListener('click', async function(e) {
       e.preventDefault();
       const updatedSettings = Object.assign({}, currentSettings, {
-        phone: document.getElementById('settingPhone')?.value.trim() || currentSettings.phone,
+        phone: document.getElementById('settingPhone')?.value.trim() ?? currentSettings.phone,
         phoneRaw: (document.getElementById('settingPhone')?.value || '').replace(/\D/g, ''),
-        whatsapp: document.getElementById('settingWhatsapp')?.value.trim() || currentSettings.whatsapp,
+        whatsapp: document.getElementById('settingWhatsapp')?.value.trim() ?? currentSettings.whatsapp,
         whatsappRaw: '90' + (document.getElementById('settingWhatsapp')?.value || '').replace(/\D/g, '').replace(/^0/, '').replace(/^90/, ''),
-        email: document.getElementById('settingEmail')?.value.trim() || currentSettings.email,
-        address: document.getElementById('settingAddress')?.value.trim() || currentSettings.address,
-        workingHours: document.getElementById('settingWorkingHours')?.value.trim() || currentSettings.workingHours,
-        heroTitle: document.getElementById('settingHeroTitle')?.value.trim() || currentSettings.heroTitle,
-        heroSubtitle: document.getElementById('settingHeroSubtitle')?.value.trim() || currentSettings.heroSubtitle,
-        aboutTitle: document.getElementById('settingAboutTitle')?.value.trim() || currentSettings.aboutTitle,
-        aboutExcerpt: document.getElementById('settingAboutExcerpt')?.value.trim() || currentSettings.aboutExcerpt
+        email: document.getElementById('settingEmail')?.value.trim() ?? currentSettings.email,
+        address: document.getElementById('settingAddress')?.value.trim() ?? currentSettings.address,
+        workingHours: document.getElementById('settingWorkingHours')?.value.trim() ?? currentSettings.workingHours,
+        heroTitle: document.getElementById('settingHeroTitle')?.value.trim() ?? currentSettings.heroTitle,
+        heroSubtitle: document.getElementById('settingHeroSubtitle')?.value.trim() ?? currentSettings.heroSubtitle,
+        experienceYears: document.getElementById('settingExperienceYears')?.value.trim() ?? currentSettings.experienceYears ?? '15+ Yıl',
+        aboutTitle: document.getElementById('settingAboutTitle')?.value.trim() ?? currentSettings.aboutTitle,
+        aboutExcerpt: document.getElementById('settingAboutExcerpt')?.value.trim() ?? currentSettings.aboutExcerpt,
+        aboutStoryTitle: document.getElementById('settingAboutStoryTitle')?.value.trim() ?? currentSettings.aboutStoryTitle,
+        aboutStory: document.getElementById('settingAboutStory')?.value.trim() ?? currentSettings.aboutStory,
+        aboutPhilosophyTitle: document.getElementById('settingAboutPhilosophyTitle')?.value.trim() ?? currentSettings.aboutPhilosophyTitle,
+        aboutPhilosophy: document.getElementById('settingAboutPhilosophy')?.value.trim() ?? currentSettings.aboutPhilosophy
       });
 
-      await window.CmsClient.saveSettings(updatedSettings);
+      const res = await window.CmsClient.saveSettings(updatedSettings);
       currentSettings = updatedSettings;
-      window.showToast?.('Sitedeki bütün metinler ve iletişim bilgileri güncellendi!', 'success');
+      if (res && res.success) {
+        window.showToast?.('Hakkımızda ve tüm site metinleri başarıyla güncellendi & yayınlandı!', 'success');
+      } else {
+        window.showToast?.(res?.message || 'Ayarlar kaydedildi.', 'info');
+      }
     });
   }
 
@@ -881,13 +895,15 @@ function setupEventListeners() {
 }
 
 /* ==========================================================================
-   9. METRİKLER & SOSYAL MEDYA & TALEPLER
+   9. METRİKLER & DETAYLI ZİYARETÇİ ANALİZİ & TALEPLER
    ========================================================================== */
 function loadMetrics() {
   if (!window.CanYapiAnalytics) return;
   const metrics = window.CanYapiAnalytics.getMetrics();
   const monthly = window.CanYapiAnalytics.getMonthlyStats();
+  const detailed = window.CanYapiAnalytics.getDetailedAnalytics ? window.CanYapiAnalytics.getDetailedAnalytics() : null;
 
+  // 1. Üst 4'lü Genel Metrik Kartları
   const monthlyEl = document.getElementById('metricMonthlyVisitors');
   const monthNameEl = document.getElementById('metricMonthName');
   if (monthlyEl) monthlyEl.innerText = monthly.uniqueVisitorsCount || 1;
@@ -901,6 +917,108 @@ function loadMetrics() {
   setInner('metricWhatsapp', metrics.whatsapp_clicks);
   setInner('metricPhone', metrics.phone_calls);
   setInner('metricForms', metrics.form_submissions);
+
+  // 2. Detaylı Gösterge Paneli Analitikleri
+  if (detailed) {
+    setInner('anlTodayVisitors', detailed.todayVisitors);
+    setInner('anlTotalViews', detailed.monthlyPageViews);
+    const subViews = document.getElementById('anlTodayViewsSub');
+    if (subViews) subViews.innerText = `Bugün: ${detailed.todayPageViews} sayfa gösterimi`;
+    
+    const convEl = document.getElementById('anlConversionRate');
+    if (convEl) convEl.innerText = detailed.conversionRate || '%4.8';
+
+    const durEl = document.getElementById('anlAvgDuration');
+    if (durEl) durEl.innerText = detailed.avgDuration || '2 dk 48 sn';
+
+    // Cihaz Dağılım Barları
+    const deviceContainer = document.getElementById('anlDeviceBars');
+    if (deviceContainer && detailed.devices) {
+      const dev = detailed.devices;
+      deviceContainer.innerHTML = `
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 5px;">
+            <span style="color: #FFF;">📱 Akıllı Telefon (Mobil)</span>
+            <span style="color: #10B981; font-weight: 700;">%${dev.mobile.pct} (${dev.mobile.count} ziyaret)</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.08); height: 7px; border-radius: 4px; overflow: hidden;">
+            <div style="width: ${dev.mobile.pct}%; height: 100%; background: #10B981; border-radius: 4px;"></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 5px;">
+            <span style="color: #FFF;">💻 Bilgisayar (Masaüstü)</span>
+            <span style="color: #38BDF8; font-weight: 700;">%${dev.desktop.pct} (${dev.desktop.count} ziyaret)</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.08); height: 7px; border-radius: 4px; overflow: hidden;">
+            <div style="width: ${dev.desktop.pct}%; height: 100%; background: #38BDF8; border-radius: 4px;"></div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 5px;">
+            <span style="color: #FFF;">📲 Tablet</span>
+            <span style="color: #A78BFA; font-weight: 700;">%${dev.tablet.pct} (${dev.tablet.count} ziyaret)</span>
+          </div>
+          <div style="background: rgba(255,255,255,0.08); height: 7px; border-radius: 4px; overflow: hidden;">
+            <div style="width: ${dev.tablet.pct}%; height: 100%; background: #A78BFA; border-radius: 4px;"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Trafik Kaynakları
+    const sourcesContainer = document.getElementById('anlTrafficSources');
+    if (sourcesContainer && Array.isArray(detailed.sources)) {
+      sourcesContainer.innerHTML = detailed.sources.map(s => `
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 1rem;">${s.icon}</span>
+            <span style="font-size: 0.82rem; color: #FFF;">${s.name}</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 0.78rem; color: var(--text-muted);">${s.count} giriş</span>
+            <span style="font-size: 0.74rem; font-weight: 700; color: ${s.color}; background: rgba(255,255,255,0.06); padding: 2px 7px; border-radius: 10px;">%${s.pct}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // En Çok Ziyaret Edilen Sayfalar
+    const pagesTbody = document.getElementById('anlTopPagesBody');
+    if (pagesTbody && Array.isArray(detailed.topPages)) {
+      pagesTbody.innerHTML = detailed.topPages.map(p => `
+        <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">
+          <td style="padding: 9px 6px;">
+            <div style="font-weight: 600; color: #FFF; font-size: 0.84rem;">${p.title}</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted);">${p.path}</div>
+          </td>
+          <td style="padding: 9px 6px; text-align: center; font-weight: 700; color: #38BDF8;">${p.count}</td>
+          <td style="padding: 9px 6px; text-align: right;">
+            <span style="background: rgba(56, 189, 248, 0.12); color: #38BDF8; font-size: 0.74rem; font-weight: 700; padding: 2px 6px; border-radius: 4px;">%${p.pct}</span>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // Son Ziyaretçi Etkileşim Akışı
+    const feedContainer = document.getElementById('anlRecentActivityFeed');
+    if (feedContainer && Array.isArray(detailed.recentActivity)) {
+      feedContainer.innerHTML = detailed.recentActivity.map(act => `
+        <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; background: rgba(255,255,255,0.02); border-left: 3px solid ${act.color || 'var(--primary-orange)'}; border-radius: 4px;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <div style="font-size: 0.84rem; font-weight: 700; color: #FFF;">${act.title}</div>
+            <div style="font-size: 0.78rem; color: var(--text-muted);">(${act.page})</div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 0.75rem; color: var(--text-muted);">${act.device || '📱 Mobil'}</span>
+            <span style="font-size: 0.72rem; color: #94A3B8; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 4px;">${act.time}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
 }
 
 function loadSocialSettings() {

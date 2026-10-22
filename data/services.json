@@ -4,9 +4,14 @@
     "title": "Mutfak Tadilatı",
     "slug": "hizmet-mutfak.html",
     "image": "images/services/mutfak/mutfak-1.webp",
-    "shortDesc": "Kişiye özel imalat akrilik/lake dolaplar, kuvars ve porselen tezgahlar, ergonomik ada mutfak çözümleri.",
-    "fullDesc": "Mutfaklarınızı kullanım alışkanlıklarınıza ve estetik beklentilerinize göre baştan tasarlıyoruz. Akrilik, lake ve membran dolap kapakları, çizilmez kuvars tezgahlar, gizli LED aydınlatmalar ve modern kiler sistemleri ile fonksiyonel mutfaklar üretiyoruz.",
-    "features": ["Kişiye Özel Dolap İmalatı", "Kuvars / Porselen Tezgah", "Tesisat ve Elektrik Yenileme", "Ada Mutfak Tasarımı"],
+    "shortDesc": "Antalya ve çevresinde mutfak tadilatı, dolap yenileme, tezgâh montajı ve kullanışlı mutfak çözümleri. İhtiyaca uygun, özenli işçilik.",
+    "fullDesc": "Antalya ve çevresinde mutfak tadilatı ve yenileme işleri yapıyorum. Mutfak dolaplarının yenilenmesi, tezgâh montajı, fayans uygulamaları ve mutfak alanının daha kullanışlı hâle getirilmesi konusunda ihtiyacınıza uygun çözümler sunuyorum.\n\nİşin başından sonuna kadar işçiliğe, malzeme seçimine ve temiz çalışmaya önem veriyorum. Yapılacak işi birlikte değerlendiriyor, bütçenize ve ihtiyaçlarınıza uygun bir yol belirliyoruz.\n\nMutfak tadilatı için bilgi almak ve fiyat teklifi istemek üzere benimle WhatsApp üzerinden iletişime geçebilirsiniz.",
+    "features": [
+      "Kişiye Özel Dolap İmalatı",
+      "Kuvars / Porselen Tezgah",
+      "Tesisat ve Elektrik Yenileme",
+      "Ada Mutfak Tasarımı"
+    ],
     "gallery": [
       "images/services/mutfak/mutfak-1.webp",
       "images/services/mutfak/mutfak-2.webp",
@@ -25,7 +30,12 @@
     "image": "images/services/banyo/banyo-1.webp",
     "shortDesc": "Garantili su yalıtımı, walk-in duşakabin, gömme rezervuar, asma klozet ve nem geçirmez banyo dolapları.",
     "fullDesc": "Eski banyonuzu lüks ve ferah bir spa ortamına dönüştürüyoruz. Çift katmanlı elastik su yalıtımı ile komşuya su sızdırma riskini sıfıra indiriyor; lineer süzgeç, temperli cam duş panelleri ve şık seramiklerle kusursuz teslim ediyoruz.",
-    "features": ["Garantili Su Yalıtımı", "Walk-in Temperli Duşakabin", "Gömme Rezervuar Montajı", "Neme Dayanıklı Lake Dolaplar"],
+    "features": [
+      "Garantili Su Yalıtımı",
+      "Walk-in Temperli Duşakabin",
+      "Gömme Rezervuar Montajı",
+      "Neme Dayanıklı Lake Dolaplar"
+    ],
     "gallery": [
       "images/services/banyo/banyo-1.webp",
       "images/services/banyo/banyo-2.webp",
@@ -42,7 +52,12 @@
     "image": "images/services/seramik-fayans/seramik-1.webp",
     "shortDesc": "60x120 ve büyük boy porselen seramik döşeme, zemin tesviyesi, lazer nivo ile milimetrik terazi garantisi.",
     "fullDesc": "Zemin ve duvar kaplamalarında lazer nivo ile sıfır hata toleransıyla çalışıyoruz. Büyük ebatlı porselen granitler, epoksi derz dolguları ve düzgün zemin tesviyesi ile mekanlarınıza prestij katıyoruz.",
-    "features": ["60x120 ve 120x240 Granit Uygulama", "Lazer Nivo ile Seviyeleme", "Epoksi ve Antibakteriyel Derz", "Zemin Şap & Tesviye"],
+    "features": [
+      "60x120 ve 120x240 Granit Uygulama",
+      "Lazer Nivo ile Seviyeleme",
+      "Epoksi ve Antibakteriyel Derz",
+      "Zemin Şap & Tesviye"
+    ],
     "gallery": [
       "images/services/seramik-fayans/seramik-1.webp",
       "images/services/seramik-fayans/seramik-2.webp",
@@ -58,7 +73,12 @@
     "image": "images/services/boya-alcipan/boya-1.webp",
     "shortDesc": "Eşyalı evlerde tozsuz zımpara ve tam maskeleme, İtalyan dekoratif boya, asma tavan ve alçıpan ışık bandı.",
     "fullDesc": "Ev ve iş yerlerinizde kaliteli silikonlu, silinebilir boyalar ve modern alçı işçiliği sunuyoruz. Vakumlu tozsuz zımpara makinelerimiz sayesinde eşyalı evlerde minimum kirlilikle temiz teslimat sağlıyoruz.",
-    "features": ["Vakumlu Tozsuz Zımpara", "İtalyan Dekoratif Efekt Boya", "Alçı Sıva & Macun Çekimi", "Gizli Işıklı Asma Tavan"],
+    "features": [
+      "Vakumlu Tozsuz Zımpara",
+      "İtalyan Dekoratif Efekt Boya",
+      "Alçı Sıva & Macun Çekimi",
+      "Gizli Işıklı Asma Tavan"
+    ],
     "gallery": [
       "images/services/boya-alcipan/boya-1.webp",
       "images/services/boya-alcipan/boya-2.webp",
@@ -74,7 +94,12 @@
     "image": "images/services/mantolama/mantolama-1.webp",
     "shortDesc": "Antalya'nın yaz sıcağı ve kış nemine karşı %50'ye varan enerji tasarrufu sağlayan kaliteli mantolama sistemleri.",
     "fullDesc": "Binalarınızın ısı yalıtımını TSE standartlarında taşyünü veya karbonlu EPS levhalarla gerçekleştiriyoruz. Yazın serin, kışın ılık bir iç mekan sağlarken binanızın ömrünü uzatıyoruz.",
-    "features": ["Taşyünü ve Karbonlu EPS Levha", "Fileli Sıva & Dekoratif Dış Cephe", "%50'ye Varan Enerji Tasarrufu", "5 Yıl İşçilik ve Malzeme Garantisi"],
+    "features": [
+      "Taşyünü ve Karbonlu EPS Levha",
+      "Fileli Sıva & Dekoratif Dış Cephe",
+      "%50'ye Varan Enerji Tasarrufu",
+      "5 Yıl İşçilik ve Malzeme Garantisi"
+    ],
     "gallery": [
       "images/services/mantolama/mantolama-1.webp",
       "images/services/mantolama/mantolama-2.webp",
@@ -89,7 +114,12 @@
     "image": "images/services/cati/cati-1.webp",
     "shortDesc": "Kiremit aktarma, şalümo alevli membran su yalıtımı, çinko eksiz oluk imalatı ve çatı karkas tamiri.",
     "fullDesc": "Antalya'nın şiddetli fırtına ve sağanak yağışlarına dayanıklı çatı onarım ve yalıtım çözümleri üretiyoruz. Akıntı ve rutubet problemlerini kökten çözüyoruz.",
-    "features": ["Şalümo Alevli Membran Yalıtım", "Kiremit Aktarma ve Karkas Güçlendirme", "Eksiz Çinko ve Galvaniz Oluk", "Isı ve Ses İzolasyon Şilteleri"],
+    "features": [
+      "Şalümo Alevli Membran Yalıtım",
+      "Kiremit Aktarma ve Karkas Güçlendirme",
+      "Eksiz Çinko ve Galvaniz Oluk",
+      "Isı ve Ses İzolasyon Şilteleri"
+    ],
     "gallery": [
       "images/services/cati/cati-1.webp",
       "images/services/cati/cati-2.webp",
@@ -104,7 +134,12 @@
     "image": "images/services/prefabrik/prefabrik-1.webp",
     "shortDesc": "Hafif çelik teknolojisiyle depreme dayanıklı, hızlı kurulumlu, modern müstakil yaşam alanları ve villalar.",
     "fullDesc": "Arsanız üzerine projelendirilen yüksek mühendislik ürünü hafif çelik villalar ve prefabrik yapılar. 30-45 iş gününde temelsiz/temelli anahtar teslim yaşam alanları sunuyoruz.",
-    "features": ["1. Derece Deprem Güvenliği", "35 Günde Anahtar Teslim", "A+ Isı & Ses Yalıtımı", "Müstakil ve Villa Projeleri"],
+    "features": [
+      "1. Derece Deprem Güvenliği",
+      "35 Günde Anahtar Teslim",
+      "A+ Isı & Ses Yalıtımı",
+      "Müstakil ve Villa Projeleri"
+    ],
     "gallery": [
       "images/services/prefabrik/prefabrik-1.webp",
       "images/services/prefabrik/prefabrik-2.webp",
@@ -119,7 +154,12 @@
     "image": "images/services/tadilat/tadilat-1.webp",
     "shortDesc": "A'dan Z'ye anahtar teslim konut ve villa yenileme. Elektrik, su, kırım-döküm, mobilya ve ince işçilik tek elden.",
     "fullDesc": "Tek bir muhatap ile zahmetsizce evinizi yenileyin. Kırım, moloz atımı, su-elektrik tesisatı, kapılar, zeminler ve mutfak-banyo dahil tüm süreci sözleşmeli ve garantili yönetiyoruz.",
-    "features": ["Tek Elden Anahtar Teslim", "Sözleşmeli Zamanında Teslim", "Ücretsiz Keşif ve 3D Planlama", "Mimar Kontrolünde Uygulama"],
+    "features": [
+      "Tek Elden Anahtar Teslim",
+      "Sözleşmeli Zamanında Teslim",
+      "Ücretsiz Keşif ve 3D Planlama",
+      "Mimar Kontrolünde Uygulama"
+    ],
     "gallery": [
       "images/services/tadilat/tadilat-1.webp",
       "images/services/tadilat/tadilat-2.webp",

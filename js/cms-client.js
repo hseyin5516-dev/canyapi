@@ -34,11 +34,16 @@
     return false;
   }
 
+  function getAuthToken() {
+    return sessionStorage.getItem(TOKEN_STORAGE_KEY) || '05458320190';
+  }
+
   function getAuthHeader() {
-    const token = sessionStorage.getItem(TOKEN_STORAGE_KEY) || '05458320190';
+    const token = getAuthToken();
     return {
       'Content-Type': 'application/json',
-      'X-Admin-Token': token
+      'X-Admin-Token': token,
+      'Authorization': 'Bearer ' + token
     };
   }
 
@@ -80,15 +85,20 @@
     localStorage.setItem('canyapi_cms_settings', JSON.stringify(settings));
 
     try {
+      const payload = Object.assign({}, settings, { _token: getAuthToken() });
       const res = await fetch(apiUrl('api/settings.php'), {
         method: 'POST',
         headers: getAuthHeader(),
-        body: JSON.stringify(settings)
+        credentials: 'same-origin',
+        body: JSON.stringify(payload)
       });
       if (res.ok) {
-        return await res.json();
+        const json = await res.json();
+        return json;
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('saveSettings API error:', e);
+    }
 
     return { success: true, message: 'Ayarlar kaydedildi.', data: settings };
   }
@@ -131,10 +141,12 @@
 
   async function saveProject(project) {
     try {
+      const payload = Object.assign({}, project, { _token: getAuthToken() });
       const res = await fetch(apiUrl('api/projects.php'), {
         method: 'POST',
         headers: getAuthHeader(),
-        body: JSON.stringify(project)
+        credentials: 'same-origin',
+        body: JSON.stringify(payload)
       });
       if (res.ok) {
         const data = await res.json();
@@ -143,7 +155,9 @@
           return data;
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('saveProject error:', e);
+    }
 
     // Yerel mod simülasyonu
     let projects = await getProjects();
@@ -164,7 +178,8 @@
       const res = await fetch(apiUrl('api/projects.php'), {
         method: 'POST',
         headers: getAuthHeader(),
-        body: JSON.stringify({ action: 'delete', id: id })
+        credentials: 'same-origin',
+        body: JSON.stringify({ action: 'delete', id: id, _token: getAuthToken() })
       });
       if (res.ok) {
         const data = await res.json();
@@ -173,7 +188,9 @@
           return data;
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('deleteProject error:', e);
+    }
 
     let projects = await getProjects();
     projects = projects.filter(p => p.id !== id);
@@ -219,10 +236,12 @@
 
   async function saveService(service) {
     try {
+      const payload = Object.assign({}, service, { _token: getAuthToken() });
       const res = await fetch(apiUrl('api/services.php'), {
         method: 'POST',
         headers: getAuthHeader(),
-        body: JSON.stringify(service)
+        credentials: 'same-origin',
+        body: JSON.stringify(payload)
       });
       if (res.ok) {
         const data = await res.json();
@@ -231,7 +250,9 @@
           return data;
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('saveService error:', e);
+    }
 
     let services = await getServices();
     if (!service.id) {
@@ -251,7 +272,8 @@
       const res = await fetch(apiUrl('api/services.php'), {
         method: 'POST',
         headers: getAuthHeader(),
-        body: JSON.stringify({ action: 'delete', id: id })
+        credentials: 'same-origin',
+        body: JSON.stringify({ action: 'delete', id: id, _token: getAuthToken() })
       });
       if (res.ok) {
         const data = await res.json();
@@ -260,7 +282,9 @@
           return data;
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('deleteService error:', e);
+    }
 
     let services = await getServices();
     services = services.filter(s => s.id !== id);
@@ -316,10 +340,12 @@
 
   async function saveBlogPost(post) {
     try {
+      const payload = Object.assign({}, post, { _token: getAuthToken() });
       const res = await fetch(apiUrl('api/blog.php'), {
         method: 'POST',
         headers: getAuthHeader(),
-        body: JSON.stringify(post)
+        credentials: 'same-origin',
+        body: JSON.stringify(payload)
       });
       if (res.ok) {
         const data = await res.json();
@@ -328,7 +354,9 @@
           return data;
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('saveBlogPost error:', e);
+    }
 
     let blog = await getBlogPosts();
     if (!post.id) {
@@ -353,7 +381,8 @@
       const res = await fetch(apiUrl('api/blog.php'), {
         method: 'POST',
         headers: getAuthHeader(),
-        body: JSON.stringify({ action: 'delete', id: id })
+        credentials: 'same-origin',
+        body: JSON.stringify({ action: 'delete', id: id, _token: getAuthToken() })
       });
       if (res.ok) {
         const data = await res.json();
@@ -362,7 +391,9 @@
           return data;
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('deleteBlogPost error:', e);
+    }
 
     let blog = await getBlogPosts();
     blog = blog.filter(b => b.id !== id);
@@ -375,17 +406,22 @@
     try {
       const formData = new FormData();
       formData.append('image', file);
+      formData.append('_token', getAuthToken());
       const res = await fetch(apiUrl('api/upload.php'), {
         method: 'POST',
         headers: {
-          'X-Admin-Token': sessionStorage.getItem(TOKEN_STORAGE_KEY) || '05458320190'
+          'X-Admin-Token': getAuthToken(),
+          'Authorization': 'Bearer ' + getAuthToken()
         },
+        credentials: 'same-origin',
         body: formData
       });
       if (res.ok) {
         return await res.json();
       }
-    } catch (e) {}
+    } catch (e) {
+      console.warn('uploadPhoto error:', e);
+    }
 
     // Yerel mod simülasyonu: Dosyayı base64 Data URL'e çevirip kaydeder
     return new Promise((resolve) => {

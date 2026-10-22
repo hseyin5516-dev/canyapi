@@ -204,7 +204,7 @@ function ensureQuoteModalExists() {
           <div class="form-group full-width">
             <label class="form-label">Fotoğraf Yükleyin (İsteğe Bağlı)</label>
             <div class="file-upload-box" id="modalUploadBox" style="padding: 16px;">
-              <input type="file" id="modalFileInput" multiple accept="image/*,.pdf">
+              <input type="file" id="modalFileInput" multiple accept="image/jpeg,image/png,image/webp,.pdf">
               <div class="upload-text" style="font-size: 0.82rem;">Fotoğrafları buraya sürükleyin veya tıklayarak seçin</div>
             </div>
             <div class="file-preview-list" id="modalFilePreview"></div>
@@ -812,63 +812,159 @@ async function initDynamicCmsContent() {
     }
   }
 
-  // 2. Hizmet Sayfalarında Alt Grid Galeri Senkronizasyonu
-  const serviceGalleryGrid = document.querySelector('.service-gallery-section .gallery-grid, .service-gallery-grid');
-  if (serviceGalleryGrid) {
-    try {
+  // 2. Hizmetler Sayfasında ve Hizmet Sayfalarında Dinamik Galeri / Liste Senkronizasyonu
+  try {
+    const isServicesPage = window.location.pathname.includes('hizmetler');
+    const servicesGrid = isServicesPage ? document.querySelector('.services-section .services-grid') : null;
+    const serviceGalleryGrid = document.querySelector('.service-gallery-section .gallery-grid, .service-gallery-grid');
+
+    if (servicesGrid || serviceGalleryGrid) {
       const services = await window.CmsClient.getServices();
-      const currentPath = window.location.pathname.toLowerCase();
 
-      const matchedService = services.find(s => {
-        if (!s.slug) return false;
-        const cleanSlug = s.slug.replace('.html', '').toLowerCase();
-        return currentPath.includes(cleanSlug);
-      });
-
-      if (matchedService && Array.isArray(matchedService.gallery) && matchedService.gallery.length > 0) {
-        serviceGalleryGrid.innerHTML = matchedService.gallery.map((imgUrl, i) => `
-          <div class="gallery-item">
-            <img src="${imgUrl}" alt="${matchedService.title} Uygulaması ${i+1}" loading="lazy" decoding="async" onerror="this.src='images/logo.webp'">
-            <div class="gallery-overlay">
-              <span class="gallery-badge">Antalya Projesi</span>
-              <h4 class="gallery-caption">${matchedService.title} Uygulaması #${i+1}</h4>
+      // Hizmetler Sayfasında Kartları Senkronize Et
+      if (servicesGrid && Array.isArray(services) && services.length > 0) {
+        servicesGrid.innerHTML = services.map(s => {
+          const detailUrl = (s.slug || ('hizmet-' + s.id)).replace(/\.html$/, '');
+          return `
+            <div class="service-card">
+              <div class="service-thumb">
+                <img src="${s.image || 'images/logo.webp'}" alt="${s.title}" loading="lazy" decoding="async" onerror="this.src='images/logo.webp'">
+              </div>
+              <div class="service-content">
+                <h3 class="service-title">${s.title}</h3>
+                <p class="service-desc">${s.shortDesc || ''}</p>
+                <div class="service-actions">
+                  <a href="${detailUrl}" class="btn btn-outline-orange">Detay</a>
+                  <button class="btn btn-primary js-open-quote-modal" data-service="${s.title}">Teklif Al</button>
+                </div>
+              </div>
             </div>
-            <div class="gallery-zoom-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
-            </div>
-          </div>
-        `).join('');
-
-        initGalleryLightbox();
+          `;
+        }).join('');
       }
-    } catch (e) {
-      console.warn('Hizmet galeri senkronizasyon hatası:', e);
+
+      // Hizmet Detay Sayfasında Alt Grid Galeri Senkronizasyonu
+      if (serviceGalleryGrid && Array.isArray(services)) {
+        const currentPath = window.location.pathname.toLowerCase();
+        const matchedService = services.find(s => {
+          if (!s.slug) return false;
+          const cleanSlug = s.slug.replace('.html', '').toLowerCase();
+          return currentPath.includes(cleanSlug);
+        });
+
+        if (matchedService && Array.isArray(matchedService.gallery) && matchedService.gallery.length > 0) {
+          serviceGalleryGrid.innerHTML = matchedService.gallery.map((imgUrl, i) => `
+            <div class="gallery-item">
+              <img src="${imgUrl}" alt="${matchedService.title} Uygulaması ${i+1}" loading="lazy" decoding="async" onerror="this.src='images/logo.webp'">
+              <div class="gallery-overlay">
+                <span class="gallery-badge">Antalya Projesi</span>
+                <h4 class="gallery-caption">${matchedService.title} Uygulaması #${i+1}</h4>
+              </div>
+              <div class="gallery-zoom-icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+              </div>
+            </div>
+          `).join('');
+
+          initGalleryLightbox();
+        }
+      }
     }
+  } catch (e) {
+    console.warn('Hizmetler senkronizasyon hatası:', e);
   }
 
-  // 3. Genel Site Metinleri (Hero, Telefon, Sosyal Medya vb.) Senkronizasyonu
+  // 3. Genel Site Metinleri (Hakkımızda, Hero, Telefon, Sosyal Medya vb.) Senkronizasyonu
   try {
     const settings = await window.CmsClient.getSettings();
     if (settings) {
+      // Telefon
       if (settings.phone) {
         document.querySelectorAll('.top-phone span, .contact-phone-display, .top-bar-item strong').forEach(el => el.textContent = settings.phone);
         const cleanTel = settings.phone.replace(/[^0-9+]/g, '');
         document.querySelectorAll('a[href^="tel:"]').forEach(el => el.href = 'tel:' + cleanTel);
       }
+
+      // WhatsApp
       if (settings.whatsapp) {
         const cleanWa = settings.whatsapp.replace(/[^0-9]/g, '');
         document.querySelectorAll('a[href*="wa.me"]').forEach(el => {
           el.href = `https://wa.me/${cleanWa}?text=Merhaba,%20Can%20Yapı%20Antalya%20için%20ücretsiz%20keşif%20ve%20fiyat%20teklifi%20almak%20istiyorum.`;
         });
       }
+
+      // E-Posta
+      if (settings.email) {
+        document.querySelectorAll('a[href^="mailto:"]').forEach(el => el.href = 'mailto:' + settings.email);
+        document.querySelectorAll('.contact-email-display').forEach(el => el.textContent = settings.email);
+      }
+
+      // Adres
+      if (settings.address) {
+        document.querySelectorAll('.contact-address-display, .top-bar-item span:not(.experience-badge)').forEach(el => {
+          if (!el.textContent.includes('+90') && !el.textContent.includes('Yıl')) {
+            el.textContent = settings.address;
+          }
+        });
+      }
+
+      // Deneyim Yılı
+      if (settings.experienceYears) {
+        document.querySelectorAll('.js-experience-years, .experience-badge').forEach(el => {
+          el.textContent = settings.experienceYears;
+        });
+      }
+
+      // Hero Başlık & Alt Açıklama (Ana Sayfa)
       if (settings.heroTitle) {
         const heroTitle = document.querySelector('.hero-title-main');
         if (heroTitle) heroTitle.innerHTML = settings.heroTitle;
       }
       if (settings.heroSubtitle) {
-        const heroSub = document.querySelector('.hero-desc-main');
+        const heroSub = document.querySelector('.hero-desc-main, .hero-poster-desc');
         if (heroSub) heroSub.textContent = settings.heroSubtitle;
       }
+
+      // Hakkımızda Sayfası Dinamik İçerik Enjeksiyonu
+      if (settings.aboutTitle) {
+        const el = document.querySelector('.js-about-hero-title');
+        if (el) el.innerHTML = settings.aboutTitle;
+      }
+      if (settings.aboutExcerpt) {
+        const el = document.querySelector('.js-about-hero-desc');
+        if (el) el.textContent = settings.aboutExcerpt;
+      }
+      if (settings.aboutStoryTitle) {
+        const el = document.querySelector('.js-about-story-title');
+        if (el) el.textContent = settings.aboutStoryTitle;
+      }
+      if (settings.aboutStory) {
+        const el = document.querySelector('.js-about-story-body');
+        if (el) {
+          const paras = settings.aboutStory.split('\n\n').filter(Boolean);
+          el.innerHTML = paras.map((p, idx) => `
+            <p style="color: var(--text-muted); font-size: 1.02rem; line-height: 1.8; margin-bottom: ${idx === paras.length - 1 ? '24px' : '18px'};">
+              ${p.replace(/\n/g, '<br>')}
+            </p>
+          `).join('');
+        }
+      }
+      if (settings.aboutPhilosophyTitle) {
+        const el = document.querySelector('.js-about-philosophy-title');
+        if (el) el.textContent = settings.aboutPhilosophyTitle;
+      }
+      if (settings.aboutPhilosophy) {
+        const el = document.querySelector('.js-about-philosophy-body');
+        if (el) {
+          const paras = settings.aboutPhilosophy.split('\n\n').filter(Boolean);
+          el.innerHTML = paras.map((p, idx) => `
+            <p style="color: ${idx === 0 ? 'var(--text-white)' : 'var(--text-muted)'}; font-size: ${idx === 0 ? '1.08rem' : '1.02rem'}; line-height: 1.85; margin-bottom: ${idx === paras.length - 1 ? '0' : '18px'};">
+              ${p.replace(/\n/g, '<br>')}
+            </p>
+          `).join('');
+        }
+      }
+
       // Sosyal Medya İkonları
       const socialLinks = [
         { key: 'instagram', prefix: 'https://instagram.com/' },
