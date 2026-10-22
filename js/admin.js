@@ -897,32 +897,33 @@ function setupEventListeners() {
 /* ==========================================================================
    9. METRİKLER & DETAYLI ZİYARETÇİ ANALİZİ & TALEPLER
    ========================================================================== */
-function loadMetrics() {
+async function loadMetrics() {
   if (!window.CanYapiAnalytics) return;
   const metrics = window.CanYapiAnalytics.getMetrics();
   const monthly = window.CanYapiAnalytics.getMonthlyStats();
-  const detailed = window.CanYapiAnalytics.getDetailedAnalytics ? window.CanYapiAnalytics.getDetailedAnalytics() : null;
+  const detailed = window.CanYapiAnalytics.getDetailedAnalytics ? await window.CanYapiAnalytics.getDetailedAnalytics() : null;
 
   // 1. Üst Genel Metrik Kartları
   const weeklyEl = document.getElementById('metricWeeklyVisitors');
-  if (weeklyEl && detailed) weeklyEl.innerText = detailed.weeklyVisitors || 186;
+  if (weeklyEl && detailed) weeklyEl.innerText = detailed.weeklyVisitors ?? 0;
 
   const monthlyEl = document.getElementById('metricMonthlyVisitors');
   const monthNameEl = document.getElementById('metricMonthName');
-  const mVisCount = (detailed ? detailed.monthlyVisitors : monthly.uniqueVisitorsCount) || 354;
-  const mViewsCount = (detailed ? detailed.monthlyPageViews : monthly.pageViewsCount) || 1240;
+  const mVisCount = (detailed ? detailed.monthlyVisitors : monthly.uniqueVisitorsCount) ?? 0;
+  const mViewsCount = (detailed ? detailed.monthlyPageViews : monthly.pageViewsCount) ?? 0;
 
   if (monthlyEl) monthlyEl.innerText = mVisCount;
   if (monthNameEl) monthNameEl.innerText = `${monthly.monthLabel} (${mVisCount} Tekil / ${mViewsCount} Sayfa)`;
 
   const setInner = (id, val) => {
     const el = document.getElementById(id);
-    if (el) el.innerText = val || 0;
+    if (el) el.innerText = val !== undefined ? val : 0;
   };
 
-  setInner('metricWhatsapp', metrics.whatsapp_clicks);
-  setInner('metricPhone', metrics.phone_calls);
-  setInner('metricForms', metrics.form_submissions);
+  const conv = detailed?.conversions || metrics;
+  setInner('metricWhatsapp', conv.whatsapp ?? metrics.whatsapp_clicks ?? 0);
+  setInner('metricPhone', conv.phone ?? metrics.phone_calls ?? 0);
+  setInner('metricForms', conv.forms ?? metrics.form_submissions ?? 0);
 
   // 2. Detaylı Gösterge Paneli Analitikleri
   if (detailed) {

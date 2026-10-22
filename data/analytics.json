@@ -1,0 +1,66 @@
+{
+  "created_at": 1792690000,
+  "today_key": "2026-10-22",
+  "today_visitors": 4,
+  "today_views": 14,
+  "weekly_visitors": 9,
+  "weekly_views": 32,
+  "monthly_visitors": 9,
+  "monthly_views": 32,
+  "total_views": 32,
+  "month_label": "Ekim 2026",
+  "daily_history": {
+    "2026-10-21": {
+      "visitors": 5,
+      "views": 18,
+      "uids": []
+    },
+    "2026-10-22": {
+      "visitors": 4,
+      "views": 14,
+      "uids": []
+    }
+  },
+  "devices": {
+    "mobile": 7,
+    "desktop": 2,
+    "tablet": 0
+  },
+  "sources": {
+    "direct": 5,
+    "google": 2,
+    "whatsapp": 2,
+    "social": 0,
+    "referral": 0
+  },
+  "pages": {
+    "/": 16,
+    "/projeler": 6,
+    "/hizmet-mutfak": 4,
+    "/hakkimizda": 3,
+    "/iletisim": 3
+  },
+  "conversions": {
+    "whatsapp": 1,
+    "phone": 1,
+    "forms": 0,
+    "discovery": 0,
+    "total": 2
+  },
+  "recent_activity": [
+    {
+      "title": "WhatsApp Sohbeti Başlatıldı",
+      "page": "Ana Sayfa",
+      "time": "Dün 17:42",
+      "device": "📱 Mobil",
+      "color": "#25D366"
+    },
+    {
+      "title": "Telefon Arama Butonuna Tıklandı",
+      "page": "Projelerimiz",
+      "time": "Dün 16:15",
+      "device": "📱 Mobil",
+      "color": "#FF5500"
+    }
+  ]
+}
