@@ -110,28 +110,26 @@ const CanYapiAnalytics = (function() {
     } catch (e) {}
   }
 
-  // Sunucu API'sine arka planda asenkron bildirim
+  // Sunucu API'sine güvenli asenkron bildirim
   function sendServerHit(payload) {
     try {
       const url = (window.location.origin || '') + '/api/analytics.php';
-      if (navigator.sendBeacon) {
-        const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
-        navigator.sendBeacon(url, blob);
-      } else {
-        fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-          keepalive: true
-        }).catch(() => {});
-      }
+      fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        credentials: 'same-origin',
+        keepalive: true
+      }).catch(() => {});
     } catch (e) {}
   }
 
   function recordPageVisit() {
     const path = getCleanPagePath();
-    // Admin sayfalarını ziyaretçi sayacına katma
-    if (path.includes('admin')) return;
+    // Admin sayfalarını veya giriş yapmış yöneticiyi ziyaretçi sayacına katma
+    if (path.includes('admin') || sessionStorage.getItem('canyapi_admin_auth') === 'true') {
+      return;
+    }
 
     const uid = getVisitorId();
     const dev = getDeviceType();
@@ -321,13 +319,13 @@ const CanYapiAnalytics = (function() {
     }
 
     return {
-      todayVisitors: detailed.today_visitors || detailed.todayVisitorsCount || 4,
-      todayPageViews: detailed.today_views || detailed.todayPageViewsCount || 14,
-      weeklyVisitors: detailed.weekly_visitors || detailed.weeklyVisitorsCount || 9,
-      weeklyPageViews: detailed.weekly_views || detailed.weeklyPageViewsCount || 32,
-      monthlyVisitors: mVisitors,
-      monthlyPageViews: detailed.monthly_views || detailed.monthlyPageViewsCount || 32,
-      totalPageViews: detailed.total_views || detailed.monthlyPageViewsCount || 32,
+      todayVisitors: detailed.today_visitors !== undefined ? detailed.today_visitors : (detailed.todayVisitorsCount || 0),
+      todayPageViews: detailed.today_views !== undefined ? detailed.today_views : (detailed.todayPageViewsCount || 0),
+      weeklyVisitors: detailed.weekly_visitors !== undefined ? detailed.weekly_visitors : (detailed.weeklyVisitorsCount || 0),
+      weeklyPageViews: detailed.weekly_views !== undefined ? detailed.weekly_views : (detailed.weeklyPageViewsCount || 0),
+      monthlyVisitors: detailed.monthly_visitors !== undefined ? detailed.monthly_visitors : mVisitors,
+      monthlyPageViews: detailed.monthly_views !== undefined ? detailed.monthly_views : (detailed.monthlyPageViewsCount || 0),
+      totalPageViews: detailed.total_views !== undefined ? detailed.total_views : (detailed.monthlyPageViewsCount || 0),
       monthLabel: detailed.month_label || 'Ekim 2026',
       conversionRate: convRate,
       avgDuration: '2 dk 15 sn',

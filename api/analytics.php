@@ -8,7 +8,17 @@
 
 require_once __DIR__ . '/config.php';
 
+// CORS ve Güvenlik Başlıkları
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Access-Control-Allow-Headers: Content-Type, X-Admin-Token, Authorization');
+
 $method = $_SERVER['REQUEST_METHOD'];
+if ($method === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
 $analyticsFile = 'analytics.json';
 
 // Cihaz türü tespiti
@@ -155,9 +165,10 @@ if ($method === 'GET') {
     $source = detectSource($ref);
     $path = cleanPath($input['path'] ?? '/');
 
-    // Admin sayfalarını sayfa gösterimi olarak sayma
-    if (strpos($path, 'admin') !== false) {
-        jsonResponse(['success' => true, 'ignored' => 'admin_page']);
+    // Admin sayfalarını veya oturum açmış admini sayfa gösterimi olarak sayma
+    $isAdminSession = !empty($_SESSION['canyapi_admin_logged']) && $_SESSION['canyapi_admin_logged'] === true;
+    if (strpos($path, 'admin') !== false || $isAdminSession) {
+        jsonResponse(['success' => true, 'ignored' => 'admin_session_or_page']);
     }
 
     $uid = $input['uid'] ?? md5(($_SERVER['REMOTE_ADDR'] ?? '') . $ua);
