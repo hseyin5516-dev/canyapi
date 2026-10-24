@@ -21,7 +21,35 @@
       "images/services/mutfak/mutfak-6.webp",
       "images/services/mutfak/mutfak-7.webp"
     ],
-    "order": 1
+    "order": 1,
+    "scopeTitle": "Mutfak Tadilatında Neler Dahil?",
+    "scopeTag": "Neler Yapıyoruz?",
+    "scopeItems": [
+      {
+        "title": "1. 3D Tasarım & Ölçülendirme",
+        "desc": "Evinizin ölçülerine tam oturan, kullanım kolaylığı sağlayan üç boyutlu mutfak projesini üretim öncesi onayınıza sunuyoruz."
+      },
+      {
+        "title": "2. Tesisat & Altyapı Yenileme",
+        "desc": "Eski su ve elektrik hatlarını yeni ankastre cihazlara göre sıfırdan revize ediyor, sigorta ve kaçak akım korumasını sağlıyoruz."
+      },
+      {
+        "title": "3. Lake / Akrilik Dolaplar",
+        "desc": "MDF gövde, Blum ve Hafele yavaşlatıcılı ray sistemleri, çizilmeye ve neme dayanıklı üst sınıf kapak seçenekleri."
+      },
+      {
+        "title": "4. Kuvars & Porselen Tezgah",
+        "desc": "Çimstone, Belenco, Silestone kuvars veya son teknoloji porselen tezgahlar ile sıcağa ve lekeye dayanıklı yüzeyler."
+      },
+      {
+        "title": "5. Tezgah Arası Seramik & Cam",
+        "desc": "Modern metro seramik, mermer desenli büyük ebat porselen veya temperli cam tezgah arası kaplamaları."
+      },
+      {
+        "title": "6. Montaj & Temizlik",
+        "desc": "Tozsuz ve titiz montaj, ankastre cihaz bağlantıları, evye & batarya montajı ve temizlenmiş anahtar teslim teslimat."
+      }
+    ]
   },
   {
     "id": "srv-banyo",
@@ -43,7 +71,35 @@
       "images/services/banyo/banyo-4.webp",
       "images/services/banyo/banyo-5.webp"
     ],
-    "order": 2
+    "order": 2,
+    "scopeTitle": "Banyo Tadilatında Neler Dahil?",
+    "scopeTag": "Neler Yapıyoruz?",
+    "scopeItems": [
+      {
+        "title": "1. Kırım & Moloz Atımı",
+        "desc": "Eski fayans ve vitrifiyelerin sökülmesi, molozların çuvallanıp nizami olarak uzaklaştırılması."
+      },
+      {
+        "title": "2. Sıhhi Tesisat Yenileme",
+        "desc": "Temiz su ve atık su borularının PPRC ve sessiz borularla sıfırdan çekilmesi, basınç testi."
+      },
+      {
+        "title": "3. Çift Kat Su Yalıtımı",
+        "desc": "Zemin ve duvarlara elastik izolasyon filesi ve sürme su yalıtımı ile komşuya sızıntı sıfırlanır."
+      },
+      {
+        "title": "4. Büyük Ebat Seramik Kaplama",
+        "desc": "60x120 ve 120x180 lazer kesim porselen seramiklerin sıfır hata ve tesviye klipsleriyle döşenmesi."
+      },
+      {
+        "title": "5. Duşakabin & Gömme Rezervuar",
+        "desc": "Walk-in temperli cam duş paneli, lineer yer süzgeci ve gömme rezervuar montajı."
+      },
+      {
+        "title": "6. Banyo Dolabı & Aydınlatma",
+        "desc": "Suya dayanıklı lake dolap, LED dokunmatik ayna ve havalandırma menfezi montajı."
+      }
+    ]
   },
   {
     "id": "srv-seramik",
@@ -64,7 +120,35 @@
       "images/services/seramik-fayans/seramik-3.webp",
       "images/services/seramik-fayans/seramik-4.webp"
     ],
-    "order": 3
+    "order": 3,
+    "scopeTitle": "Seramik & Granit Uygulamasında Neler Dahil?",
+    "scopeTag": "Neler Yapıyoruz?",
+    "scopeItems": [
+      {
+        "title": "1. Zemin Tesviyesi & Şap",
+        "desc": "Lazerli terazi ile zeminin sıfırlanması ve kot farklarının giderilmesi."
+      },
+      {
+        "title": "2. Malzeme & Ebat Planlaması",
+        "desc": "Büyük ebat porselen, granit ve seramiklerin mekana uygun kesim planı."
+      },
+      {
+        "title": "3. Yüksek Yapışma Harcı",
+        "desc": "C2TE S1 sınıfı esnek ve kayma yapmayan profesyonel yapıştırıcılar."
+      },
+      {
+        "title": "4. Tesviye Klipsi ile Sıfır Hata",
+        "desc": "Diş ve bombe oluşumunu önleyen 3D klipsli hassas montaj."
+      },
+      {
+        "title": "5. Antibakteriyel Derz Dolgu",
+        "desc": "Su itici, küf ve leke tutmayan epoksi veya silikonlu derz uygulaması."
+      },
+      {
+        "title": "6. Kenar Pah ve 45 Derece Kesim",
+        "desc": "Köşe profili yerine estetik 45 derece gönye kesim işçiliği."
+      }
+    ]
   },
   {
     "id": "srv-boya",
@@ -85,7 +169,35 @@
       "images/services/boya-alcipan/boya-3.webp",
       "images/services/boya-alcipan/boya-4.webp"
     ],
-    "order": 4
+    "order": 4,
+    "scopeTitle": "Boya & Badana İşlerinde Neler Dahil?",
+    "scopeTag": "Neler Yapıyoruz?",
+    "scopeItems": [
+      {
+        "title": "1. Tam Koruma & Maskeleme",
+        "desc": "Zemin, süpürgelik, kapı ve mobilyaların kalın koruyucu örtü ve bantla sarılması."
+      },
+      {
+        "title": "2. Çatlak Onarımı & Alçı Sıva",
+        "desc": "Derin çatlakların file ile tamiri, çukur ve kabarmaların saten alçıyla doldurulması."
+      },
+      {
+        "title": "3. Tozsuz Vakumlu Zımpara",
+        "desc": "Işık altında kontrol edilerek duvara pürüzsüz ayna gibi zemin hazırlanması."
+      },
+      {
+        "title": "4. Astar Boya Uygulaması",
+        "desc": "Boya emilimini dengeleyen ve yapışmayı artıran dönüşüm astarı sürülmesi."
+      },
+      {
+        "title": "5. İki Kat İpek Mat Boya",
+        "desc": "Silinebilir, kokusuz, antibakteriyel birinci sınıf marka boya uygulaması."
+      },
+      {
+        "title": "6. Temizlik & Teslimat",
+        "desc": "Maskeleme bantlarının sökülmesi, detay temizlik ve sıfır leke teslimatı."
+      }
+    ]
   },
   {
     "id": "srv-mantolama",
@@ -105,7 +217,35 @@
       "images/services/mantolama/mantolama-2.webp",
       "images/services/mantolama/mantolama-3.webp"
     ],
-    "order": 5
+    "order": 5,
+    "scopeTitle": "Dış Cephe Mantolamada Neler Dahil?",
+    "scopeTag": "Neler Yapıyoruz?",
+    "scopeItems": [
+      {
+        "title": "1. İskele & Güvenlik Kurulumu",
+        "desc": "İş güvenliği standartlarına uygun emniyetli iskele montajı."
+      },
+      {
+        "title": "2. Cephe Temizliği & Onarım",
+        "desc": "Kabaran eski sıvaların kazınması ve yüzeyin tozdan arındırılması."
+      },
+      {
+        "title": "3. Yüksek Yoğunluklu Levhalar",
+        "desc": "Karbonlu EPS veya taşyünü yalıtım plakalarının tam yapıştırma ile uygulanması."
+      },
+      {
+        "title": "4. Çelik Çivili Dübelleme",
+        "desc": "Rüzgar ve deprem yüklerine dayanıklı sertifikalı dübel montajı."
+      },
+      {
+        "title": "5. Donatı Filesi & Sıva",
+        "desc": "Köşe profilleri, damlalıklar ve alkali dayanımlı çift kat fileli sıva."
+      },
+      {
+        "title": "6. Dekoratif Sıva & Dış Cephe Boyası",
+        "desc": "Silikonlu, su itici ve solmayan mineral dekoratif kaplama."
+      }
+    ]
   },
   {
     "id": "srv-cati",
@@ -125,7 +265,35 @@
       "images/services/cati/cati-2.webp",
       "images/services/cati/cati-3.webp"
     ],
-    "order": 6
+    "order": 6,
+    "scopeTitle": "Çatı Onarımı & İzolasyonda Neler Dahil?",
+    "scopeTag": "Neler Yapıyoruz?",
+    "scopeItems": [
+      {
+        "title": "1. Çatı İskeleti Muayenesi",
+        "desc": "Ahşap veya çelik taşıyıcıların çürük/pas kontrolü ve güçlendirilmesi."
+      },
+      {
+        "title": "2. Kiremit & Kaplama Yenileme",
+        "desc": "Kırık kiremitlerin değişimi, osb ve membran altı hazırlığı."
+      },
+      {
+        "title": "3. Çift Kat Su İzolasyonu",
+        "desc": "Kiremit altına nefes alan su geçirmez örtü ve şaloma ile bitümlü membran."
+      },
+      {
+        "title": "4. Isı Yalıtımı (Taşyünü/XPS)",
+        "desc": "Tavan arasına yüksek yoğunluklu ısı yalıtım serimi ile ısı kaybı önleme."
+      },
+      {
+        "title": "5. Dere & Yağmur Oluğu İmalatı",
+        "desc": "Eksiz çinko veya PVC yağmur suyu olukları ve iniş boruları montajı."
+      },
+      {
+        "title": "6. Baca & Parapet İzolasyonu",
+        "desc": "Su sızıntısının en sık görüldüğü baca diplerinin kurşun/alüminyum folyoyla yalıtımı."
+      }
+    ]
   },
   {
     "id": "srv-prefabrik",
@@ -145,7 +313,35 @@
       "images/services/prefabrik/prefabrik-2.webp",
       "images/services/prefabrik/prefabrik-3.webp"
     ],
-    "order": 7
+    "order": 7,
+    "scopeTitle": "Prefabrik & Çelik Yapılarda Neler Dahil?",
+    "scopeTag": "Neler Yapıyoruz?",
+    "scopeItems": [
+      {
+        "title": "1. Statik & Mimari Projelendirme",
+        "desc": "Deprem yönetmeliğine uygun galvanizli hafif çelik konstrüksiyon projesi."
+      },
+      {
+        "title": "2. Su Basmanı & Temel Danışmanlığı",
+        "desc": "Zemin betonunun ölçülerine uygun hazırlanması için aplikasyon desteği."
+      },
+      {
+        "title": "3. Çelik Karkas Montajı",
+        "desc": "Paslanmaz vidalı sistemle cıvatalı, kaynaksız hızlı montaj."
+      },
+      {
+        "title": "4. Duvar & Çatı Yalıtım Panelleri",
+        "desc": "Betopan dış kaplama, taşyünü iç dolgu ve neme dayanıklı alçıpan."
+      },
+      {
+        "title": "5. Sıhhi & Elektrik Tesisatı",
+        "desc": "Duvar içi gizli çekilen TSE belgeli kablo, boru ve armatür montajı."
+      },
+      {
+        "title": "6. Pencereler, Kapılar & Boya",
+        "desc": "Isıcamlı PVC doğramalar, çelik kapı, iç/dış boya ile anahtar teslimi."
+      }
+    ]
   },
   {
     "id": "srv-tadilat",
@@ -165,6 +361,34 @@
       "images/services/tadilat/tadilat-2.webp",
       "images/services/tadilat/tadilat-3.webp"
     ],
-    "order": 8
+    "order": 8,
+    "scopeTitle": "Komple Ev Tadilatında Neler Dahil?",
+    "scopeTag": "Neler Yapıyoruz?",
+    "scopeItems": [
+      {
+        "title": "1. Mimari 3D Planlama",
+        "desc": "Mekanın rölövesi alınarak yeni yerleşim ve elektrik/aydınlatma projesi çizilir."
+      },
+      {
+        "title": "2. Kırım, Yıkım & Altyapı",
+        "desc": "İstenilen duvarların kaldırılması, tüm tesisatların sıfırdan döşenmesi."
+      },
+      {
+        "title": "3. Mutfak & Banyo İmalatı",
+        "desc": "Özel ölçü lake dolaplar, porselen tezgahlar ve lüks banyo yenilemesi."
+      },
+      {
+        "title": "4. Zemin Kaplama (Laminat/Seramik)",
+        "desc": "Derzli parke, süpürgelik veya büyük ebat granit kaplamaları."
+      },
+      {
+        "title": "5. Alçıpan, Asma Tavan & Boya",
+        "desc": "Gizli LED ve spot tavanlar, çıtalama dekorları ve silinebilir boya."
+      },
+      {
+        "title": "6. Kapı, Pencere & Temiz Teslimat",
+        "desc": "Lake iç kapılar, çelik kapı, detaylı ince temizlik sonrası anahtar teslim."
+      }
+    ]
   }
 ]

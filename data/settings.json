@@ -21,5 +21,73 @@
     "tiktok": "",
     "x": "",
     "youtube": ""
+  },
+  "whyUs": {
+    "tag": "Fark Yaratan Standartlarımız",
+    "title": "Neden Can Yapı Antalya?",
+    "subtitle": "Antalya genelinde yüzlerce konut ve villaya imza atan ekibimizin temel ilkeleri",
+    "items": [
+      {
+        "title": "15+ Yıllık Tecrübe",
+        "desc": "Yapı, tadilat ve yenileme alanlarında edindiğimiz bilgi ve deneyim."
+      },
+      {
+        "title": "İhtiyaca Uygun Çözümler",
+        "desc": "Her projeyi müşterimizin beklentilerine ve yapının özelliklerine göre değerlendirme."
+      },
+      {
+        "title": "Özenli İşçilik",
+        "desc": "Uygulama detaylarına ve işin düzgün tamamlanmasına önem verme."
+      },
+      {
+        "title": "Estetik ve İşlevsellik",
+        "desc": "Yaşam alanlarının görünümü kadar kullanım kolaylığını da gözetme."
+      },
+      {
+        "title": "Geniş Hizmet Yelpazesi",
+        "desc": "Tadilat, yenileme, çatı, yalıtım, seramik ve prefabrik yapı hizmetleri."
+      },
+      {
+        "title": "Antalya ve Çevresinde Hizmet",
+        "desc": "Bölgedeki konut, villa ve farklı yapı projelerine yönelik çözümler."
+      },
+      {
+        "title": "Müşteri Memnuniyeti",
+        "desc": "Güvene, açık iletişime ve beklentilerin doğru anlaşılmasına değer verme."
+      }
+    ]
+  },
+  "aboutCta": {
+    "tag": "Birlikte İnşa Edelim",
+    "title": "Hayalinizdeki Projeyi Birlikte Gerçekleştirelim",
+    "desc1": "Banyonuzu yenilemek, mutfağınızı modernleştirmek, evinizi baştan sona tadilattan geçirmek, çatınızı yenilemek veya prefabrik yapı yaptırmak istiyorsanız Can Yapı Antalya olarak projenizi değerlendirmeye hazırız.",
+    "desc2": "İhtiyaçlarınızı birlikte değerlendirelim, size uygun çözümleri konuşalım ve yaşam alanlarınıza değer katacak bir çalışma planlayalım.",
+    "boxTitle": "Can Yapı Antalya | Yapı, Tadilat ve Prefabrik",
+    "boxDesc": "15 yılı aşkın tecrübemizle Antalya ve çevresinde yaşam alanlarınıza değer katmak için çalışıyoruz.",
+    "boxNote": "Projeniz hakkında bilgi almak ve ücretsiz keşif talebinizi iletmek için bizimle iletişime geçebilirsiniz."
+  },
+  "discovery": {
+    "tag": "Sıfır Risk & Şeffaf Fiyat",
+    "title": "Antalya Genelinde Ücretsiz Keşif & Danışmanlık",
+    "desc": "Ev veya iş yerinizin tadilatına başlamadan önce mekanınızı yerinde inceliyor, lazerli metraj çıkarıyor ve bütçenize en uygun malzeme seçeneklerini ücretsiz sunuyoruz. Hiçbir bağlayıcılığı yoktur.",
+    "stepsTag": "Nasıl Çalışır?",
+    "stepsTitle": "3 Kolay Adımda Keşif Süreci",
+    "steps": [
+      {
+        "step": 1,
+        "title": "Talep Bırakın",
+        "desc": "Aşağıdaki formu doldurun veya WhatsApp / telefon hattımızdan müsait olduğunuz gün ve saati bize iletin."
+      },
+      {
+        "step": 2,
+        "title": "Yerinde Ziyaret",
+        "desc": "Teknik uzmanımız adresinize gelir, mekanın fiziksel durumunu, tesisatını ve isteklerinizi yerinde detaylıca inceler."
+      },
+      {
+        "step": 3,
+        "title": "Şeffaf Teklif",
+        "desc": "Tüm malzeme, işçilik ve teslim süresini içeren net ve bağlayıcı olmayan yazılı teklifinizi sunarız."
+      }
+    ]
   }
 }

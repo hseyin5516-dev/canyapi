@@ -785,6 +785,168 @@ Antalya ve çevresinde komple ev tadilatı, modern mutfak ve banyo yenileme, ser
               </div>
             </div>
           </div>
+        
+            <!-- Bölüm 1: Neden Can Yapı Antalya? (7 Temel Standart) -->
+            <div style="background: #0B0E13; padding: 22px; border-radius: 8px; border: 1px solid var(--admin-border); grid-column: 1 / -1; margin-top: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h4 style="color: var(--primary-orange); margin: 0; font-size: 1.05rem;">⭐ Hakkımızda: "Neden Can Yapı Antalya?" (7 Standart Kart)</h4>
+                <span class="text-muted" style="font-size: 0.8rem;">hakkimizda.html sayfasındaki 7 kutuyu buradan özelleştirebilirsiniz.</span>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 18px;">
+                <div class="form-group">
+                  <label class="form-label">Üst Etiket</label>
+                  <input type="text" id="settingWhyUsTag" class="form-control" value="Fark Yaratan Standartlarımız">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Ana Bölüm Başlığı</label>
+                  <input type="text" id="settingWhyUsTitle" class="form-control" value="Neden Can Yapı Antalya?">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                  <label class="form-label">Alt Açıklama Cümlesi</label>
+                  <input type="text" id="settingWhyUsSubtitle" class="form-control" value="Antalya genelinde yüzlerce konut ve villaya imza atan ekibimizin temel ilkeleri">
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;" id="whyUsItemsEditor">
+                <!-- 7 Kart Giriş Alanları (JS ile veya statik doldurulur) -->
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 1</div>
+                  <input type="text" id="whyUs1_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs1_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 2</div>
+                  <input type="text" id="whyUs2_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs2_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 3</div>
+                  <input type="text" id="whyUs3_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs3_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 4</div>
+                  <input type="text" id="whyUs4_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs4_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 5</div>
+                  <input type="text" id="whyUs5_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs5_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 6</div>
+                  <input type="text" id="whyUs6_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs6_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 7</div>
+                  <input type="text" id="whyUs7_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs7_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bölüm 2: Hayalinizdeki Projeyi Birlikte Gerçekleştirelim (CTA & İmza Kutusu) -->
+            <div style="background: #0B0E13; padding: 22px; border-radius: 8px; border: 1px solid var(--admin-border); grid-column: 1 / -1; margin-top: 10px;">
+              <h4 style="color: var(--primary-orange); margin-bottom: 16px; font-size: 1.05rem;">🤝 Hakkımızda: CTA & İmza Kutusu ("Birlikte İnşa Edelim")</h4>
+              
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 14px;">
+                <div class="form-group">
+                  <label class="form-label">Üst Etiket</label>
+                  <input type="text" id="settingAboutCtaTag" class="form-control" value="Birlikte İnşa Edelim">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                  <label class="form-label">Ana CTA Başlığı</label>
+                  <input type="text" id="settingAboutCtaTitle" class="form-control" value="Hayalinizdeki Projeyi Birlikte Gerçekleştirelim">
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                <div class="form-group">
+                  <label class="form-label">Birinci Paragraf</label>
+                  <textarea id="settingAboutCtaDesc1" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">İkinci Paragraf</label>
+                  <textarea id="settingAboutCtaDesc2" class="form-control" rows="3"></textarea>
+                </div>
+              </div>
+
+              <div style="background: rgba(234, 88, 12, 0.05); border: 1px dashed rgba(234, 88, 12, 0.3); border-radius: 6px; padding: 16px;">
+                <div style="color: var(--primary-orange); font-weight: 700; font-size: 0.9rem; margin-bottom: 12px;">Kesikli Çerçeve İçi İmza Kutusu</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px;">
+                  <div class="form-group">
+                    <label class="form-label">Kutu Başlığı</label>
+                    <input type="text" id="settingAboutBoxTitle" class="form-control" value="Can Yapı Antalya | Yapı, Tadilat ve Prefabrik">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Kutu Açıklama Metni</label>
+                    <input type="text" id="settingAboutBoxDesc" class="form-control">
+                  </div>
+                  <div class="form-group" style="grid-column: 1 / -1;">
+                    <label class="form-label">Kutu Alt Vurgu Cümlesi (Beyaz Kalın Metin)</label>
+                    <input type="text" id="settingAboutBoxNote" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bölüm 3: Ücretsiz Keşif Sayfası & 3 Kolay Adım Süreci -->
+            <div style="background: #0B0E13; padding: 22px; border-radius: 8px; border: 1px solid var(--admin-border); grid-column: 1 / -1; margin-top: 10px;">
+              <h4 style="color: var(--primary-orange); margin-bottom: 16px; font-size: 1.05rem;">📋 Ücretsiz Keşif Sayfası & 3 Kolay Adım</h4>
+              
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 16px;">
+                <div class="form-group">
+                  <label class="form-label">Keşif Sayfası Üst Etiketi</label>
+                  <input type="text" id="settingDiscoveryTag" class="form-control" value="Sıfır Risk & Şeffaf Fiyat">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                  <label class="form-label">Keşif Sayfası Hero Başlığı</label>
+                  <input type="text" id="settingDiscoveryTitle" class="form-control" value="Antalya Genelinde Ücretsiz Keşif & Danışmanlık">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                  <label class="form-label">Keşif Sayfası Hero Açıklaması</label>
+                  <textarea id="settingDiscoveryDesc" class="form-control" rows="2"></textarea>
+                </div>
+              </div>
+
+              <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                  <div class="form-group">
+                    <label class="form-label">Adımlar Üst Etiketi</label>
+                    <input type="text" id="settingDiscoveryStepsTag" class="form-control" value="Nasıl Çalışır?">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Adımlar Bölüm Başlığı</label>
+                    <input type="text" id="settingDiscoveryStepsTitle" class="form-control" value="3 Kolay Adımda Keşif Süreci">
+                  </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                  <!-- Adım 1 -->
+                  <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                    <div style="color: var(--primary-orange); font-weight: 700; margin-bottom: 8px;">Adım 1</div>
+                    <input type="text" id="discoveryStep1_title" class="form-control" placeholder="Adım 1 Başlık" style="margin-bottom: 8px;">
+                    <textarea id="discoveryStep1_desc" class="form-control" rows="3" placeholder="Adım 1 Açıklama"></textarea>
+                  </div>
+                  <!-- Adım 2 -->
+                  <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                    <div style="color: var(--primary-orange); font-weight: 700; margin-bottom: 8px;">Adım 2</div>
+                    <input type="text" id="discoveryStep2_title" class="form-control" placeholder="Adım 2 Başlık" style="margin-bottom: 8px;">
+                    <textarea id="discoveryStep2_desc" class="form-control" rows="3" placeholder="Adım 2 Açıklama"></textarea>
+                  </div>
+                  <!-- Adım 3 -->
+                  <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                    <div style="color: var(--primary-orange); font-weight: 700; margin-bottom: 8px;">Adım 3</div>
+                    <input type="text" id="discoveryStep3_title" class="form-control" placeholder="Adım 3 Başlık" style="margin-bottom: 8px;">
+                    <textarea id="discoveryStep3_desc" class="form-control" rows="3" placeholder="Adım 3 Açıklama"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
         </form>
       </div>
     </section>
@@ -877,6 +1039,168 @@ Antalya ve çevresinde komple ev tadilatı, modern mutfak ve banyo yenileme, ser
               <span>Sosyal Medya Linklerini Kaydet</span>
             </button>
           </div>
+        
+            <!-- Bölüm 1: Neden Can Yapı Antalya? (7 Temel Standart) -->
+            <div style="background: #0B0E13; padding: 22px; border-radius: 8px; border: 1px solid var(--admin-border); grid-column: 1 / -1; margin-top: 10px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h4 style="color: var(--primary-orange); margin: 0; font-size: 1.05rem;">⭐ Hakkımızda: "Neden Can Yapı Antalya?" (7 Standart Kart)</h4>
+                <span class="text-muted" style="font-size: 0.8rem;">hakkimizda.html sayfasındaki 7 kutuyu buradan özelleştirebilirsiniz.</span>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 18px;">
+                <div class="form-group">
+                  <label class="form-label">Üst Etiket</label>
+                  <input type="text" id="settingWhyUsTag" class="form-control" value="Fark Yaratan Standartlarımız">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Ana Bölüm Başlığı</label>
+                  <input type="text" id="settingWhyUsTitle" class="form-control" value="Neden Can Yapı Antalya?">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                  <label class="form-label">Alt Açıklama Cümlesi</label>
+                  <input type="text" id="settingWhyUsSubtitle" class="form-control" value="Antalya genelinde yüzlerce konut ve villaya imza atan ekibimizin temel ilkeleri">
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px;" id="whyUsItemsEditor">
+                <!-- 7 Kart Giriş Alanları (JS ile veya statik doldurulur) -->
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 1</div>
+                  <input type="text" id="whyUs1_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs1_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 2</div>
+                  <input type="text" id="whyUs2_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs2_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 3</div>
+                  <input type="text" id="whyUs3_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs3_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 4</div>
+                  <input type="text" id="whyUs4_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs4_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 5</div>
+                  <input type="text" id="whyUs5_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs5_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 6</div>
+                  <input type="text" id="whyUs6_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs6_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                  <div style="color: #FFF; font-weight: 700; font-size: 0.85rem; margin-bottom: 8px;">Kart 7</div>
+                  <input type="text" id="whyUs7_title" class="form-control" placeholder="Başlık" style="margin-bottom: 8px;">
+                  <textarea id="whyUs7_desc" class="form-control" rows="2" placeholder="Açıklama"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bölüm 2: Hayalinizdeki Projeyi Birlikte Gerçekleştirelim (CTA & İmza Kutusu) -->
+            <div style="background: #0B0E13; padding: 22px; border-radius: 8px; border: 1px solid var(--admin-border); grid-column: 1 / -1; margin-top: 10px;">
+              <h4 style="color: var(--primary-orange); margin-bottom: 16px; font-size: 1.05rem;">🤝 Hakkımızda: CTA & İmza Kutusu ("Birlikte İnşa Edelim")</h4>
+              
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 14px;">
+                <div class="form-group">
+                  <label class="form-label">Üst Etiket</label>
+                  <input type="text" id="settingAboutCtaTag" class="form-control" value="Birlikte İnşa Edelim">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                  <label class="form-label">Ana CTA Başlığı</label>
+                  <input type="text" id="settingAboutCtaTitle" class="form-control" value="Hayalinizdeki Projeyi Birlikte Gerçekleştirelim">
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                <div class="form-group">
+                  <label class="form-label">Birinci Paragraf</label>
+                  <textarea id="settingAboutCtaDesc1" class="form-control" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">İkinci Paragraf</label>
+                  <textarea id="settingAboutCtaDesc2" class="form-control" rows="3"></textarea>
+                </div>
+              </div>
+
+              <div style="background: rgba(234, 88, 12, 0.05); border: 1px dashed rgba(234, 88, 12, 0.3); border-radius: 6px; padding: 16px;">
+                <div style="color: var(--primary-orange); font-weight: 700; font-size: 0.9rem; margin-bottom: 12px;">Kesikli Çerçeve İçi İmza Kutusu</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px;">
+                  <div class="form-group">
+                    <label class="form-label">Kutu Başlığı</label>
+                    <input type="text" id="settingAboutBoxTitle" class="form-control" value="Can Yapı Antalya | Yapı, Tadilat ve Prefabrik">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Kutu Açıklama Metni</label>
+                    <input type="text" id="settingAboutBoxDesc" class="form-control">
+                  </div>
+                  <div class="form-group" style="grid-column: 1 / -1;">
+                    <label class="form-label">Kutu Alt Vurgu Cümlesi (Beyaz Kalın Metin)</label>
+                    <input type="text" id="settingAboutBoxNote" class="form-control">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bölüm 3: Ücretsiz Keşif Sayfası & 3 Kolay Adım Süreci -->
+            <div style="background: #0B0E13; padding: 22px; border-radius: 8px; border: 1px solid var(--admin-border); grid-column: 1 / -1; margin-top: 10px;">
+              <h4 style="color: var(--primary-orange); margin-bottom: 16px; font-size: 1.05rem;">📋 Ücretsiz Keşif Sayfası & 3 Kolay Adım</h4>
+              
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 16px;">
+                <div class="form-group">
+                  <label class="form-label">Keşif Sayfası Üst Etiketi</label>
+                  <input type="text" id="settingDiscoveryTag" class="form-control" value="Sıfır Risk & Şeffaf Fiyat">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                  <label class="form-label">Keşif Sayfası Hero Başlığı</label>
+                  <input type="text" id="settingDiscoveryTitle" class="form-control" value="Antalya Genelinde Ücretsiz Keşif & Danışmanlık">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                  <label class="form-label">Keşif Sayfası Hero Açıklaması</label>
+                  <textarea id="settingDiscoveryDesc" class="form-control" rows="2"></textarea>
+                </div>
+              </div>
+
+              <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px;">
+                  <div class="form-group">
+                    <label class="form-label">Adımlar Üst Etiketi</label>
+                    <input type="text" id="settingDiscoveryStepsTag" class="form-control" value="Nasıl Çalışır?">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Adımlar Bölüm Başlığı</label>
+                    <input type="text" id="settingDiscoveryStepsTitle" class="form-control" value="3 Kolay Adımda Keşif Süreci">
+                  </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+                  <!-- Adım 1 -->
+                  <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                    <div style="color: var(--primary-orange); font-weight: 700; margin-bottom: 8px;">Adım 1</div>
+                    <input type="text" id="discoveryStep1_title" class="form-control" placeholder="Adım 1 Başlık" style="margin-bottom: 8px;">
+                    <textarea id="discoveryStep1_desc" class="form-control" rows="3" placeholder="Adım 1 Açıklama"></textarea>
+                  </div>
+                  <!-- Adım 2 -->
+                  <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                    <div style="color: var(--primary-orange); font-weight: 700; margin-bottom: 8px;">Adım 2</div>
+                    <input type="text" id="discoveryStep2_title" class="form-control" placeholder="Adım 2 Başlık" style="margin-bottom: 8px;">
+                    <textarea id="discoveryStep2_desc" class="form-control" rows="3" placeholder="Adım 2 Açıklama"></textarea>
+                  </div>
+                  <!-- Adım 3 -->
+                  <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 14px; border-radius: 6px;">
+                    <div style="color: var(--primary-orange); font-weight: 700; margin-bottom: 8px;">Adım 3</div>
+                    <input type="text" id="discoveryStep3_title" class="form-control" placeholder="Adım 3 Başlık" style="margin-bottom: 8px;">
+                    <textarea id="discoveryStep3_desc" class="form-control" rows="3" placeholder="Adım 3 Açıklama"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
         </form>
       </div>
     </section>
@@ -1131,6 +1455,57 @@ Antalya ve çevresinde komple ev tadilatı, modern mutfak ve banyo yenileme, ser
           <input type="text" id="servFeatures" class="form-control" placeholder="Örn: Kişiye Özel Dolap İmalatı, Kuvars Tezgah, 5 Yıl Garanti">
         </div>
 
+        
+        <!-- Hizmet Kapsamı / Neler Dahil? (6 Madde) -->
+        <div style="background: #0B0E13; border: 1px solid var(--admin-border); border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+          <h4 style="color: var(--primary-orange); margin: 0 0 12px; font-size: 0.95rem;">🛠️ Hizmet Kapsamı: "Neler Dahil? / Neler Yapıyoruz?" (6 Madde)</h4>
+          <p class="text-muted" style="font-size: 0.8rem; margin: 0 0 14px;">Bu hizmetin kendi sayfasındaki 6 kutuyu buradan düzenleyebilirsiniz.</p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;">
+            <div class="form-group">
+              <label class="form-label">Kapsam Üst Etiketi</label>
+              <input type="text" id="servScopeTag" class="form-control" placeholder="Örn: Neler Yapıyoruz?">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Kapsam Başlığı</label>
+              <input type="text" id="servScopeTitle" class="form-control" placeholder="Örn: Mutfak Tadilatında Neler Dahil?">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px;">
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 10px; border-radius: 6px;">
+              <span style="color: #FFF; font-size: 0.75rem; font-weight: 700;">Madde 1</span>
+              <input type="text" id="servScope1_title" class="form-control" placeholder="Örn: 1. 3D Tasarım & Ölçülendirme" style="margin: 4px 0 6px;">
+              <textarea id="servScope1_desc" class="form-control" rows="2" placeholder="Madde açıklaması..."></textarea>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 10px; border-radius: 6px;">
+              <span style="color: #FFF; font-size: 0.75rem; font-weight: 700;">Madde 2</span>
+              <input type="text" id="servScope2_title" class="form-control" placeholder="Örn: 2. Tesisat & Altyapı Yenileme" style="margin: 4px 0 6px;">
+              <textarea id="servScope2_desc" class="form-control" rows="2" placeholder="Madde açıklaması..."></textarea>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 10px; border-radius: 6px;">
+              <span style="color: #FFF; font-size: 0.75rem; font-weight: 700;">Madde 3</span>
+              <input type="text" id="servScope3_title" class="form-control" placeholder="Örn: 3. Lake / Akrilik Dolaplar" style="margin: 4px 0 6px;">
+              <textarea id="servScope3_desc" class="form-control" rows="2" placeholder="Madde açıklaması..."></textarea>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 10px; border-radius: 6px;">
+              <span style="color: #FFF; font-size: 0.75rem; font-weight: 700;">Madde 4</span>
+              <input type="text" id="servScope4_title" class="form-control" placeholder="Örn: 4. Kuvars & Porselen Tezgah" style="margin: 4px 0 6px;">
+              <textarea id="servScope4_desc" class="form-control" rows="2" placeholder="Madde açıklaması..."></textarea>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 10px; border-radius: 6px;">
+              <span style="color: #FFF; font-size: 0.75rem; font-weight: 700;">Madde 5</span>
+              <input type="text" id="servScope5_title" class="form-control" placeholder="Örn: 5. Tezgah Arası Seramik & Cam" style="margin: 4px 0 6px;">
+              <textarea id="servScope5_desc" class="form-control" rows="2" placeholder="Madde açıklaması..."></textarea>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); padding: 10px; border-radius: 6px;">
+              <span style="color: #FFF; font-size: 0.75rem; font-weight: 700;">Madde 6</span>
+              <input type="text" id="servScope6_title" class="form-control" placeholder="Örn: 6. Montaj & Temizlik" style="margin: 4px 0 6px;">
+              <textarea id="servScope6_desc" class="form-control" rows="2" placeholder="Madde açıklaması..."></textarea>
+            </div>
+          </div>
+        </div>
+
         <div style="display: flex; justify-content: flex-end; gap: 10px;">
           <button type="button" onclick="closeServiceModal()" class="btn btn-outline">İptal</button>
           <button type="submit" class="btn btn-primary">Kaydet & Yayınla</button>
@@ -1240,8 +1615,8 @@ Antalya ve çevresinde komple ev tadilatı, modern mutfak ve banyo yenileme, ser
     </div>
   </div>
 
-  <script defer src="js/analytics.min.js?v=20261024"></script>
-  <script defer src="js/cms-client.min.js?v=20261024"></script>
-  <script defer src="js/admin.min.js?v=20261024"></script>
+  <script defer src="js/analytics.min.js?v=20261024b"></script>
+  <script defer src="js/cms-client.min.js?v=20261024b"></script>
+  <script defer src="js/admin.min.js?v=20261024b"></script>
 </body>
 </html>
