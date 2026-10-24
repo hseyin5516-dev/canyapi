@@ -94,8 +94,7 @@ function initMobileNav() {
   const servicesToggle = document.querySelector('.js-mobile-services-toggle');
   const submenu = document.querySelector('.mobile-submenu');
 
-  function openMenu(e) {
-    if (e && e.preventDefault) e.preventDefault();
+  function openMenu() {
     if (drawer && overlay) {
       drawer.classList.add('open');
       overlay.classList.add('open');
@@ -103,8 +102,7 @@ function initMobileNav() {
     }
   }
 
-  function closeMenu(e) {
-    if (e && e.preventDefault) e.preventDefault();
+  function closeMenu() {
     if (drawer && overlay) {
       drawer.classList.remove('open');
       overlay.classList.remove('open');
@@ -112,17 +110,33 @@ function initMobileNav() {
     }
   }
 
-  hamburgerBtns.forEach(btn => btn.addEventListener('click', openMenu));
-  closeBtns.forEach(btn => btn.addEventListener('click', closeMenu));
-  if (overlay) overlay.addEventListener('click', closeMenu);
+  hamburgerBtns.forEach(btn => btn.addEventListener('click', function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    openMenu();
+  }));
 
-  document.querySelectorAll('.mobile-nav-link:not(.js-mobile-services-toggle)').forEach(link => {
-    link.addEventListener('click', closeMenu);
+  closeBtns.forEach(btn => btn.addEventListener('click', function(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    closeMenu();
+  }));
+
+  if (overlay) {
+    overlay.addEventListener('click', function() {
+      closeMenu();
+    });
+  }
+
+  // Mobil çekmecedeki tüm linkler: Tıklandığında sayfa geçişini engelleme, çekmeceyi kapat ve git
+  document.querySelectorAll('.mobile-nav-link:not(.js-mobile-services-toggle), .mobile-sub-link').forEach(link => {
+    link.addEventListener('click', function() {
+      closeMenu();
+    });
   });
 
   if (servicesToggle && submenu) {
     servicesToggle.addEventListener('click', function(e) {
       e.preventDefault();
+      e.stopPropagation();
       submenu.classList.toggle('open');
     });
   }
@@ -516,7 +530,19 @@ function initForms() {
           status: 'Yeni'
         };
 
-        // localStorage kaydı (Can Yapı Yönetim Paneli için)
+        // 1. Sunucu API'sine (api/leads.php -> data/leads.json) kalıcı olarak kaydet
+        if (window.CmsClient && window.CmsClient.submitLead) {
+          window.CmsClient.submitLead({
+            name: name,
+            phone: phone,
+            service: service || 'Genel Keşif / Danışmanlık',
+            location: location || 'Antalya / Belirtilmedi',
+            message: notes,
+            isDiscovery: Boolean(discovery)
+          }).catch(e => console.warn('Lead sunucu kayıt hatası:', e));
+        }
+
+        // 2. Tarayıcı yerel yedeği (Çevrimdışı güvencesi)
         saveLeadToStorage(newLead);
 
         // Ölçümleme (Analytics Event)
@@ -701,15 +727,15 @@ async function initDynamicCmsContent() {
   // Blog bağlantısını menülere dinamik olarak ekle (yoksa)
   const navMenus = document.querySelectorAll('.nav-menu, .mobile-nav-list');
   navMenus.forEach(menu => {
-    if (!menu.querySelector('a[href="blog.html"]')) {
-      const projLink = menu.querySelector('a[href="projeler.html"]');
+    if (!menu.querySelector('a[href="/blog"], a[href="blog"], a[href="blog.html"]')) {
+      const projLink = menu.querySelector('a[href*="projeler"]');
       const blogLink = document.createElement('a');
-      blogLink.href = 'blog.html';
+      blogLink.href = '/blog';
       blogLink.className = menu.classList.contains('mobile-nav-list') ? 'mobile-nav-link' : 'nav-link';
       blogLink.textContent = menu.classList.contains('mobile-nav-list') ? 'Blog & Rehber' : 'Blog';
       
       const currentPath = window.location.pathname;
-      if (currentPath.includes('blog.html') || currentPath.includes('blog-detay.html')) {
+      if (currentPath.includes('blog')) {
         blogLink.classList.add('active');
       }
 
@@ -791,13 +817,14 @@ async function initDynamicCmsContent() {
           }
 
           return `
-            <div class="project-card">
+            <div class="project-card" data-category="${p.category || 'Tümü'}">
               ${thumbHtml}
               <div class="project-spec-table">
                 <div class="spec-header">
                   <h4>${p.title}</h4>
                   <span class="spec-location">${p.location || 'Antalya'}</span>
                 </div>
+                ${p.description ? `<p class="project-card-desc" style="font-size: 0.88rem; color: #94A3B8; margin: 8px 0 12px; line-height: 1.5;">${p.description}</p>` : ''}
                 ${specsHtml}
               </div>
             </div>
@@ -806,25 +833,53 @@ async function initDynamicCmsContent() {
 
         initProjectSliders();
         initGalleryLightbox();
+
+        // Kategori Filtre Butonları Mantığı
+        const filterBtns = document.querySelectorAll('.project-filters .btn-filter');
+        if (filterBtns.length > 0) {
+          filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+              filterBtns.forEach(b => {
+                b.classList.remove('active');
+                b.style.borderColor = 'var(--border-color)';
+                b.style.background = 'var(--bg-card)';
+                b.style.color = '#FFF';
+              });
+              this.classList.add('active');
+              this.style.borderColor = 'var(--primary-orange)';
+              this.style.background = 'var(--primary-orange)';
+              this.style.color = '#FFF';
+
+              const filterVal = (this.getAttribute('data-filter') || 'all').toLowerCase();
+              const cards = projectsGrid.querySelectorAll('.project-card');
+              cards.forEach(card => {
+                const cardCat = (card.getAttribute('data-category') || '').toLowerCase();
+                if (filterVal === 'all' || cardCat.includes(filterVal) || filterVal.includes(cardCat)) {
+                  card.style.display = '';
+                } else {
+                  card.style.display = 'none';
+                }
+              });
+            });
+          });
+        }
       }
     } catch (err) {
       console.warn('Dinamik proje listeleme hatası:', err);
     }
   }
 
-  // 2. Hizmetler Sayfasında ve Hizmet Sayfalarında Dinamik Galeri / Liste Senkronizasyonu
+  // 2. Hizmetler Sayfasında VE Ana Sayfada Dinamik Hizmetler & Galeri Senkronizasyonu
   try {
-    const isServicesPage = window.location.pathname.includes('hizmetler');
-    const servicesGrid = isServicesPage ? document.querySelector('.services-section .services-grid') : null;
+    const servicesGrid = document.querySelector('.services-section .services-grid');
     const serviceGalleryGrid = document.querySelector('.service-gallery-section .gallery-grid, .service-gallery-grid');
+    const services = await window.CmsClient.getServices();
 
-    if (servicesGrid || serviceGalleryGrid) {
-      const services = await window.CmsClient.getServices();
-
-      // Hizmetler Sayfasında Kartları Senkronize Et
-      if (servicesGrid && Array.isArray(services) && services.length > 0) {
+    if (Array.isArray(services) && services.length > 0) {
+      // Hizmetler Gridini (Ana sayfa veya Hizmetler sayfası) Güncelle
+      if (servicesGrid) {
         servicesGrid.innerHTML = services.map(s => {
-          const detailUrl = (s.slug || ('hizmet-' + s.id)).replace(/\.html$/, '');
+          const detailUrl = '/' + (s.slug || ('hizmet-' + s.id)).replace(/\.html$/, '');
           return `
             <div class="service-card">
               <div class="service-thumb">
@@ -843,16 +898,34 @@ async function initDynamicCmsContent() {
         }).join('');
       }
 
-      // Hizmet Detay Sayfasında Alt Grid Galeri Senkronizasyonu
-      if (serviceGalleryGrid && Array.isArray(services)) {
-        const currentPath = window.location.pathname.toLowerCase();
-        const matchedService = services.find(s => {
-          if (!s.slug) return false;
-          const cleanSlug = s.slug.replace('.html', '').toLowerCase();
-          return currentPath.includes(cleanSlug);
+      // Hizmet Detay Sayfalarında Başlık, Açıklama ve Alt Galeri Senkronizasyonu
+      const currentPath = window.location.pathname.toLowerCase();
+      const matchedService = services.find(s => {
+        if (!s.slug) return false;
+        const cleanSlug = s.slug.replace('.html', '').toLowerCase();
+        return currentPath.includes(cleanSlug);
+      });
+
+      if (matchedService) {
+        // Hero başlığı ve vurgu güncelle
+        const heroHighlight = document.querySelector('.hero-service-section .hero-title .highlight');
+        if (heroHighlight) {
+          heroHighlight.textContent = matchedService.title;
+        }
+
+        // Hero açıklamasını güncelle
+        const heroDesc = document.querySelector('.hero-service-section .hero-description');
+        if (heroDesc && (matchedService.fullDesc || matchedService.shortDesc)) {
+          heroDesc.textContent = matchedService.fullDesc || matchedService.shortDesc;
+        }
+
+        // Teklif al butonlarını güncelle
+        document.querySelectorAll('.hero-service-section button[data-service]').forEach(btn => {
+          btn.setAttribute('data-service', matchedService.title);
         });
 
-        if (matchedService && Array.isArray(matchedService.gallery) && matchedService.gallery.length > 0) {
+        // Alt fotoğraf galerisini güncelle
+        if (serviceGalleryGrid && Array.isArray(matchedService.gallery) && matchedService.gallery.length > 0) {
           serviceGalleryGrid.innerHTML = matchedService.gallery.map((imgUrl, i) => `
             <div class="gallery-item">
               <img src="${imgUrl}" alt="${matchedService.title} Uygulaması ${i+1}" loading="lazy" decoding="async" onerror="this.src='images/logo.webp'">
@@ -874,7 +947,78 @@ async function initDynamicCmsContent() {
     console.warn('Hizmetler senkronizasyon hatası:', e);
   }
 
-  // 3. Genel Site Metinleri (Hakkımızda, Hero, Telefon, Sosyal Medya vb.) Senkronizasyonu
+  // 3. Blog Vitrini (Ana Sayfa) & Benzer Yazılar (Blog Detay)
+  try {
+    const homeBlogGrid = document.getElementById('homeBlogGrid');
+    const relatedPostsGrid = document.getElementById('relatedPostsGrid');
+
+    if (homeBlogGrid || relatedPostsGrid) {
+      const allPosts = await window.CmsClient.getBlogPosts();
+      if (Array.isArray(allPosts) && allPosts.length > 0) {
+        if (homeBlogGrid) {
+          const latestPosts = allPosts.slice(0, 3);
+          homeBlogGrid.innerHTML = latestPosts.map(b => `
+            <article class="blog-card">
+              <div class="blog-thumb">
+                <img src="${b.coverImage || 'images/real/proje-luks-mutfak.webp'}" alt="${b.title}" loading="lazy" onerror="this.src='images/real/proje-luks-mutfak.webp'" decoding="async">
+                <span class="blog-category-badge">${b.category || 'Rehber'}</span>
+              </div>
+              <div class="blog-body">
+                <div class="blog-meta">
+                  <span>📅 ${b.date || 'Ekim 2026'}</span>
+                  <span>⏱️ ${b.readTime || '4 dk okuma'}</span>
+                </div>
+                <h3 class="blog-title" style="font-size: 1.15rem; margin: 8px 0;">${b.title}</h3>
+                <p class="blog-excerpt">${b.excerpt || ''}</p>
+                <a href="/blog-detay?slug=${b.slug}" class="blog-read-more" style="color: var(--primary-orange); font-weight: 600; text-decoration: none;">Devamını Oku →</a>
+              </div>
+            </article>
+          `).join('');
+        }
+
+        if (relatedPostsGrid) {
+          const currentUrlParams = new URLSearchParams(window.location.search);
+          const currentSlug = currentUrlParams.get('slug') || '';
+          const others = allPosts.filter(p => p.slug !== currentSlug).slice(0, 2);
+          relatedPostsGrid.innerHTML = others.map(b => `
+            <article class="blog-card">
+              <div class="blog-thumb">
+                <img src="${b.coverImage || 'images/real/proje-luks-mutfak.webp'}" alt="${b.title}" loading="lazy" onerror="this.src='images/real/proje-luks-mutfak.webp'" decoding="async">
+                <span class="blog-category-badge">${b.category || 'Rehber'}</span>
+              </div>
+              <div class="blog-body">
+                <div class="blog-meta">
+                  <span>📅 ${b.date || 'Ekim 2026'}</span>
+                </div>
+                <h4 class="blog-title" style="font-size: 1.05rem; margin: 6px 0;">${b.title}</h4>
+                <a href="/blog-detay?slug=${b.slug}" class="blog-read-more" style="color: var(--primary-orange); font-weight: 600; text-decoration: none;">İncele →</a>
+              </div>
+            </article>
+          `).join('');
+        }
+      }
+    }
+
+    // Blog Detay Paylaşım Butonları
+    const shareWaBtn = document.getElementById('shareWaBtn');
+    const copyLinkBtn = document.getElementById('copyArticleLinkBtn');
+    if (shareWaBtn) {
+      const pageUrl = encodeURIComponent(window.location.href);
+      const pageTitle = encodeURIComponent(document.title);
+      shareWaBtn.href = `https://api.whatsapp.com/send?text=${pageTitle}%20${pageUrl}`;
+    }
+    if (copyLinkBtn) {
+      copyLinkBtn.addEventListener('click', function() {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          showToast('Makale bağlantısı panoya kopyalandı!', 'success');
+        });
+      });
+    }
+  } catch (e) {
+    console.warn('Blog senkronizasyon hatası:', e);
+  }
+
+  // 4. Genel Site Metinleri (Hakkımızda, Hero, Telefon, Sosyal Medya, Çalışma Saatleri) Senkronizasyonu
   try {
     const settings = await window.CmsClient.getSettings();
     if (settings) {
@@ -895,16 +1039,28 @@ async function initDynamicCmsContent() {
 
       // E-Posta
       if (settings.email) {
-        document.querySelectorAll('a[href^="mailto:"]').forEach(el => el.href = 'mailto:' + settings.email);
+        document.querySelectorAll('a[href^="mailto:"]').forEach(el => {
+          el.href = 'mailto:' + settings.email;
+          if (el.textContent.includes('@')) {
+            el.textContent = settings.email;
+          }
+        });
         document.querySelectorAll('.contact-email-display').forEach(el => el.textContent = settings.email);
       }
 
       // Adres
       if (settings.address) {
-        document.querySelectorAll('.contact-address-display, .top-bar-item span:not(.experience-badge)').forEach(el => {
-          if (!el.textContent.includes('+90') && !el.textContent.includes('Yıl')) {
+        document.querySelectorAll('.contact-address-display, .top-bar-item span:not(.experience-badge):not(.js-working-hours)').forEach(el => {
+          if (!el.textContent.includes('+90') && !el.textContent.includes('Yıl') && !el.textContent.includes('Pzt')) {
             el.textContent = settings.address;
           }
+        });
+      }
+
+      // Çalışma Saatleri
+      if (settings.workingHours) {
+        document.querySelectorAll('.js-working-hours, .contact-hours-display').forEach(el => {
+          el.textContent = settings.workingHours;
         });
       }
 
@@ -917,8 +1073,10 @@ async function initDynamicCmsContent() {
 
       // Hero Başlık & Alt Açıklama (Ana Sayfa)
       if (settings.heroTitle) {
-        const heroTitle = document.querySelector('.hero-title-main');
-        if (heroTitle) heroTitle.innerHTML = settings.heroTitle;
+        const heroTitle = document.querySelector('.hero-title-main, .hero-poster-badge');
+        if (heroTitle && settings.heroTitle.trim()) {
+          heroTitle.innerHTML = `<span class="poster-pill-top">ANTALYA</span><span class="poster-plate-gold"><span class="poster-gold-title">${settings.heroTitle}</span></span>`;
+        }
       }
       if (settings.heroSubtitle) {
         const heroSub = document.querySelector('.hero-desc-main, .hero-poster-desc');
@@ -941,10 +1099,13 @@ async function initDynamicCmsContent() {
       if (settings.aboutStory) {
         const el = document.querySelector('.js-about-story-body');
         if (el) {
-          const paras = settings.aboutStory.split('\n\n').filter(Boolean);
+          const paras = settings.aboutStory.split('
+
+').filter(Boolean);
           el.innerHTML = paras.map((p, idx) => `
             <p style="color: var(--text-muted); font-size: 1.02rem; line-height: 1.8; margin-bottom: ${idx === paras.length - 1 ? '24px' : '18px'};">
-              ${p.replace(/\n/g, '<br>')}
+              ${p.replace(/
+/g, '<br>')}
             </p>
           `).join('');
         }
@@ -956,10 +1117,13 @@ async function initDynamicCmsContent() {
       if (settings.aboutPhilosophy) {
         const el = document.querySelector('.js-about-philosophy-body');
         if (el) {
-          const paras = settings.aboutPhilosophy.split('\n\n').filter(Boolean);
+          const paras = settings.aboutPhilosophy.split('
+
+').filter(Boolean);
           el.innerHTML = paras.map((p, idx) => `
             <p style="color: ${idx === 0 ? 'var(--text-white)' : 'var(--text-muted)'}; font-size: ${idx === 0 ? '1.08rem' : '1.02rem'}; line-height: 1.85; margin-bottom: ${idx === paras.length - 1 ? '0' : '18px'};">
-              ${p.replace(/\n/g, '<br>')}
+              ${p.replace(/
+/g, '<br>')}
             </p>
           `).join('');
         }

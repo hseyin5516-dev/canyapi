@@ -212,7 +212,7 @@
           </div>
           <div class="top-bar-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            <span>Pzt - Cts: 08:30 - 19:30</span>
+            <span class="js-working-hours"><span>Pzt - Cts: 08:30 - 19:30</span></span>
           </div>
         </div>
         <div class="top-bar-right">
@@ -289,6 +289,7 @@
   </header>
 
   <!-- Mobil Çekmece Menü (Mobile Drawer) -->
+  <!-- Mobil Menü Çekmecesi (Drawer) & Overlay -->
   <div class="mobile-nav-overlay"></div>
   <div class="mobile-nav-drawer">
     <div class="mobile-nav-header">
@@ -296,61 +297,52 @@
         <img src="images/logo-dark-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 42px;" decoding="async" width="200" height="52">
         <img src="images/logo-light-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-light" style="height: 42px;" decoding="async" width="200" height="52">
       </a>
-      <button class="mobile-close-btn" aria-label="Menüyü Kapat">
+      <button class="mobile-close-btn js-mobile-close" aria-label="Menüyü Kapat">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
 
     <div class="mobile-nav-list">
-      <a href="/" class="mobile-nav-link active">Ana Sayfa</a>
-      <a href="hakkimizda" class="mobile-nav-link">Hakkımızda</a>
+      <a href="/" class="mobile-nav-link">Ana Sayfa</a>
+      <a href="/hakkimizda" class="mobile-nav-link">Hakkımızda</a>
       <div>
         <a href="#" class="mobile-nav-link js-mobile-services-toggle">
           <span>Hizmetlerimiz</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </a>
         <div class="mobile-submenu">
-          <a href="hizmet-mutfak" class="mobile-sub-link">Mutfak Tadilatı</a>
-          <a href="hizmet-banyo" class="mobile-sub-link">Banyo & Islak Zemin</a>
-          <a href="hizmet-seramik-fayans" class="mobile-sub-link">Seramik & Fayans</a>
-          <a href="hizmet-boya" class="mobile-sub-link">Boya & Badana</a>
-          <a href="hizmet-mantolama" class="mobile-sub-link">Dış Cephe & Mantolama</a>
-          <a href="hizmet-cati" class="mobile-sub-link">Çatı Onarımı & İzolasyon</a>
-          <a href="hizmet-tadilat" class="mobile-sub-link">Komple Ev & Villa Tadilatı</a>
-          <a href="hizmet-prefabrik" class="mobile-sub-link">Prefabrik Yapı & Çelik Ev</a>
+          <a href="/hizmet-mutfak" class="mobile-sub-link">Mutfak Tadilatı</a>
+          <a href="/hizmet-banyo" class="mobile-sub-link">Banyo & Islak Zemin</a>
+          <a href="/hizmet-seramik-fayans" class="mobile-sub-link">Seramik & Fayans</a>
+          <a href="/hizmet-boya" class="mobile-sub-link">Boya & Badana</a>
+          <a href="/hizmet-mantolama" class="mobile-sub-link">Dış Cephe & Mantolama</a>
+          <a href="/hizmet-cati" class="mobile-sub-link">Çatı Onarımı & İzolasyon</a>
+          <a href="/hizmet-tadilat" class="mobile-sub-link">Komple Ev & Villa Tadilatı</a>
+          <a href="/hizmet-prefabrik" class="mobile-sub-link">Prefabrik Yapı & Çelik Ev</a>
+          <a href="/hizmetler" class="mobile-sub-link" style="color: var(--primary-orange); font-weight: 600;">Tüm Hizmetlerimiz →</a>
         </div>
       </div>
-      <a href="projeler" class="mobile-nav-link">Projelerimiz</a>
-      <a href="ucretsiz-kesif" class="mobile-nav-link">Ücretsiz Keşif</a>
-      <a href="iletisim" class="mobile-nav-link">İletişim</a>
+      <a href="/projeler" class="mobile-nav-link">Projelerimiz</a>
+      <a href="/blog" class="mobile-nav-link">Blog & Rehber</a>
+      <a href="/ucretsiz-kesif" class="mobile-nav-link">Ücretsiz Keşif</a>
+      <a href="/iletisim" class="mobile-nav-link">İletişim</a>
     </div>
 
     <div class="mobile-nav-actions">
       <button class="theme-toggle-btn js-theme-toggle" style="width: 100%; justify-content: center; margin-bottom: 8px;" aria-label="Açık/Koyu Tema">
         ☀️ <span>Açık Tema</span>
       </button>
-      <a href="tel:+905458320190" class="btn btn-outline js-track-phone" data-track-source="drawer_phone">
+      <a href="tel:+905458320190" class="btn btn-outline js-track-phone" data-track-source="drawer_phone" style="width: 100%; justify-content: center;">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         <span>Bizi Arayın: 0545 832 01 90</span>
       </a>
-      <button class="btn btn-primary js-open-quote-modal" data-service="Genel Teklif">
-        <span>Teklif Alın</span>
-      </button>
+      <a href="https://wa.me/905458320190" target="_blank" rel="noopener" class="btn btn-primary js-track-whatsapp" data-track-source="drawer_whatsapp" style="margin-top: 8px; width: 100%; justify-content: center;">
+        <span>WhatsApp'tan Yazın</span>
+      </a>
     </div>
   </div>
 
-  <!-- ==========================================================================
-       YENİ HERO BANNER MİMARİSİ (Afiş ile %100 Birebir, Tek Ekrana Sığan Mimari)
-       ========================================================================== -->
-  <section class="hero-banner-section">
-    <!-- Üst Bölüm: Salon Manzarası, Anahtar Teslim Eden El, Altın Başlık Rozeti ve 8 Altın İkon -->
-    <div class="hero-banner-main">
-      <div class="hero-banner-backdrop">
-        <img src="images/hero-bg-clean.webp" alt="Can Yapı Antalya Anahtar Teslim Tadilat ve İnşaat" class="hero-banner-bg-img" fetchpriority="high" decoding="async" width="1600" height="900">
-        <div class="hero-banner-overlay"></div>
-      </div>
-
-      <div class="container hero-banner-top-content">
+  <div class="container hero-banner-top-content">
         <!-- Orijinal Afişteki 3 Katmanlı Altın Rozet (Google & SEO için Bütüncül H1) -->
         <h1 class="hero-poster-badge">
           <span class="poster-pill-top">ANTALYA</span>
@@ -1249,8 +1241,8 @@
   </div>
 
   <!-- Scriptler -->
-  <script defer src="js/analytics.min.js?v=20261023b"></script>
-  <script defer src="js/cms-client.min.js?v=20261023b"></script>
-  <script defer src="js/main.min.js?v=20261023b"></script>
+  <script defer src="js/analytics.min.js?v=20261024"></script>
+  <script defer src="js/cms-client.min.js?v=20261024"></script>
+  <script defer src="js/main.min.js?v=20261024"></script>
 </body>
 </html>

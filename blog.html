@@ -280,6 +280,20 @@
   <!-- Blog Listesi -->
   <section class="blog-section" style="background: var(--bg-dark); padding: 20px 0 80px;">
     <div class="container">
+      
+      <!-- Arama ve Kategori Filtresi -->
+      <div style="display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; align-items: center; margin-bottom: 28px; background: var(--bg-dark-card); padding: 16px 20px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="blogCategoryFilters">
+          <button type="button" class="btn-blog-filter active" data-cat="all" style="padding: 6px 14px; border-radius: 18px; border: 1px solid var(--primary-orange); background: var(--primary-orange); color: white; font-size: 0.85rem; font-weight: 600; cursor: pointer;">Tümü</button>
+          <button type="button" class="btn-blog-filter" data-cat="Rehber" style="padding: 6px 14px; border-radius: 18px; border: 1px solid var(--border-subtle); background: transparent; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; cursor: pointer;">Tadilat Rehberi</button>
+          <button type="button" class="btn-blog-filter" data-cat="Maliyet" style="padding: 6px 14px; border-radius: 18px; border: 1px solid var(--border-subtle); background: transparent; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; cursor: pointer;">Fiyat & Maliyet</button>
+          <button type="button" class="btn-blog-filter" data-cat="Tasarım" style="padding: 6px 14px; border-radius: 18px; border: 1px solid var(--border-subtle); background: transparent; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; cursor: pointer;">Mimari Tasarım</button>
+        </div>
+        <div style="position: relative; min-width: 240px; flex: 1; max-width: 320px;">
+          <input type="text" id="blogSearchInput" placeholder="Rehberlerde ara..." style="width: 100%; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border-subtle); background: #0B0D11; color: white; font-size: 0.88rem; outline: none;">
+        </div>
+      </div>
+
       <div id="blogCardsContainer" class="blog-grid">
         <!-- Varsayılan Kart 1 -->
         <article class="blog-card">
@@ -373,9 +387,9 @@
     </div>
   </footer>
 
-  <script defer src="js/analytics.min.js?v=20261023b"></script>
-  <script defer src="js/cms-client.min.js?v=20261023b"></script>
-  <script defer src="js/main.min.js?v=20261023b"></script>
+  <script defer src="js/analytics.min.js?v=20261024"></script>
+  <script defer src="js/cms-client.min.js?v=20261024"></script>
+  <script defer src="js/main.min.js?v=20261024"></script>
   <script>
     // Dinamik Blog Yükleme (CMS)
     document.addEventListener('DOMContentLoaded', async function() {

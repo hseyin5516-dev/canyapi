@@ -455,6 +455,124 @@
     return [];
   }
 
+  async function deleteMedia(filename) {
+    try {
+      const res = await fetch(apiUrl('api/media.php'), {
+        method: 'POST',
+        headers: getAuthHeader(),
+        credentials: 'same-origin',
+        body: JSON.stringify({ action: 'delete', filename: filename })
+      });
+      if (res.ok) {
+        return await res.json();
+      }
+    } catch (e) {
+      console.warn('deleteMedia error:', e);
+    }
+    return { success: false, message: 'Görsel silinemedi.' };
+  }
+
+  // --- 6. GELEN TALEPLER & KEŞİF FORMLARI (LEADS) ---
+  async function submitLead(leadData) {
+    // 1. Canlı PHP API'ye gönder (Server-side kalıcı kayıt)
+    try {
+      const res = await fetch(apiUrl('api/leads.php'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(leadData)
+      });
+      if (res.ok) {
+        const json = await res.json();
+        return json;
+      }
+    } catch (e) {
+      console.warn('submitLead API error, yerel yedeğe yazılıyor:', e);
+    }
+
+    // 2. Çevrimdışı / LocalStorage Yedeği
+    const local = JSON.parse(localStorage.getItem('canyapi_leads') || '[]');
+    const fallbackId = 'CY-L' + Math.floor(1000 + Math.random() * 9000);
+    const newLead = Object.assign({
+      id: fallbackId,
+      date: new Date().toLocaleDateString('tr-TR') + ' ' + new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' }),
+      status: 'Yeni'
+    }, leadData);
+    local.unshift(newLead);
+    localStorage.setItem('canyapi_leads', JSON.stringify(local));
+
+    return {
+      success: true,
+      id: fallbackId,
+      message: 'Talebiniz alındı (Yerel Kayıt). Ekibimiz en kısa sürede sizinle iletişime geçecektir.'
+    };
+  }
+
+  async function getLeads() {
+    try {
+      const res = await fetch(apiUrl(`api/leads.php?_t=${Date.now()}`), {
+        headers: getAuthHeader(),
+        cache: 'no-store'
+      });
+      if (res.ok) {
+        const json = await res.json();
+        if (json && json.success && Array.isArray(json.data)) {
+          localStorage.setItem('canyapi_leads', JSON.stringify(json.data));
+          return json.data;
+        }
+      }
+    } catch (e) {}
+
+    return JSON.parse(localStorage.getItem('canyapi_leads') || '[]');
+  }
+
+  async function updateLeadStatus(id, status) {
+    try {
+      const res = await fetch(apiUrl('api/leads.php'), {
+        method: 'POST',
+        headers: getAuthHeader(),
+        credentials: 'same-origin',
+        body: JSON.stringify({ action: 'status', id: id, status: status })
+      });
+      if (res.ok) {
+        return await res.json();
+      }
+    } catch (e) {
+      console.warn('updateLeadStatus error:', e);
+    }
+
+    // Local fallback
+    const local = JSON.parse(localStorage.getItem('canyapi_leads') || '[]');
+    const target = local.find(l => l.id === id);
+    if (target) {
+      target.status = status;
+      localStorage.setItem('canyapi_leads', JSON.stringify(local));
+      return { success: true, message: 'Durum güncellendi (Yerel).' };
+    }
+    return { success: false, message: 'Talep bulunamadı.' };
+  }
+
+  async function deleteLead(id) {
+    try {
+      const res = await fetch(apiUrl('api/leads.php'), {
+        method: 'POST',
+        headers: getAuthHeader(),
+        credentials: 'same-origin',
+        body: JSON.stringify({ action: 'delete', id: id })
+      });
+      if (res.ok) {
+        return await res.json();
+      }
+    } catch (e) {
+      console.warn('deleteLead error:', e);
+    }
+
+    // Local fallback
+    let local = JSON.parse(localStorage.getItem('canyapi_leads') || '[]');
+    local = local.filter(l => l.id !== id);
+    localStorage.setItem('canyapi_leads', JSON.stringify(local));
+    return { success: true, message: 'Talep silindi (Yerel).' };
+  }
+
   // Dışa aktar
   window.CmsClient = {
     detectServerApi,
@@ -470,7 +588,12 @@
     saveBlogPost,
     deleteBlogPost,
     uploadPhoto,
-    getMediaList
+    getMediaList,
+    deleteMedia,
+    submitLead,
+    getLeads,
+    updateLeadStatus,
+    deleteLead
   };
 
 })(window);

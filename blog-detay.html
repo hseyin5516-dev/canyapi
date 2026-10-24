@@ -164,6 +164,12 @@
         <div class="header-actions">
           <button class="theme-toggle-btn js-theme-toggle" aria-label="Tema">☀️ <span>Açık</span></button>
           <button class="btn btn-primary js-open-quote-modal" data-service="Genel Teklif">Teklif Alın</button>
+        
+          <button class="hamburger-btn js-mobile-toggle" aria-label="Menüyü Aç">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </div>
     </div>
@@ -206,6 +212,20 @@
           <a href="https://wa.me/905458320190" target="_blank" class="btn btn-outline" style="border-color: #25D366; color: #25D366;">WhatsApp'tan Yazın</a>
         </div>
       </div>
+    
+      <!-- Sosyal Medya Paylaşım & İletişim -->
+      <div style="display: flex; gap: 12px; align-items: center; justify-content: center; margin: 30px 0 10px; flex-wrap: wrap;">
+        <span style="font-size: 0.9rem; color: #94A3B8; font-weight: 600;">Bu Rehberi Paylaşın:</span>
+        <a id="shareWaBtn" href="#" target="_blank" rel="noopener" class="btn btn-sm" style="background: #25D366; color: white; border-radius: 20px; padding: 6px 14px; text-decoration: none; font-size: 0.84rem; font-weight: 600;">WhatsApp'ta Paylaş</a>
+        <button id="copyArticleLinkBtn" type="button" class="btn btn-sm btn-outline" style="border-radius: 20px; padding: 6px 14px; font-size: 0.84rem; font-weight: 600; cursor: pointer;">Bağlantıyı Kopyala</button>
+      </div>
+
+      <!-- Benzer & Son Blog Yazıları -->
+      <div class="related-posts-section" style="margin-top: 48px; border-top: 1px solid var(--border-color); padding-top: 36px;">
+        <h3 style="font-size: 1.5rem; color: #FFF; margin-bottom: 22px; text-align: center;">İlginizi Çekebilecek Diğer Rehberler</h3>
+        <div class="blog-grid" id="relatedPostsGrid"></div>
+      </div>
+
     </article>
   </main>
 
@@ -300,9 +320,9 @@
     </button>
   </div>
 
-  <script defer src="js/analytics.min.js?v=20261023b"></script>
-  <script defer src="js/cms-client.min.js?v=20261023b"></script>
-  <script defer src="js/main.min.js?v=20261023b"></script>
+  <script defer src="js/analytics.min.js?v=20261024"></script>
+  <script defer src="js/cms-client.min.js?v=20261024"></script>
+  <script defer src="js/main.min.js?v=20261024"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async function() {
       const params = new URLSearchParams(window.location.search);
@@ -324,6 +344,44 @@
           document.getElementById('articleCover').src = post.coverImage || 'images/real/proje-luks-mutfak.jpg';
           document.getElementById('articleCover').alt = post.title;
           document.getElementById('articleBody').innerHTML = post.content || `<p>${post.excerpt}</p>`;
+
+          // Benzer yazıları çek
+          const allPosts = await window.CmsClient.getBlogPosts();
+          const relatedGrid = document.getElementById('relatedPostsGrid');
+          if (relatedGrid && Array.isArray(allPosts)) {
+            const others = allPosts.filter(p => p.slug !== slug).slice(0, 2);
+            relatedGrid.innerHTML = others.map(b => `
+              <article class="blog-card">
+                <div class="blog-thumb">
+                  <img src="${b.coverImage || 'images/real/proje-luks-mutfak.webp'}" alt="${b.title}" loading="lazy" onerror="this.src='images/real/proje-luks-mutfak.webp'" decoding="async">
+                  <span class="blog-category-badge">${b.category || 'Rehber'}</span>
+                </div>
+                <div class="blog-body">
+                  <div class="blog-meta">
+                    <span>📅 ${b.date || 'Ekim 2026'}</span>
+                  </div>
+                  <h4 class="blog-title" style="font-size: 1.05rem; margin: 6px 0;">${b.title}</h4>
+                  <a href="/blog-detay?slug=${b.slug}" class="blog-read-more" style="color: var(--primary-orange); font-weight: 600; text-decoration: none;">İncele →</a>
+                </div>
+              </article>
+            `).join('');
+          }
+
+          // Paylaşım Butonları
+          const shareWaBtn = document.getElementById('shareWaBtn');
+          const copyLinkBtn = document.getElementById('copyArticleLinkBtn');
+          if (shareWaBtn) {
+            const pageUrl = encodeURIComponent(window.location.href);
+            const pageTitle = encodeURIComponent(post.title);
+            shareWaBtn.href = `https://api.whatsapp.com/send?text=${pageTitle}%20${pageUrl}`;
+          }
+          if (copyLinkBtn) {
+            copyLinkBtn.addEventListener('click', function() {
+              navigator.clipboard.writeText(window.location.href).then(() => {
+                alert('Makale bağlantısı panoya kopyalandı!');
+              });
+            });
+          }
         } else {
           document.getElementById('articleTitle').innerText = 'Yazı Bulunamadı';
           document.getElementById('articleBody').innerHTML = '<p>Aradığınız blog yazısı kaldırılmış veya adı değişmiş olabilir. <a href="blog">Blog sayfasına dönmek için tıklayın</a>.</p>';
@@ -333,5 +391,59 @@
       }
     });
   </script>
+
+  <!-- Mobil Menü Çekmecesi (Drawer) & Overlay -->
+  <div class="mobile-nav-overlay"></div>
+  <div class="mobile-nav-drawer">
+    <div class="mobile-nav-header">
+      <a href="/" class="logo" aria-label="Can Yapı Antalya">
+        <img src="images/logo-dark-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-dark" style="height: 42px;" decoding="async" width="200" height="52">
+        <img src="images/logo-light-mode.webp" alt="Can Yapı Antalya" class="brand-logo logo-light" style="height: 42px;" decoding="async" width="200" height="52">
+      </a>
+      <button class="mobile-close-btn js-mobile-close" aria-label="Menüyü Kapat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="mobile-nav-list">
+      <a href="/" class="mobile-nav-link">Ana Sayfa</a>
+      <a href="/hakkimizda" class="mobile-nav-link">Hakkımızda</a>
+      <div>
+        <a href="#" class="mobile-nav-link js-mobile-services-toggle">
+          <span>Hizmetlerimiz</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mobile-submenu">
+          <a href="/hizmet-mutfak" class="mobile-sub-link">Mutfak Tadilatı</a>
+          <a href="/hizmet-banyo" class="mobile-sub-link">Banyo & Islak Zemin</a>
+          <a href="/hizmet-seramik-fayans" class="mobile-sub-link">Seramik & Fayans</a>
+          <a href="/hizmet-boya" class="mobile-sub-link">Boya & Badana</a>
+          <a href="/hizmet-mantolama" class="mobile-sub-link">Dış Cephe & Mantolama</a>
+          <a href="/hizmet-cati" class="mobile-sub-link">Çatı Onarımı & İzolasyon</a>
+          <a href="/hizmet-tadilat" class="mobile-sub-link">Komple Ev & Villa Tadilatı</a>
+          <a href="/hizmet-prefabrik" class="mobile-sub-link">Prefabrik Yapı & Çelik Ev</a>
+          <a href="/hizmetler" class="mobile-sub-link" style="color: var(--primary-orange); font-weight: 600;">Tüm Hizmetlerimiz →</a>
+        </div>
+      </div>
+      <a href="/projeler" class="mobile-nav-link">Projelerimiz</a>
+      <a href="/blog" class="mobile-nav-link">Blog & Rehber</a>
+      <a href="/ucretsiz-kesif" class="mobile-nav-link">Ücretsiz Keşif</a>
+      <a href="/iletisim" class="mobile-nav-link">İletişim</a>
+    </div>
+
+    <div class="mobile-nav-actions">
+      <button class="theme-toggle-btn js-theme-toggle" style="width: 100%; justify-content: center; margin-bottom: 8px;" aria-label="Açık/Koyu Tema">
+        ☀️ <span>Açık Tema</span>
+      </button>
+      <a href="tel:+905458320190" class="btn btn-outline js-track-phone" data-track-source="drawer_phone" style="width: 100%; justify-content: center;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        <span>Bizi Arayın: 0545 832 01 90</span>
+      </a>
+      <a href="https://wa.me/905458320190" target="_blank" rel="noopener" class="btn btn-primary js-track-whatsapp" data-track-source="drawer_whatsapp" style="margin-top: 8px; width: 100%; justify-content: center;">
+        <span>WhatsApp'tan Yazın</span>
+      </a>
+    </div>
+  </div>
+
 </body>
 </html>
