@@ -10,6 +10,7 @@ function getLeadsData($file) {
         return [];
     }
     $content = file_get_contents($file);
+    $content = preg_replace('/^\xEF\xBB\xBF/', '', $content);
     $data = json_decode($content, true);
     return is_array($data) ? $data : [];
 }

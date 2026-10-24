@@ -84,6 +84,7 @@ function readJsonFile($filename, $default = []) {
         return $default;
     }
     $content = file_get_contents($filePath);
+    $content = preg_replace('/^\xEF\xBB\xBF/', '', $content);
     $data = json_decode($content, true);
     return is_array($data) ? $data : $default;
 }
