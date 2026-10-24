@@ -1120,13 +1120,11 @@ async function initDynamicCmsContent() {
       if (settings.aboutStory) {
         const el = document.querySelector('.js-about-story-body');
         if (el) {
-          const paras = settings.aboutStory.split('
+          const paras = settings.aboutStory.split(/\r?\n\r?\n/).filter(Boolean);
 
-').filter(Boolean);
           el.innerHTML = paras.map((p, idx) => `
             <p style="color: var(--text-muted); font-size: 1.02rem; line-height: 1.8; margin-bottom: ${idx === paras.length - 1 ? '24px' : '18px'};">
-              ${p.replace(/
-/g, '<br>')}
+              ${p.replace(/\r?\n/g, '<br>')}
             </p>
           `).join('');
         }
@@ -1138,13 +1136,11 @@ async function initDynamicCmsContent() {
       if (settings.aboutPhilosophy) {
         const el = document.querySelector('.js-about-philosophy-body');
         if (el) {
-          const paras = settings.aboutPhilosophy.split('
+          const paras = settings.aboutPhilosophy.split(/\r?\n\r?\n/).filter(Boolean);
 
-').filter(Boolean);
           el.innerHTML = paras.map((p, idx) => `
             <p style="color: ${idx === 0 ? 'var(--text-white)' : 'var(--text-muted)'}; font-size: ${idx === 0 ? '1.08rem' : '1.02rem'}; line-height: 1.85; margin-bottom: ${idx === paras.length - 1 ? '0' : '18px'};">
-              ${p.replace(/
-/g, '<br>')}
+              ${p.replace(/\r?\n/g, '<br>')}
             </p>
           `).join('');
         }
