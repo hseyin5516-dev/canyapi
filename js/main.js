@@ -1092,12 +1092,10 @@ async function initDynamicCmsContent() {
         });
       }
 
-      // Hero Başlık & Alt Açıklama (Ana Sayfa)
+      // Hero Başlık (Orijinal afiş rozeti .hero-poster-badge asla ezilmez, korunur)
       if (settings.heroTitle) {
-        const heroTitle = document.querySelector('.hero-title-main, .hero-poster-badge');
-        if (heroTitle && settings.heroTitle.trim()) {
-          heroTitle.innerHTML = `<span class="poster-pill-top">ANTALYA</span><span class="poster-plate-gold"><span class="poster-gold-title">${settings.heroTitle}</span></span>`;
-        }
+        const heroTitle = document.querySelector('.hero-title-main');
+        if (heroTitle) heroTitle.innerHTML = settings.heroTitle;
       }
       if (settings.heroSubtitle) {
         const heroSub = document.querySelector('.hero-desc-main, .hero-poster-desc');
